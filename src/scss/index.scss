@@ -1,0 +1,7 @@
+@use "./breakpoint.scss";
+
+:root {
+       --color-base-100: oklch(100% 0 0);
+       --color-base-300: oklch(95% 0 0);
+       --color-base-content: oklch(26% 0 0);
+}

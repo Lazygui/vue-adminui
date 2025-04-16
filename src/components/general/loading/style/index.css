@@ -1,0 +1,74 @@
+.z-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  z-index: 2000;
+}
+
+.z-loading-spinner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.z-loading-spinner .circular {
+  width: 42px;
+  height: 42px;
+  animation: loading-rotate 2s linear infinite;
+}
+
+.z-loading-spinner .path {
+  animation: loading-dash 1.5s ease-in-out infinite;
+  stroke-dasharray: 90, 150;
+  stroke-dashoffset: 0;
+  stroke-width: 2;
+  stroke: #409eff;
+  stroke-linecap: round;
+}
+
+.z-loading-text {
+  margin-top: 12px;
+  color: #409eff;
+  font-size: 14px;
+}
+
+@keyframes loading-rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loading-dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -40px;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -120px;
+  }
+}
+
+.z-loading-parent--relative {
+  position: relative;
+}

@@ -1,0 +1,35 @@
+$className: (
+  "fixed": (
+    position: fixed
+  ),
+  "flex": (
+    display: flex
+  ),
+  "block": (
+    display: block
+  ),
+  "hidden": (
+    display: none
+  ),
+  "flex-col": (
+    flex-direction: column
+  ),
+  "grow": (
+    flex-grow: 1
+  ),
+  "items-center": (
+    align-items: center
+  ),
+  "justify-center": (
+    justify-content: center
+  ),
+  "text-center": (
+    text-align: center
+  ),
+  "absolute": (
+    position: absolute
+  )
+);
+$themes: (
+  --spacing: 0.25rem
+);
