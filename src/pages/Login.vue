@@ -2,6 +2,11 @@
 import ZCard from '@/components/library/ZCard.vue'
 import ZInput from '@/components/library/ZInput.vue'
 import { UserIcon, LockIcon } from '@/components/svg'
+interface IForm {
+  username: string
+  password: string
+}
+const remember = ref<boolean>(false)
 const submit = (payload: Event) => {
   console.log("🚀 ~ submit ~ payload:", payload)
 }
@@ -12,14 +17,19 @@ const submit = (payload: Event) => {
     <z-card class="login-card">
       <div class="card-body">
         <div class="text-center">
-          <h2>用户登录</h2>
-          <p class="tips">请输入您的账户和密码</p>
+          <h2 class="h2 text-base-content">用户登录</h2>
+          <p class="tips text-base-content">请输入您的账户和密码</p>
         </div>
         <div class="form">
           <form @submit="submit">
             <z-input class="form-input" label="账号" :icon="UserIcon"></z-input>
             <z-input label="密码" :icon="LockIcon" type="password"></z-input>
-            <button>111</button>
+            <div>
+              <z-input label="记住密码" :icon="LockIcon" type="checkbox" v-model="remember"></z-input>
+            </div>
+            <div class="text-center">
+              <button>111</button>
+            </div>
           </form>
         </div>
       </div>
@@ -53,9 +63,17 @@ const submit = (payload: Event) => {
         }
       }
 
+      .h2 {
+        margin-top: 0;
+        font-size: 1.875rem;
+        line-height: calc(2.25 / 1.875);
+        letter-spacing: -0.025rem;
+        font-weight: 800;
+        margin-bottom: 0.25rem;
+      }
+
       .tips {
         font-size: 0.875rem;
-        color: oklch(26% 0 0);
       }
     }
   }

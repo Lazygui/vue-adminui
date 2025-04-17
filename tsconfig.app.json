@@ -19,5 +19,6 @@
     "src/**/*.ts",
     "src/**/*.vue",
     "src/**/*.d.ts",
+    "src/vite-plugin/.d.ts/auto-import.d.ts"
   ]
 }
