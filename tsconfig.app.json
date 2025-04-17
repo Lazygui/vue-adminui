@@ -12,6 +12,9 @@
     "paths": {
       "@/*": [
         "src/*"
+      ],
+      "@pages/*": [
+        "src/components/pages/*"
       ]
     }
   },

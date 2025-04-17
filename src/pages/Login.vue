@@ -1,15 +1,30 @@
 <script setup lang="ts">
 import ZCard from '@/components/library/ZCard.vue'
 import ZInput from '@/components/library/ZInput.vue'
+import ZCheckbox from '@/components/library/ZCheckbox.vue'
 import { UserIcon, LockIcon } from '@/components/svg'
+import ThemeButton from "@pages/login/ThemeButton.vue"
 interface IForm {
   username: string
   password: string
 }
-const remember = ref<boolean>(false)
-const submit = (payload: Event) => {
-  console.log("🚀 ~ submit ~ payload:", payload)
+const form = ref<IForm>({
+  username: '',
+  password: '',
+})
+const remember = ref<boolean>(true)
+const submit = () => {
+  console.log("🚀 ~ submit ~ payload:", form.value, remember.value)
 }
+const rememberPass = () => {
+  // remember.value = !remember.value
+  console.log("🚀 ~ submit ~ payload:", remember.value)
+
+}
+onMounted(() => {
+  form.value.password = ''
+  form.value.username = ''
+})
 </script>
 
 <template>
@@ -21,11 +36,16 @@ const submit = (payload: Event) => {
           <p class="tips text-base-content">请输入您的账户和密码</p>
         </div>
         <div class="form">
-          <form @submit="submit">
-            <z-input class="form-input" label="账号" :icon="UserIcon"></z-input>
-            <z-input label="密码" :icon="LockIcon" type="password"></z-input>
-            <div>
-              <z-input label="记住密码" :icon="LockIcon" type="checkbox" v-model="remember"></z-input>
+          <form @submit.prevent="submit">
+            <z-input class="form-input" label="账号" :icon="UserIcon" v-model="form.username"></z-input>
+            <z-input label="密码" :icon="LockIcon" type="password" v-model="form.password"></z-input>
+            <div class="flex justify-between">
+              <!-- <z-input label="记住密码" :icon="LockIcon" type="checkbox" v-model="remember" @click="rememberPass"></z-input> -->
+              <z-checkbox label="记住密码" :icon="LockIcon" type="checkbox" v-model="remember"
+                @click="rememberPass"></z-checkbox>
+              <div className="flex items-center gap-2">
+                <ThemeButton></ThemeButton>
+              </div>
             </div>
             <div class="text-center">
               <button>111</button>

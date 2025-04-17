@@ -31,6 +31,9 @@ $className: (
   ),
   "text-base-content": (
     color: var(--base-content)
+  ),
+  "justify-between": (
+    justify-content: space-between
   )
 );
 $themes: (
