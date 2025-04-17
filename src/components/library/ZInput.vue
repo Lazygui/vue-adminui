@@ -7,10 +7,17 @@ const props = withDefaults(defineProps<{
        icon?: Component
        type?: InputType
        placeholder?: string
+       modelValue?: string
+       required?: boolean
 }>(), {
        labelPost: 'top',
-       type: 'text'
+       type: 'text',
+       modelValue: '',
+       required: false
 })
+const emit = defineEmits<{
+       (e: 'update:modelValue', el: string): void,
+}>()
 </script>
 
 <template>
@@ -21,10 +28,12 @@ const props = withDefaults(defineProps<{
                             <div class="inputIcon" v-show="props.icon">
                                    <component :is="props.icon" class="icon"></component>
                             </div>
-                            <input v-if="props.type === 'text'" type="text" required value=""
-                                   :placeholder="props.placeholder" />
-                            <input v-else="props.type === 'password'" type="password" required value=""
-                                   :placeholder="props.placeholder" />
+                            <input v-if="props.type === 'text' || props.type === 'password'" :type="props.type"
+                                   :required="props.required" :placeholder="props.placeholder" :value="props.modelValue"
+                                   @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)" />
+                            <!-- <input v-else="props.type === 'password'" type="password" required
+                                   :placeholder="props.placeholder" :value="props.modelValue"
+                                   @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)" /> -->
                      </div>
               </label>
        </div>
@@ -97,7 +106,7 @@ const props = withDefaults(defineProps<{
                      white-space: nowrap;
                      width: 100%;
                      height: var(--size);
-                     font-size: 0.875rem;
+                     font-size: inherit;
                      border-start-start-radius: 0.5rem;
                      border-start-end-radius: 0.5rem;
                      border-end-start-radius: 0.5rem;

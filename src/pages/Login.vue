@@ -18,7 +18,7 @@ const submit = (payload: Event) => {
         <div class="form">
           <form action="" @submit="submit">
             <z-input label="账号" :icon="UserIcon"></z-input>
-            <z-input label="密码" :icon="LockIcon"></z-input>
+            <z-input label="密码" :icon="LockIcon" type="password"></z-input>
             <button>111</button>
           </form>
         </div>
