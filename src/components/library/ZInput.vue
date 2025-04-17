@@ -41,6 +41,7 @@ const emit = defineEmits<{
 
 <style scoped lang="scss">
 .z-input {
+       width: 100%;
 
        .label {
               width: 100%;
@@ -104,7 +105,7 @@ const emit = defineEmits<{
                      padding-inline: calc(0.25rem * 3);
                      vertical-align: middle;
                      white-space: nowrap;
-                     width: 100%;
+                     width: inherit;
                      height: var(--size);
                      font-size: inherit;
                      border-start-start-radius: 0.5rem;

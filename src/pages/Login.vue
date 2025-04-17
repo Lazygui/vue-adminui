@@ -9,15 +9,15 @@ const submit = (payload: Event) => {
 
 <template>
   <div class="login flex items-center justify-center">
-    <z-card>
-      <div>
+    <z-card class="login-card">
+      <div class="card-body">
         <div class="text-center">
           <h2>用户登录</h2>
           <p class="tips">请输入您的账户和密码</p>
         </div>
         <div class="form">
-          <form action="" @submit="submit">
-            <z-input label="账号" :icon="UserIcon"></z-input>
+          <form @submit="submit">
+            <z-input class="form-input" label="账号" :icon="UserIcon"></z-input>
             <z-input label="密码" :icon="LockIcon" type="password"></z-input>
             <button>111</button>
           </form>
@@ -37,14 +37,31 @@ const submit = (payload: Event) => {
   background-size: cover;
   background-repeat: no-repeat;
 
-  .tips {
-    font-size: 0.875rem;
-    color: oklch(26% 0 0);
+  .login-card {
+    width: 24rem;
+
+    .card-body {
+      width: 100%;
+
+      .form {
+        width: 100%;
+        margin-top: 2rem;
+        box-sizing: border-box;
+
+        .form-input {
+          width: 100%;
+        }
+      }
+
+      .tips {
+        font-size: 0.875rem;
+        color: oklch(26% 0 0);
+      }
+    }
   }
 
-  .form {
-    margin-top: 2rem;
-    box-sizing: border-box;
-  }
+
+
+
 }
 </style>
