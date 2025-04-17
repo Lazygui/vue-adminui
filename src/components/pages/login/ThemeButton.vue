@@ -1,98 +1,199 @@
 <template>
-       <label class="theme-toggle">
-              <input type="checkbox" v-model="isDark" class="toggle-checkbox">
-              <div class="icons-container">
-                     <transition name="slide" mode="out-in">
-                            <svg v-if="!isDark" key="sun" aria-label="sun" xmlns="http://www.w3.org/2000/svg"
-                                   viewBox="0 0 24 24" class="icon">
-                                   <!-- 太阳图标路径保持原样 -->
-                                   <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none"
-                                          stroke="currentColor">
-                                          <circle cx="12" cy="12" r="4" />
-                                          <path d="M12 2v2" />
-                                          <path d="M12 20v2" />
-                                          <path d="m4.93 4.93 1.41 1.41" />
-                                          <path d="m17.66 17.66 1.41 1.41" />
-                                          <path d="M2 12h2" />
-                                          <path d="M20 12h2" />
-                                          <path d="m6.34 17.66-1.41 1.41" />
-                                          <path d="m19.07 4.93-1.41 1.41" />
-                                   </g>
-                            </svg>
-
-                            <svg v-else key="moon" aria-label="moon" xmlns="http://www.w3.org/2000/svg"
-                                   viewBox="0 0 24 24" class="icon">
-                                   <!-- 月亮图标路径保持原样 -->
-                                   <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none"
-                                          stroke="currentColor">
-                                          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
-                                   </g>
-                            </svg>
-                     </transition>
-              </div>
-       </label>
+       <div class="theme-button flex items-center">
+              <label class="toggle text-base-content">
+                     <input type="checkbox" value="dark" @change="handleThemeChange"
+                            :checked="props.modelValue === 'light'" />
+                     <SunIcon aria-label="sun"></SunIcon>
+                     <MoonIcon aria-label="moon"></MoonIcon>
+              </label>
+       </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+type ITheme = 'dark' | 'light'
+const props = withDefaults(defineProps<{
+       modelValue?: ITheme
+}>(), {
 
-const isDark = ref(false)
+})
+const emit = defineEmits<{
+       (e: 'theme', el: HTMLInputElement): void,
+       (e: 'update:modelValue', el: ITheme): void,
+}>()
+const handleThemeChange = (e: Event) => {
+       const target = e.target as HTMLInputElement
+       const theme = target.checked ? 'light' : 'dark'
+       emit('update:modelValue', theme)
+       emit('theme', target)
+}
 </script>
 
-<style scoped>
-.theme-toggle {
-       position: relative;
-       display: inline-block;
-       cursor: pointer;
-}
+<style scoped lang="scss">
+.theme-button {
+       gap: 0.5rem;
 
-.toggle-checkbox {
-       position: absolute;
-       opacity: 0;
-       width: 0;
-       height: 0;
-}
+       .toggle {
+              border: var(--border) solid currentColor;
+              position: relative;
+              display: inline-grid;
+              flex-shrink: 0;
+              cursor: pointer;
+              appearance: none;
+              place-content: center;
+              vertical-align: middle;
+              user-select: none;
+              grid-template-columns: 0fr 1fr 1fr;
+              --radius-selector-max: calc(var(--radius-selector) + var(--radius-selector) + var(--radius-selector));
+              border-radius: calc(var(--radius-selector) + min(var(--toggle-p), var(--radius-selector-max)) + min(var(--border), var(--radius-selector-max)));
+              padding: var(--toggle-p);
+              box-shadow: 0 1px color-mix(in oklab, currentColor calc(var(--depth) * 10%), #0000) inset;
+              transition: color 0.3s, grid-template-columns 0.2s;
+              --input-color: color-mix(in oklab, var(--color-base-content) 50%, #0000);
+              --toggle-p: 0.1875rem;
+              --size: calc(var(--size-selector, 0.25rem) * 6);
+              width: calc((var(--size) * 2) - (var(--border) + var(--toggle-p)) * 2);
+              height: fit-content;
 
-.icons-container {
-       display: inline-block;
-       position: relative;
-       width: 24px;
-       height: 24px;
-}
+              >* {
+                     z-index: 1;
+                     grid-column: span 1 / span 1;
+                     grid-column-start: 2;
+                     grid-row-start: 1;
+                     height: 100%;
+                     cursor: pointer;
+                     appearance: none;
+                     background-color: transparent;
+                     padding: calc(0.25rem * 0.5);
+                     box-sizing: border-box;
+                     transition: opacity 0.2s, rotate 0.4s;
+                     border: none;
 
-.icon {
-       position: absolute;
-       width: 100%;
-       height: 100%;
-       transition: all 0.3s ease;
-       fill: currentColor;
-}
+                     &:focus {
+                            --tw-outline-style: none;
+                            outline-style: none;
 
-/* 太阳进入动画 */
-.slide-enter-from {
-       opacity: 0;
-       transform: rotate(-30deg);
-}
+                            @media (forced-colors: active) {
+                                   outline: 2px solid transparent;
+                                   outline-offset: 2px;
+                            }
+                     }
 
-.slide-enter-to {
-       opacity: 1;
-       transform: rotate(0);
-}
+                     &:nth-child(2) {
+                            color: var(--color-base-100)
+                                   /* var(--color-base-100) */
+                            ;
+                            rotate: 0deg;
+                     }
 
-/* 月亮进入动画 */
-.slide-leave-from {
-       opacity: 1;
-       transform: rotate(0);
-}
+                     &:nth-child(3) {
+                            color: var(--color-base-100)
+                                   /* var(--color-base-100) */
+                            ;
+                            opacity: 0%;
+                            rotate: -15deg;
+                     }
+              }
 
-.slide-leave-to {
-       opacity: 0;
-       transform: rotate(30deg);
-}
+              &:has(:checked) {
+                     > :nth-child(2) {
+                            opacity: 0%;
+                            rotate: 15deg;
+                     }
 
-/* 统一过渡效果 */
-.slide-enter-active,
-.slide-leave-active {
-       transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+                     > :nth-child(3) {
+                            opacity: 100%;
+                            rotate: 0deg;
+                     }
+              }
+
+              &:before {
+                     position: relative;
+                     inset-inline-start: calc(0.25rem
+                                   /* 4px */
+                                   * 0)
+                            /* 0rem = 0px */
+                     ;
+                     grid-column-start: 2;
+                     grid-row-start: 1;
+                     aspect-ratio: 1 / 1;
+                     height: 100%;
+                     border-radius: var(--radius-selector)
+                            /* var(--radius-selector) */
+                     ;
+                     background-color: currentColor;
+                     translate: 0;
+                     --tw-content: "";
+                     content: var(--tw-content);
+                     transition: background-color 0.1s, translate 0.2s, inset-inline-start 0.2s;
+                     box-shadow: 0 -1px oklch(0% 0 0 / calc(var(--depth) * 0.1))
+                            /* #000000 */
+                            inset, 0 8px 0 -4px oklch(100% 0 0 / calc(var(--depth) * 0.1)) inset, 0 1px color-mix(in oklab, currentColor calc(var(--depth) * 10%), #0000);
+                     background-size: auto, calc(var(--noise) * 100%);
+                     background-image: none, var(--fx-noise);
+              }
+
+              @media (forced-colors: active) {
+                     &:before {
+                            outline-style: var(--tw-outline-style);
+                            outline-width: 1px;
+                            outline-offset: calc(1px * -1)
+                                   /* -1px */
+                            ;
+                     }
+              }
+
+              @media print {
+                     &:before {
+                            outline: 0.25rem
+                                   /* 4px */
+                                   solid;
+                            outline-offset: -1rem
+                                   /* -16px */
+                            ;
+                     }
+              }
+
+              &:focus-visible,
+              &:has(:focus-visible) {
+                     outline: 2px solid currentColor;
+                     outline-offset: 2px;
+              }
+
+              &:checked,
+              &[aria-checked="true"],
+              &:has(> input:checked) {
+                     grid-template-columns: 1fr 1fr 0fr;
+                     background-color: var(--color-base-100)
+                            /* var(--color-base-100) */
+                     ;
+                     --input-color: var(--color-base-content)
+                            /* var(--color-base-content) */
+                     ;
+
+                     &:before {
+                            background-color: currentColor;
+                     }
+
+                     @starting-style {
+                            &:before {
+                                   opacity: 0;
+                            }
+                     }
+              }
+
+              &:indeterminate {
+                     grid-template-columns: 0.5fr 1fr 0.5fr;
+              }
+
+              &:disabled {
+                     cursor: not-allowed;
+                     opacity: 30%;
+
+                     &:before {
+                            background-color: transparent;
+                            border: var(--border) solid currentColor;
+                     }
+              }
+       }
 }
 </style>

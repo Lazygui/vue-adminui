@@ -29,4 +29,8 @@
        --border: 1px;
        --depth: 0;
        --noise: 0;
+       --fx-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org…'url(%23a)' opacity='0.2'%3E%3C/rect%3E%3C/svg%3E");
+}
+.w-full {
+       width: 100%;
 }

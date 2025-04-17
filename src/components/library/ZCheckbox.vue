@@ -21,7 +21,6 @@ const emit = defineEmits<{
 
 <style scoped lang="scss">
 .z-Checkbox {
-       margin-block-end: 1.5rem;
        width: 100%;
        --size: calc(var(--size-selector, 0.25rem) * 5);
 

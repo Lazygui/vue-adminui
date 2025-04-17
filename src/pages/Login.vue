@@ -13,12 +13,22 @@ const form = ref<IForm>({
   password: '',
 })
 const remember = ref<boolean>(true)
+
+/**
+ * 主题切换
+ * @default 'light'
+ */
+const theme = ref<'light' | 'dark'>('light')
 const submit = () => {
   console.log("🚀 ~ submit ~ payload:", form.value, remember.value)
 }
 const rememberPass = () => {
   // remember.value = !remember.value
   console.log("🚀 ~ submit ~ payload:", remember.value)
+
+}
+const handleThemeChange = (e: HTMLInputElement) => {
+  console.log("🚀 ~ handleThemeChange ~ e:", e.checked, theme.value)
 
 }
 onMounted(() => {
@@ -39,13 +49,11 @@ onMounted(() => {
           <form @submit.prevent="submit">
             <z-input class="form-input" label="账号" :icon="UserIcon" v-model="form.username"></z-input>
             <z-input label="密码" :icon="LockIcon" type="password" v-model="form.password"></z-input>
-            <div class="flex justify-between">
-              <!-- <z-input label="记住密码" :icon="LockIcon" type="checkbox" v-model="remember" @click="rememberPass"></z-input> -->
-              <z-checkbox label="记住密码" :icon="LockIcon" type="checkbox" v-model="remember"
-                @click="rememberPass"></z-checkbox>
-              <div className="flex items-center gap-2">
-                <ThemeButton></ThemeButton>
+            <div class="flex justify-between items-center">
+              <div className="flex items-center">
+                <z-checkbox label="记住密码" type="checkbox" v-model="remember" @click="rememberPass"></z-checkbox>
               </div>
+              <ThemeButton v-model="theme" @theme="handleThemeChange"></ThemeButton>
             </div>
             <div class="text-center">
               <button>111</button>
