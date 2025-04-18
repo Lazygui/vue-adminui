@@ -23,6 +23,8 @@ const emit = defineEmits<{
 const handleThemeChange = (e: Event) => {
        const target = e.target as HTMLInputElement
        const theme = target.checked ? 'light' : 'dark'
+       document.documentElement.setAttribute('data-theme', theme)
+       localStorage.setItem('theme', theme)
        emit('update:modelValue', theme)
        emit('theme', target)
 }

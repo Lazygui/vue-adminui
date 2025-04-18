@@ -2,7 +2,6 @@ import type { RouteRecordRaw } from "vue-router";
 import { createRouter, createWebHashHistory } from "vue-router";
 import { storage, StorageKeys } from "@/hooks/useLocalStore";
 import { Fequest } from "@/hooks/useFech";
-import { isToken } from "@/utils/tools";
 const routes: RouteRecordRaw[] = [
        {
               path: "/",

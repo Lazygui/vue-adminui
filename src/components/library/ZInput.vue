@@ -29,8 +29,9 @@ const emit = defineEmits<{
                             <div class="inputIcon" v-show="props.icon">
                                    <component :is="props.icon" class="icon"></component>
                             </div>
-                            <input :type="props.type" :required="props.required" :placeholder="props.placeholder"
-                                   :autocomplete="type === 'password' ? 'off' : 'on'" :value="props.modelValue"
+                            <input class="bg-transparent" :type="props.type" :required="props.required"
+                                   :placeholder="props.placeholder" :autocomplete="type === 'password' ? 'off' : 'on'"
+                                   :value="props.modelValue"
                                    @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)" />
                      </div>
               </label>
@@ -55,6 +56,7 @@ const emit = defineEmits<{
 
                      .input {
                             margin-top: 0.5rem;
+                            background-color: rgba(0, 0, 0, 0);
                      }
               }
 
@@ -65,6 +67,7 @@ const emit = defineEmits<{
                      white-space: nowrap;
 
                      .input {
+                            background-color: rgba(0, 0, 0, 0);
                             margin-top: 0;
                      }
               }
