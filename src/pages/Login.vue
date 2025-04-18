@@ -2,6 +2,7 @@
 import ZCard from '@/components/library/ZCard.vue'
 import ZInput from '@/components/library/ZInput.vue'
 import ZCheckbox from '@/components/library/ZCheckbox.vue'
+import ZButton from '@/components/library/ZButton.vue'
 import { UserIcon, LockIcon } from '@/components/svg'
 import ThemeButton from "@pages/login/ThemeButton.vue"
 interface IForm {
@@ -37,16 +38,16 @@ onMounted(() => {
         </div>
         <div class="form">
           <form @submit.prevent="submit">
-            <z-input class="form-input" label="账号" :icon="UserIcon" v-model="form.username"></z-input>
-            <z-input label="密码" :icon="LockIcon" type="password" v-model="form.password"></z-input>
-            <div class="flex justify-between items-center">
-              <div className="flex items-center">
+            <z-input required class="form-input" label="账号" :icon="UserIcon" v-model="form.username"></z-input>
+            <z-input required label="密码" :icon="LockIcon" type="password" v-model="form.password"></z-input>
+            <div class="form-config flex justify-between items-center">
+              <div class="flex items-center">
                 <z-checkbox label="记住密码" type="checkbox" v-model="remember" @click="rememberPass"></z-checkbox>
               </div>
               <ThemeButton></ThemeButton>
             </div>
             <div class="text-center">
-              <button>111</button>
+              <z-button type="primary" btn-type="submit">登录</z-button>
             </div>
           </form>
         </div>
@@ -78,6 +79,11 @@ onMounted(() => {
 
         .form-input {
           width: 100%;
+        }
+
+        .form-config {
+          margin-block-start: 0;
+          margin-block-end: 1.5rem;
         }
       }
 

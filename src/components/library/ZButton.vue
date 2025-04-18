@@ -1,139 +1,146 @@
 <script setup lang="ts">
-import type { Component } from 'vue'
-type InputType = 'text' | 'password'
 const props = withDefaults(defineProps<{
-       label: string
-       labelPost?: 'top' | 'left'
-       icon?: Component
-       type?: InputType
-       placeholder?: string
-       modelValue?: string
-       required?: boolean
+       type?: '' | 'primary' | 'warning' | 'error'
+       btnType?: 'submit' | 'button' | 'reset'
+       disabled?: boolean
 }>(), {
-       labelPost: 'top',
-       type: 'text',
-       modelValue: '',
-       required: false
+       type: '',
+       btnType: 'button'
 })
 const emit = defineEmits<{
-       (e: 'update:modelValue', el: string): void,
+       (e: 'click'): void,
 }>()
 </script>
 
 <template>
-       <div class="z-input">
-              <label class="label" :class="{ 'label-top': labelPost === 'top', 'label-left': labelPost === 'left' }">
-                     {{ props.label }}
-                     <div class="input-Iocn border block input">
-                            <div class="inputIcon" v-show="props.icon">
-                                   <component :is="props.icon" class="icon"></component>
-                            </div>
-                            <input v-if="props.type === 'text' || props.type === 'password'" :type="props.type"
-                                   :required="props.required" :placeholder="props.placeholder" :value="props.modelValue"
-                                   @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)" />
-                            <!-- <input v-else="props.type === 'password'" type="password" required
-                                   :placeholder="props.placeholder" :value="props.modelValue"
-                                   @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)" /> -->
-                     </div>
-              </label>
+       <div class="z-button">
+              <button :type="props.btnType" :class="['btn', props.type ? `btn-${props.type}` : '', 'w-full']"
+                     :disabled="props.disabled" @click="emit('click')">
+                     <slot></slot>
+              </button>
        </div>
 </template>
 
 <style scoped lang="scss">
-.z-input {
-       margin-block-end: 1.5rem;
+.z-button {
        width: 100%;
 
-       .label {
+       .w-full {
               width: 100%;
-              font-size: 0.875rem;
-              line-height: calc(1.25 / 0.875);
-              font-weight: 500;
-              color: color-mix(in oklab, var(--color-base-content) 90%, transparent);
+       }
 
-              &-top {
-                     display: block;
+       .btn {
+              :where(&) {
+                     width: unset;
+              }
 
-                     .input {
-                            margin-top: 0.5rem;
+              display: inline-flex;
+              flex-shrink: 0;
+              cursor: pointer;
+              flex-wrap: nowrap;
+              align-items: center;
+              justify-content: center;
+              gap: calc(0.25rem * 1.5);
+              text-align: center;
+              vertical-align: middle;
+              outline-offset: 2px;
+              user-select: none;
+              padding-inline: var(--btn-p);
+              color: var(--btn-fg);
+              --tw-prose-links: var(--btn-fg);
+              height: var(--size);
+              font-size: var(--fontsize, 0.875rem
+                     /* 14px */
+              );
+              font-weight: 600;
+              outline-color: var(--btn-color, var(--color-base-content));
+              transition-property: color,
+              background-color,
+              border-color,
+              box-shadow;
+              transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+              transition-duration: 0.2s;
+              border-start-start-radius: var(--join-ss, var(--radius-field));
+              border-start-end-radius: var(--join-se, var(--radius-field));
+              border-end-start-radius: var(--join-es, var(--radius-field));
+              border-end-end-radius: var(--join-ee, var(--radius-field));
+              background-color: var(--btn-bg);
+              background-size: auto,
+              calc(var(--noise) * 100%);
+              background-image: none,
+              var(--btn-noise);
+              border-width: var(--border);
+              border-style: solid;
+              border-color: var(--btn-border);
+              text-shadow: 0 0.5px oklch(100% 0 0 / calc(var(--depth) * 0.15));
+              box-shadow: 0 0.5px 0 0.5px oklch(100% 0 0 / calc(var(--depth) * 6%)) inset,
+              var(--btn-shadow);
+              --size: calc(var(--size-field, 0.25rem) * 10);
+              --btn-bg: var(--btn-color, var(--color-base-200));
+              --btn-fg: var(--color-base-content);
+              --btn-p: 1rem;
+              --btn-border: color-mix(in oklab, var(--btn-bg), #000 calc(var(--depth) * 5%));
+              --btn-shadow: 0 3px 2px -2px color-mix(in oklab, var(--btn-bg) calc(var(--depth) * 30%), #0000),
+              0 4px 3px -2px color-mix(in oklab, var(--btn-bg) calc(var(--depth) * 30%), #0000);
+              --btn-noise: var(--fx-noise);
+
+              .prose & {
+                     text-decoration-line: none;
+              }
+
+              @media (hover: hover) {
+                     &:hover {
+                            --btn-bg: color-mix(in oklab, var(--btn-color, var(--color-base-200)), #000 7%);
                      }
               }
 
-              &-left {
-                     display: inline-flex;
-                     align-items: center;
-                     gap: 0.5rem;
-                     white-space: nowrap;
-
-                     .input {
-                            margin-top: 0;
-                     }
+              &:focus-visible {
+                     outline-width: 2px;
+                     outline-style: solid;
               }
 
-              .input-Iocn {
+              &:active:not(.btn-active) {
+                     translate: 0 0.5px;
+                     --btn-bg: color-mix(in oklab, var(--btn-color, var(--color-base-200)), #000 5%);
+                     --btn-border: color-mix(in oklab, var(--btn-color, var(--color-base-200)), #000 7%);
+                     --btn-shadow: 0 0 0 0 oklch(0% 0 0/0), 0 0 0 0 oklch(0% 0 0/0);
+              }
 
-                     .inputIcon {
-                            pointer-events: none;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
+              &:is(:disabled, [disabled], .btn-disabled) {
+                     &:not(.btn-link, .btn-ghost) {
+                            background-color: color-mix(in oklab, var(--color-base-content) 10%, transparent);
+                            box-shadow: none;
+                     }
 
-                            .icon {
-                                   height: 1.25rem;
-                                   width: 1.25rem;
-                                   color: color-mix(in oklab, var(--color-base-content) 90%, transparent);
+                     pointer-events: none;
+                     --btn-border: #0000;
+                     --btn-noise: none;
+                     --btn-fg: color-mix(in oklch, var(--color-base-content) 20%, #0000);
+
+                     @media (hover: hover) {
+                            &:hover {
+                                   pointer-events: none;
+                                   background-color: color-mix(in oklab, var(--color-neutral) 20%, transparent);
+                                   --btn-border: #0000;
+                                   --btn-fg: color-mix(in oklch, var(--color-base-content) 20%, #0000);
                             }
                      }
               }
+       }
 
-              .border {
-                     border-style: solid;
-                     border-width: 1px;
-                     padding-left: 2.5rem; //pl-10
-                     box-sizing: border-box;
-                     border-color: color-mix(in oklab, var(--color-base-content) 20%, transparent);
-              }
+       .btn-primary {
+              --btn-color: var(--color-primary);
+              --btn-fg: var(--color-primary-content);
+       }
 
-              .input {
-                     cursor: text;
-                     position: relative;
-                     display: inline-flex;
-                     flex-shrink: 1;
-                     appearance: none;
-                     align-items: center;
-                     gap: calc(0.25rem * 2);
-                     background-color: var(--color-base-100);
-                     padding-inline: calc(0.25rem * 3);
-                     vertical-align: middle;
-                     white-space: nowrap;
-                     width: inherit;
-                     height: var(--size);
-                     font-size: inherit;
-                     border-start-start-radius: 0.5rem;
-                     border-start-end-radius: 0.5rem;
-                     border-end-start-radius: 0.5rem;
-                     border-end-end-radius: 0.5rem;
-                     box-shadow: 0 1px color-mix(in oklab, var(--input-color) calc(0 * 10%), #0000) inset, 0 -1px oklch(100% 0 0 / calc(0 * 0.1)) inset;
-                     --size: calc(var(--size-field, 0.25rem) * 10);
-                     --input-color: oklch(58% 0.233 277.117);
+       .btn-error {
+              --btn-color: var(--color-error);
+              --btn-fg: var(--color-error-content);
+       }
 
-
-                     &:focus-within {
-                            box-shadow: 0 1px color-mix(in oklab, var(--input-color) calc(0* 10%), #0000);
-                            outline: 2px solid var(--input-color);
-                            outline-offset: 2px;
-                            isolation: isolate;
-                     }
-
-              }
-
-              input {
-                     border: none;
-
-                     &:focus {
-                            outline: none;
-                     }
-              }
+       .btn-warning {
+              --btn-color: var(--color-warning);
+              --btn-fg: var(--color-warning-content);
        }
 }
 </style>
