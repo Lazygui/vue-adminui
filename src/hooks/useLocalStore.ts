@@ -5,7 +5,8 @@ export enum StorageKeys {
        USER_ID = "USER_ID",
        USERNAME = "USERNAME",
        REFRESH = "REFRESH",
-       LAST_PATH = "LAST_PATH"
+       LAST_PATH = "LAST_PATH",
+       Theme = 'Theme'
 }
 interface IStorage {
        setItem: (key: StorageKeys, val: any) => void;

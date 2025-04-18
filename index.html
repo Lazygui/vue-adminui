@@ -14,7 +14,7 @@
 </body>
 <script>
   (function () {
-    let storedTheme = localStorage.getItem('theme');
+    let storedTheme = localStorage.getItem('Theme_EXCL');
     if (storedTheme) {
       document.documentElement.setAttribute('data-theme', storedTheme);
     } else {
@@ -23,7 +23,7 @@
       storedTheme = prefersDark ? 'dark' : 'light'
       document.documentElement.setAttribute('data-theme', storedTheme);
     }
-    window.localStorage.setItem('theme', storedTheme);
+    window.localStorage.setItem('Theme_EXCL', storedTheme);
   })()
 </script>
 

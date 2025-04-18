@@ -1,8 +1,7 @@
 <template>
        <div class="theme-button flex items-center">
               <label class="toggle text-base-content">
-                     <input type="checkbox" value="dark" @change="handleThemeChange"
-                            :checked="props.modelValue === 'light'" />
+                     <input type="checkbox" value="dark" @change="handleThemeChange" :checked="theme === 'light'" />
                      <SunIcon aria-label="sun"></SunIcon>
                      <MoonIcon aria-label="moon"></MoonIcon>
               </label>
@@ -11,23 +10,21 @@
 
 <script setup lang="ts">
 type ITheme = 'dark' | 'light'
-const props = withDefaults(defineProps<{
-       modelValue?: ITheme
-}>(), {
-
-})
 const emit = defineEmits<{
-       (e: 'theme', el: HTMLInputElement): void,
        (e: 'update:modelValue', el: ITheme): void,
 }>()
+const theme = ref<ITheme>('light')
 const handleThemeChange = (e: Event) => {
        const target = e.target as HTMLInputElement
        const theme = target.checked ? 'light' : 'dark'
        document.documentElement.setAttribute('data-theme', theme)
        localStorage.setItem('theme', theme)
        emit('update:modelValue', theme)
-       emit('theme', target)
 }
+onMounted(() => {
+       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+       theme.value = storage.getItem(StorageKeys.Theme) || prefersDark ? 'dark' : 'light'
+})
 </script>
 
 <style scoped lang="scss">
