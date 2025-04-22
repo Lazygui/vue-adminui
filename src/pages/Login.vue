@@ -13,14 +13,12 @@ const form = ref<IForm>({
   username: '',
   password: '',
 })
-const remember = ref<boolean>(true)
+const remember = ref<boolean>(false)
 const submit = () => {
-  console.log("🚀 ~ submit ~ payload:", form.value, remember.value)
-}
-const rememberPass = () => {
-  // remember.value = !remember.value
-  console.log("🚀 ~ submit ~ payload:", remember.value)
-
+  //本地保存密码
+  if (!remember.value) return
+  storage.setItem(StorageKeys.USERNAME, form.value.username)
+  storage.setItem(StorageKeys.PASSWORD, form.value.password)
 }
 onMounted(() => {
   form.value.password = ''
@@ -42,7 +40,7 @@ onMounted(() => {
             <z-input required label="密码" :icon="LockIcon" type="password" v-model="form.password"></z-input>
             <div class="form-config flex justify-between items-center">
               <div class="flex items-center">
-                <z-checkbox label="记住密码" type="checkbox" v-model="remember" @click="rememberPass"></z-checkbox>
+                <z-checkbox label="记住密码" type="checkbox" v-model="remember"></z-checkbox>
               </div>
               <ThemeButton></ThemeButton>
             </div>

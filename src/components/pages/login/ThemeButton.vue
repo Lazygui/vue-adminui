@@ -18,11 +18,11 @@ const handleThemeChange = (e: Event) => {
        const target = e.target as HTMLInputElement
        const theme = target.checked ? 'dark' : 'light'
        document.documentElement.setAttribute('data-theme', theme)
-       storage.setItem(StorageKeys.Theme, theme)
+       storage.setItem(StorageKeys.THEME, theme)
        emit('update:modelValue', theme)
 }
 onMounted(() => {
-       const themeloacl = storage.getItem(StorageKeys.Theme) as ITheme
+       const themeloacl = storage.getItem(StorageKeys.THEME) as ITheme
        if (themeloacl) {
               theme.value = themeloacl
               return
