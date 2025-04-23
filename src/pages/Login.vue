@@ -32,7 +32,7 @@ onMounted(() => {
       <div class="card-body">
         <div class="text-center">
           <h2 class="h2 text-base-content">用户登录</h2>
-          <p class="tips text-base-content">请输入您的账户和密码</p>
+          <p class="tips text-base-content">请输入您的账号和密码</p>
         </div>
         <div class="form">
           <form @submit.prevent="submit">

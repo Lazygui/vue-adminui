@@ -89,7 +89,13 @@ const emit = defineEmits<{
 
                      .caret-color {
                             color: color-mix(in oklab, var(--color-base-content) 90%, transparent);
+
+
+
+
                      }
+
+
               }
 
               .border {
