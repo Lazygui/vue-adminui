@@ -27,7 +27,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="login flex items-center justify-center">
+  <div class="login flex items-center justify-center to-indigo-900 from-blue-900\/70">
     <z-card class="login-card">
       <div class="card-body">
         <div class="text-center">
@@ -36,8 +36,10 @@ onMounted(() => {
         </div>
         <div class="form">
           <form @submit.prevent="submit">
-            <z-input required class="form-input" label="账号" :icon="UserIcon" v-model="form.username"></z-input>
-            <z-input required label="密码" :icon="LockIcon" type="password" v-model="form.password"></z-input>
+            <z-input required class="form-input" label="账号" :icon="UserIcon" v-model="form.username"
+              placeholder="请输入账号"></z-input>
+            <z-input required label="密码" :icon="LockIcon" type="password" v-model="form.password"
+              placeholder="请输入密码"></z-input>
             <div class="form-config flex justify-between items-center">
               <div class="flex items-center">
                 <z-checkbox label="记住密码" type="checkbox" v-model="remember"></z-checkbox>
@@ -60,9 +62,13 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   display: flex;
-  background-image: url('/background.png');
+  background-image: linear-gradient(to right, rgba(28, 57, 142, 0.7), transparent), url('/background.png');
   background-size: cover;
   background-repeat: no-repeat;
+  inset: 0;
+  // background-image: linear-gradient(to right in oklab);
+
+
 
   .login-card {
     width: 24rem;
@@ -99,9 +105,63 @@ onMounted(() => {
       }
     }
   }
+}
 
+.to-indigo-900\/50 {
+  --tw-gradient-to: color-mix(in oklab, var(--color-indigo-900)
+      /* oklch(0.359 0.144 278.697) = #312c85 */
+      50%, transparent);
+  --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+}
 
+@property --tw-gradient-position {
+  syntax: "*";
+  inherits: false;
+}
 
+@property --tw-gradient-from {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #0000;
+}
 
+@property --tw-gradient-via {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #0000;
+}
+
+@property --tw-gradient-to {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #0000;
+}
+
+@property --tw-gradient-stops {
+  syntax: "*";
+  inherits: false;
+}
+
+@property --tw-gradient-via-stops {
+  syntax: "*";
+  inherits: false;
+}
+
+@property --tw-gradient-from-position {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+@property --tw-gradient-via-position {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 50%;
+}
+
+@property --tw-gradient-to-position {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 100%;
 }
 </style>

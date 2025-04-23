@@ -29,7 +29,7 @@ const emit = defineEmits<{
                             <div class="inputIcon" v-show="props.icon">
                                    <component :is="props.icon" class="icon"></component>
                             </div>
-                            <input class="bg-transparent" :type="props.type" :required="props.required"
+                            <input class="bg-transparent caret-color" :type="props.type" :required="props.required"
                                    :placeholder="props.placeholder" :autocomplete="type === 'password' ? 'off' : 'on'"
                                    :value="props.modelValue"
                                    @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)" />
@@ -85,6 +85,10 @@ const emit = defineEmits<{
                                    width: 1.25rem;
                                    color: color-mix(in oklab, var(--color-base-content) 90%, transparent);
                             }
+                     }
+
+                     .caret-color {
+                            color: color-mix(in oklab, var(--color-base-content) 90%, transparent);
                      }
               }
 
