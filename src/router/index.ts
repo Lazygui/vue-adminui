@@ -13,7 +13,7 @@ const routes: RouteRecordRaw[] = [
        },
        {
               path: "/admin",
-              component: () => import("@/pages/Login.vue"),
+              component: () => import("@/components/layout/Main.vue"),
        },
        {
               path: "/user",
