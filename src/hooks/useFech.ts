@@ -5,7 +5,7 @@ const useFequest = () => {
        return async  <T>(url: string, reqCfg: RequestConfig): Promise<CommonResult<T> | null> => {
               let res: CommonResult<T> | null = null;
               try {
-                     res = await fequest(url, {
+                     res = await fequest<T>(url, {
                             ...reqCfg,
                             header: {
                                    ...reqCfg.header,

@@ -34,7 +34,7 @@ export class Fequest {
               return this.instance.bind(this);
        }
 
-       public instance = async (url: string, reqCfg: RequestConfig) => {
+       public instance = async <T>(url: string, reqCfg: RequestConfig): Promise<CommonResult<T>> => {
               let targetURL;
               if (url.startsWith("http")) {
                      targetURL = new URL(url);

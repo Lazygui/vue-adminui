@@ -5,24 +5,41 @@ import ZCheckbox from '@/components/library/ZCheckbox.vue'
 import ZButton from '@/components/library/ZButton.vue'
 import { UserIcon, LockIcon } from '@/components/svg'
 import ThemeButton from "@pages/login/ThemeButton.vue"
+interface Config {
+  system: string
+}
 interface IForm {
   username: string
   password: string
 }
+const router = useRouter()
+const fequest = useFequest()
 const form = ref<IForm>({
   username: '',
   password: '',
 })
+const config = ref<Config>({
+  system: ''
+})
 const remember = ref<boolean>(false)
+const disabled = ref<boolean>(false)
 const submit = () => {
+  disabled.value = true
   //本地保存密码
-  if (!remember.value) return
-  storage.setItem(StorageKeys.USERNAME, form.value.username)
-  storage.setItem(StorageKeys.PASSWORD, form.value.password)
+  if (remember.value) {
+    storage.setItem(StorageKeys.USERNAME, form.value.username)
+    storage.setItem(StorageKeys.PASSWORD, form.value.password)
+  }
+  router.push(`/${config.value.system}`)
+  disabled.value = false
 }
-onMounted(() => {
+onMounted(async () => {
   form.value.password = ''
   form.value.username = ''
+  const configuration: any = await fequest('/config.json', { method: 'get' })
+  if (configuration) {
+    config.value = configuration as Config
+  }
 })
 </script>
 
@@ -47,7 +64,8 @@ onMounted(() => {
               <ThemeButton></ThemeButton>
             </div>
             <div class="text-center">
-              <z-button type="primary" btn-type="submit">登录</z-button>
+              <z-button :disabled="disabled" type="primary" btn-type="submit">{{ disabled ? '登录中...' : '登录'
+              }}</z-button>
             </div>
           </form>
         </div>
