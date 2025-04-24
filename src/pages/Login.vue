@@ -43,7 +43,7 @@ onMounted(async () => {
     return
   }
   // 获取配置文件
-  const configuration: any = await fequest('/config.json', { method: 'get' })
+  const configuration: any = await fequest(`${location.origin}/config.json`, { method: 'get' })
   if (configuration) {
     config.value = configuration as Config
   }
