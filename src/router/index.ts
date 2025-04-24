@@ -2,7 +2,7 @@ import type { RouteRecordRaw } from "vue-router";
 import { createRouter, createWebHashHistory } from "vue-router";
 import { storage, StorageKeys } from "@/hooks/useLocalStore";
 import { Fequest } from "@/hooks/useFech";
-const routes: RouteRecordRaw[] = [
+export const routes: RouteRecordRaw[] = [
        {
               path: "/",
               redirect: "/login",
@@ -10,10 +10,29 @@ const routes: RouteRecordRaw[] = [
        {
               path: "/login",
               component: () => import("@/pages/Login.vue"),
+              meta: {
+                     name: "登录"
+              }
        },
        {
               path: "/admin",
               component: () => import("@/components/layout/Main.vue"),
+              children: [
+                     {
+                            path: "/home",
+                            component: () => import("@/pages/Login.vue"),
+                            meta: {
+                                   name: "仪表盘"
+                            },
+                     },
+                     {
+                            path: "/show",
+                            component: () => import("@/pages/Login.vue"),
+                            meta: {
+                                   name: "组件展示"
+                            },
+                     }
+              ]
        },
        {
               path: "/user",

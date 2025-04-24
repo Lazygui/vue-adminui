@@ -37,8 +37,11 @@ $className: (
   ),
   "bg-transparent": (
     background-color: transparent
+  ),
+  "w-full": (
+    width: 100%
+  ),
+  "h-full": (
+    height: 100%
   )
-);
-$themes: (
-  --spacing: 0.25rem
 );
