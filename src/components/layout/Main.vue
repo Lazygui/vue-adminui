@@ -22,14 +22,17 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
       <nav class="nav w-full flex flex-col">
         <ul role="list" class="ui_list">
           <li v-for="(item) in currentNavigation">
-            <div class="ui_item  flex text-base-content" :class="{ 'bg-click': item }">{{ item.meta!.name }}</div>
+            <RouterLink :to="item.path" class="ui_item  flex text-base-content" :class="{ 'bg-click': item }">{{
+              item.meta!.name }}</RouterLink>
           </li>
         </ul>
       </nav>
     </div>
     <!-- 移动端侧边栏 - 在小屏幕设备上显示为可滑出的对话框 -->
     <div class="sm:hidden">h5</div>
-    <div class="container"></div>
+    <div class="container">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 

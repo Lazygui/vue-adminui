@@ -17,16 +17,17 @@ export const routes: RouteRecordRaw[] = [
        {
               path: "/admin",
               component: () => import("@/components/layout/Main.vue"),
+              redirect: "/admin/home",
               children: [
                      {
-                            path: "/home",
+                            path: "home",
                             component: () => import("@/pages/Login.vue"),
                             meta: {
                                    name: "仪表盘"
                             },
                      },
                      {
-                            path: "/show",
+                            path: "show",
                             component: () => import("@/pages/Login.vue"),
                             meta: {
                                    name: "组件展示"
