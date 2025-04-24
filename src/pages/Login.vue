@@ -36,6 +36,13 @@ const submit = () => {
 onMounted(async () => {
   form.value.password = ''
   form.value.username = ''
+  // 判断浏览器地址是否包含admin或user
+  const includes = location.hash.includes('/admin') || location.hash.includes('/user')
+  if (includes) {
+    config.value.system = location.hash.split('/')[1]
+    return
+  }
+  // 获取配置文件
   const configuration: any = await fequest('/config.json', { method: 'get' })
   if (configuration) {
     config.value = configuration as Config
