@@ -1,3 +1,8 @@
+/**
+ * svg图标库
+ * 基于https://heroicons.com/
+ */
+
 export * from './script'
 import * as InternalIcons from './script'
 import type { App } from 'vue'

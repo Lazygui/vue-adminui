@@ -13,6 +13,7 @@ declare global {
   const defineEmits: typeof import('vue')['defineEmits']
   const defineProps: typeof import('vue')['defineProps']
   const diffSystem: typeof import('../../hooks/useUtils')['diffSystem']
+  const isExpire: typeof import('../../hooks/useUtils')['isExpire']
   const onMounted: typeof import('vue')['onMounted']
   const onUnmounted: typeof import('vue')['onUnmounted']
   const ref: typeof import('vue')['ref']

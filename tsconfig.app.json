@@ -13,8 +13,8 @@
       "@/*": [
         "src/*"
       ],
-      "@pages/*": [
-        "src/components/pages/*"
+      "@admin/*": [
+        "src/pages/components/*"
       ]
     }
   },
