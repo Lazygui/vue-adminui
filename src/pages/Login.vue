@@ -5,6 +5,9 @@ import ZCheckbox from '@/components/library/ZCheckbox.vue'
 import ZButton from '@/components/library/ZButton.vue'
 import { UserIcon, LockIcon } from '@/components/svg'
 import ThemeButton from "@pages/login/ThemeButton.vue"
+import { useLoading } from "@/hooks/private/usePlugin"
+import { isExpire, diffSystem } from "@/hooks/useUtils";
+useLoading.show()
 interface Config {
   system: string
 }
@@ -13,7 +16,7 @@ interface IForm {
   password: string
 }
 const router = useRouter()
-const fequest = useFequest()
+const loading = ref<boolean>(false)
 const form = ref<IForm>({
   username: '',
   password: '',
@@ -34,24 +37,20 @@ const submit = () => {
   disabled.value = false
 }
 onMounted(async () => {
-  form.value.password = ''
-  form.value.username = ''
-  // 判断浏览器地址是否包含admin或user
-  const includes = location.hash.includes('/admin') || location.hash.includes('/user')
-  if (includes) {
-    config.value.system = location.hash.split('/')[1]
+  const system = await diffSystem()
+  if (!isExpire()) {
+    useLoading.hidden()
+    router.push(`/${system}`)
     return
   }
-  // 获取配置文件
-  const configuration: any = await fequest(`${location.origin}/config.json`, { method: 'get' })
-  if (configuration) {
-    config.value = configuration as Config
-  }
+  form.value.password = ''
+  form.value.username = ''
+  loading.value = true
 })
 </script>
 
 <template>
-  <div class="login flex items-center justify-center to-indigo-900 from-blue-900\/70">
+  <div class="login flex items-center justify-center to-indigo-900 from-blue-900\/70" v-if="false">
     <z-card class="login-card">
       <div class="card-body">
         <div class="text-center">

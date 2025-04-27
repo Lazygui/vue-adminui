@@ -22,7 +22,21 @@ const diffSystem = async (): Promise<"admin" | "user"> => {
        }
        return system as 'admin' | 'user'
 }
+
+/**
+ * 判断凭证是否过期
+ * 暂用账号及密码的凭证过期判断，后续需要可修改为全局的凭证过期判断
+ */
+const isExpire = () => {
+       const username = storage.getItem(StorageKeys.USERNAME)
+       const password = storage.getItem(StorageKeys.PASSWORD)
+       if (username && password) {
+              return false
+       }
+       return true
+}
 export {
        wait,
-       diffSystem
+       diffSystem,
+       isExpire
 }
