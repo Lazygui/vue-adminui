@@ -52,15 +52,16 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
   background-color: var(--color-base-100);
 
   .lg-sidebar {
-    border: 1px solid red;
-    box-sizing: border-box;
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-color: color-mix(in oklab, var(--color-base-content) 10%, transparent);
     height: inherit;
     padding-top: calc(var(--spacing) * 4);
     padding-inline: calc(var(--spacing) * 6);
     box-sizing: border-box;
     overflow-y: auto;
     row-gap: calc(var(--spacing) * 2);
-    // flex-grow: 1;
+    background-color: var(--color-base-200);
 
     @media (width >=64rem) {
       width: calc(var(--spacing) * 72);
@@ -83,7 +84,6 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
       flex: 1;
 
       .ui_list {
-        margin-inline: -0.5rem;
         row-gap: calc(var(--spacing) * 7);
         box-sizing: border-box;
 
