@@ -1,11 +1,18 @@
 <script setup lang="ts">
 import type { RouteRecordRaw } from "vue-router";
 import { routes } from "@/router"
+const route = useRoute();
 const currentNavigation = computed((): RouteRecordRaw[] => {
-  const route = routes.find((item: any) => item.path === '/admin')
-  if (route && route.children && route.children.length > 0) {
-    const { children } = route
-    return children
+  const routeObj = routes.find((item: any) => item.path === '/admin')
+  if (routeObj && routeObj.children && routeObj.children.length > 0) {
+    const { children } = routeObj
+    return children.map((item: RouteRecordRaw) => ({
+      ...item,
+      meta: {
+        ...item.meta,
+        current: route.path.includes(item.path)
+      }
+    }))
   }
   return []
 })
@@ -22,8 +29,8 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
       <nav class="nav w-full flex flex-col">
         <ul role="list" class="ui_list">
           <li v-for="(item) in currentNavigation">
-            <RouterLink :to="item.path" class="ui_item  flex text-base-content" :class="{ 'bg-click': item }">{{
-              item.meta!.name }}</RouterLink>
+            <RouterLink :to="`/admin/${item.path}`" class="ui_item  flex text-base-content"
+              :class="{ 'bg-click': item.meta!.current }">{{ item.meta!.name }}</RouterLink>
           </li>
         </ul>
       </nav>
@@ -75,11 +82,9 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
         row-gap: calc(var(--spacing) * 7);
         box-sizing: border-box;
 
-
-        &:not(:last-child) {
+        :where(& > :not(:last-child)) {
           margin-block-start: calc(var(--spacing) * 1);
           margin-block-end: calc(var(--spacing) * 1);
-          box-sizing: border-box;
         }
 
         .ui_item {

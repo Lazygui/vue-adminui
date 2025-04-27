@@ -29,7 +29,7 @@ export const routes: RouteRecordRaw[] = [
                      },
                      {
                             path: "show",
-                            component: () => import("@/pages/Login.vue"),
+                            component: () => import("@/pages/Dashboard.vue"),
                             meta: {
                                    name: "组件展示"
                             },
