@@ -28,3 +28,11 @@ input {
 input::placeholder {
   color: #919191;
 }
+
+a {
+  text-decoration: none;
+}
+
+.router-link-active {
+  text-decoration: none;
+}
