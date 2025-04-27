@@ -39,9 +39,9 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
 <style scoped lang="scss">
 .main-layout {
   position: relative;
+  background-color: var(--color-base-100);
 
   .lg-sidebar {
-    border: 1px solid red;
     height: inherit;
     padding-top: calc(var(--spacing) * 4);
     padding-inline: calc(var(--spacing) * 6);
