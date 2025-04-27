@@ -33,6 +33,13 @@ export const routes: RouteRecordRaw[] = [
                                    name: "仪表盘",
                                    icon: "Home"
                             },
+                     }, {
+                            path: "table",
+                            component: () => import("@/pages/Dashboard.vue"),
+                            meta: {
+                                   name: "表格页",
+                                   icon: "Table"
+                            },
                      },
                      {
                             path: "show",
