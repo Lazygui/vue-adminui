@@ -23,7 +23,7 @@ export const defineIcon = (path: { [key: string]: string }): FunctionalComponent
               viewBox: props.viewBox ?? '0 0 24 24',
               stroke: props.stroke ?? 'currentColor',
               'stroke-width': props.strokeWidth ?? 1.5,
-              class: ['size-6', props.class],
+              class: [props.class],
               style: props.style
        }, [h('path', { ...path })]);
 }

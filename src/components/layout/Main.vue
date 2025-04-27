@@ -30,7 +30,10 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
         <ul role="list" class="ui_list">
           <li v-for="(item) in currentNavigation">
             <RouterLink :to="`/admin/${item.path}`" class="ui_item  flex text-base-content"
-              :class="{ 'bg-click': item.meta!.current }">{{ item.meta!.name }}</RouterLink>
+              :class="{ 'bg-click': item.meta!.current }">
+              <component :is="`${item.meta!.icon}Icon`" class="size-6" />
+              {{ item.meta!.name }}
+            </RouterLink>
           </li>
         </ul>
       </nav>
@@ -49,6 +52,8 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
   background-color: var(--color-base-100);
 
   .lg-sidebar {
+    border: 1px solid red;
+    box-sizing: border-box;
     height: inherit;
     padding-top: calc(var(--spacing) * 4);
     padding-inline: calc(var(--spacing) * 6);
@@ -108,6 +113,11 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
         .bg-click {
           background-color: var(--color-primary);
           color: var(--color-primary-content);
+        }
+
+        .size-6 {
+          width: calc(var(--spacing) * 6);
+          height: calc(var(--spacing) * 6);
         }
       }
 
