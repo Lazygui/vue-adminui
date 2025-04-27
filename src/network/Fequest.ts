@@ -14,6 +14,7 @@ export interface RequestConfig {
        header?: Record<string, string> | Headers;
        param?: Record<string, string>;
        responseType?: any;
+       passRouter?: boolean
 }
 interface Config {
        baseURL: string;
@@ -76,11 +77,14 @@ export class Fequest {
               const controller = new AbortController();
               const { signal } = controller;
 
+
               // 中止相同URL的前一个请求并存储新的controller
               if (Fequest.requestControllers.has(url)) {
                      Fequest.requestControllers.get(url)?.abort();
               }
-              Fequest.requestControllers.set(url, controller);
+              if (!reqCfg.passRouter) {
+                     Fequest.requestControllers.set(url, controller);
+              }
 
               //发请求前走一走拦截器
               const fetchParams = {

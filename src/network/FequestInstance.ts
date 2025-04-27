@@ -16,6 +16,6 @@ export { httpUrl, Fequest }
 export default new Fequest({
        baseURL: httpUrl(),
        credentials: "omit",
-       timeout: 10000,
+       timeout: 15000,
        mode: "cors"
 }).create();
