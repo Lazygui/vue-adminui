@@ -46,11 +46,13 @@ onMounted(async () => {
   form.value.password = ''
   form.value.username = ''
   loading.value = true
+  useLoading.hidden()
+  config.value.system = system
 })
 </script>
 
 <template>
-  <div class="login flex items-center justify-center to-indigo-900 from-blue-900\/70" v-if="false">
+  <div class="login flex items-center justify-center to-indigo-900 from-blue-900\/70" v-if="loading">
     <z-card class="login-card">
       <div class="card-body">
         <div class="text-center">

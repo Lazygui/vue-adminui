@@ -62,11 +62,14 @@ export const router = createRouter({
        history: createWebHashHistory(import.meta.env.BASE_URL),
        routes,
 });
-router.beforeEach(async (_to, from, next) => {
+router.beforeEach(async (to, from, next) => {
        storage.setItem(StorageKeys.LAST_PATH, from.fullPath)
        //路由跳转之前清除上个页面的所有网络请求
        Fequest.abortAll();
        if (isExpire()) {
+              if (to.path === '/login') {
+                     return next();
+              }
               return next('/login');
        }
        next();
