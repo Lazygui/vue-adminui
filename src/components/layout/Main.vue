@@ -40,8 +40,19 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
     </div>
     <!-- 移动端侧边栏 - 在小屏幕设备上显示为可滑出的对话框 -->
     <div class="sm:hidden">h5</div>
-    <div class="container">
-      <router-view></router-view>
+    <div class="container flex items-center">
+      <div class="header sticky w-full">
+        <!-- 菜单栏收缩  -->
+        <button type="button" class="bar lg:block text-base-content">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" aria-hidden="true" data-slot="icon" class="size-6 pointer">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5">
+            </path>
+          </svg>
+        </button>
+        <div aria-hidden="true" class="w-px h-6 bg-gray-900/10 lg:hidden"></div>
+      </div>
+      <!-- <router-view></router-view> -->
     </div>
   </div>
 </template>
@@ -50,6 +61,11 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
 .main-layout {
   position: relative;
   background-color: var(--color-base-100);
+
+  .size-6 {
+    width: calc(var(--spacing) * 6);
+    height: calc(var(--spacing) * 6);
+  }
 
   .lg-sidebar {
     border-right-style: solid;
@@ -115,10 +131,7 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
           color: var(--color-primary-content);
         }
 
-        .size-6 {
-          width: calc(var(--spacing) * 6);
-          height: calc(var(--spacing) * 6);
-        }
+
       }
 
       &>ul {
@@ -134,6 +147,27 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
 
   .container {
     flex-grow: 24;
+    height: calc(var(--spacing) * 16);
+    background-color: var(--color-base-100);
+    border-color: color-mix(in oklab, var(--color-base-content) 10%, transparent);
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+
+    @media (width >=40rem) {
+      column-gap: calc(var(--spacing) * 6);
+    }
+
+    @media (width >=64rem) {
+      padding-inline: calc(var(--spacing) * 8);
+    }
+
+    .header {
+      .bar {
+        padding: calc(var(--spacing) * 2.5);
+        background-color: transparent;
+        border-radius: 0;
+      }
+    }
   }
 }
 </style>

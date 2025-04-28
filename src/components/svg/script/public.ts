@@ -14,6 +14,7 @@ export interface IconProps {
        /** 行内样式 */
        style?: CSSProperties;
        viewBox?: string;
+       ariaHidden?: boolean;
 }
 export const defineIcon = (path: { [key: string]: string }): FunctionalComponent<IconProps> => {
        return (props) => h('svg', {
@@ -24,6 +25,7 @@ export const defineIcon = (path: { [key: string]: string }): FunctionalComponent
               stroke: props.stroke ?? 'currentColor',
               'stroke-width': props.strokeWidth ?? 1.5,
               class: [props.class],
-              style: props.style
+              style: props.style,
+              'aria-hidden': props.ariaHidden ?? false
        }, [h('path', { ...path })]);
 }

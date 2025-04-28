@@ -36,3 +36,18 @@ a {
 .router-link-active {
   text-decoration: none;
 }
+
+*,
+::after,
+::before,
+::backdrop,
+::file-selector-button {
+  box-sizing: border-box;
+  margin: 0;
+  border: 0 solid;
+}
+
+.pointer {
+
+  cursor: pointer;
+}
