@@ -45,7 +45,7 @@ const breadcrumbs = computed((): RouteRecordRaw => {
                             <div class="flex self-stretch flex-1 gap-x-4 lg:gap-x-6">
                                    <div class="grid flex-1 grid-cols-1">
                                           <div class="breadcrumbs flex items-center space-x-2 text-sm text-base-content/70">
-                                                 <div :key="breadcrumbs.path" className="flex items-center">
+                                                 <div :key="breadcrumbs.path" className="flex items-center text-base-content">
                                                         <component :is="`${breadcrumbs.meta!.icon}Icon`" class="h-5 w-5 flex-shrink-0" />
                                                         <span className="ml-2 text-base">{{ breadcrumbs.meta!.name }}</span>
                                                  </div>
