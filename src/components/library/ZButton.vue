@@ -1,21 +1,28 @@
 <script setup lang="ts">
-const props = withDefaults(defineProps<{
-       type?: '' | 'primary' | 'warning' | 'error'
-       btnType?: 'submit' | 'button' | 'reset'
-       disabled?: boolean
-}>(), {
-       type: '',
-       btnType: 'button'
-})
+const props = withDefaults(
+       defineProps<{
+              type?: "" | "primary" | "warning" | "error";
+              btnType?: "submit" | "button" | "reset";
+              disabled?: boolean;
+       }>(),
+       {
+              type: "",
+              btnType: "button"
+       }
+);
 const emit = defineEmits<{
-       (e: 'click'): void,
-}>()
+       (e: "click"): void;
+}>();
 </script>
 
 <template>
        <div class="z-button">
-              <button :type="props.btnType" :class="['btn', props.type ? `btn-${props.type}` : '', 'w-full']"
-                     :disabled="props.disabled" @click="emit('click')">
+              <button
+                     :type="props.btnType"
+                     :class="['btn', props.type ? `btn-${props.type}` : '', 'w-full']"
+                     :disabled="props.disabled"
+                     @click="emit('click')"
+              >
                      <slot></slot>
               </button>
        </div>
@@ -49,15 +56,10 @@ const emit = defineEmits<{
               color: var(--btn-fg);
               --tw-prose-links: var(--btn-fg);
               height: var(--size);
-              font-size: var(--fontsize, 0.875rem
-                     /* 14px */
-              );
+              font-size: var(--fontsize, 0.875rem /* 14px */);
               font-weight: 600;
               outline-color: var(--btn-color, var(--color-base-content));
-              transition-property: color,
-              background-color,
-              border-color,
-              box-shadow;
+              transition-property: color, background-color, border-color, box-shadow;
               transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
               transition-duration: 0.2s;
               border-start-start-radius: var(--join-ss, var(--radius-field));
@@ -65,23 +67,20 @@ const emit = defineEmits<{
               border-end-start-radius: var(--join-es, var(--radius-field));
               border-end-end-radius: var(--join-ee, var(--radius-field));
               background-color: var(--btn-bg);
-              background-size: auto,
-              calc(var(--noise) * 100%);
-              background-image: none,
-              var(--btn-noise);
+              background-size: auto, calc(var(--noise) * 100%);
+              background-image: none, var(--btn-noise);
               border-width: var(--border);
               border-style: solid;
               border-color: var(--btn-border);
               text-shadow: 0 0.5px oklch(100% 0 0 / calc(var(--depth) * 0.15));
-              box-shadow: 0 0.5px 0 0.5px oklch(100% 0 0 / calc(var(--depth) * 6%)) inset,
-              var(--btn-shadow);
+              box-shadow: 0 0.5px 0 0.5px oklch(100% 0 0 / calc(var(--depth) * 6%)) inset, var(--btn-shadow);
               --size: calc(var(--size-field, 0.25rem) * 10);
               --btn-bg: var(--btn-color, var(--color-base-200));
               --btn-fg: var(--color-base-content);
               --btn-p: 1rem;
               --btn-border: color-mix(in oklab, var(--btn-bg), #000 calc(var(--depth) * 5%));
               --btn-shadow: 0 3px 2px -2px color-mix(in oklab, var(--btn-bg) calc(var(--depth) * 30%), #0000),
-              0 4px 3px -2px color-mix(in oklab, var(--btn-bg) calc(var(--depth) * 30%), #0000);
+                     0 4px 3px -2px color-mix(in oklab, var(--btn-bg) calc(var(--depth) * 30%), #0000);
               --btn-noise: var(--fx-noise);
 
               .prose & {

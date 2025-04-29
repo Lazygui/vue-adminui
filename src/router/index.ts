@@ -55,6 +55,10 @@ export const routes: RouteRecordRaw[] = [
        {
               path: "/user",
               component: () => import("@/pages/Login.vue")
+       },
+       {
+              path: "/:pathMatch(.*)*",
+              component: () => import("@/components/layout/NotFound.vue")
        }
 ];
 
