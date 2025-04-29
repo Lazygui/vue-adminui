@@ -23,7 +23,10 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
 <template>
        <div class="main-layout w-full h-full flex">
               <!-- 桌面端侧边栏 - 在大屏幕设备上固定显示 -->
-              <div class="lg-sidebar hidden sm:flex sm:flex-col flex items-center">
+              <div
+                     class="lg-sidebar lg:fixed hidden sm:flex sm:flex-col flex items-center"
+                     :class="`${isShowSidebar ? 'translate-x-0' : '-translate-x-full'}`"
+              >
                      <div class="title w-full text-base-content">高效后台管理</div>
                      <nav class="nav w-full flex flex-col">
                             <ul role="list" class="ui_list">
@@ -42,8 +45,8 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
               </div>
               <!-- 移动端侧边栏 - 在小屏幕设备上显示为可滑出的对话框 -->
               <div class="sm:hidden">h5</div>
-              <div class="container flex items-center">
-                     <div class="header sticky w-full">
+              <div class="container flex" :class="`${isShowSidebar ? 'pl-72' : 'pl-0'}`">
+                     <div class="header sticky w-full flex items-center">
                             <!-- 菜单栏收缩  -->
                             <button type="button" class="bar lg:block text-base-content" @click="isShowSidebar = !isShowSidebar">
                                    <svg
@@ -79,7 +82,12 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
               width: calc(var(--spacing) * 6);
               height: calc(var(--spacing) * 6);
        }
-
+       .-translate-x-full {
+              transform: translateX(-100%);
+       }
+       .translate-x-0 {
+              transform: translateX(0);
+       }
        .lg-sidebar {
               border-right-style: solid;
               border-right-width: 1px;
@@ -91,11 +99,17 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
               overflow-y: auto;
               row-gap: calc(var(--spacing) * 2);
               background-color: var(--color-base-200);
+              transition: transform 0.3s linear;
 
               @media (width >=64rem) {
                      width: calc(var(--spacing) * 72);
               }
-
+              @media (width >= 64rem) {
+                     flex-direction: column;
+              }
+              @media (width >= 64rem) {
+                     display: flex;
+              }
               .title {
                      padding-block-start: 1rem;
                      padding-block-end: 1rem;
@@ -155,23 +169,31 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
               list-style-type: none;
        }
 
+       @media (width >=64rem) {
+              .pl-72 {
+                     padding-left: calc(var(--spacing) * 72);
+              }
+              .pl-0 {
+                     padding-left: 0;
+              }
+       }
        .container {
-              flex-grow: 24;
-              height: calc(var(--spacing) * 16);
+              flex-grow: 1;
               background-color: var(--color-base-100);
-              border-color: color-mix(in oklab, var(--color-base-content) 10%, transparent);
-              border-bottom-style: solid;
-              border-bottom-width: 1px;
-
-              @media (width >=40rem) {
-                     column-gap: calc(var(--spacing) * 6);
-              }
-
-              @media (width >=64rem) {
-                     padding-inline: calc(var(--spacing) * 8);
-              }
+              transition: padding 0.3s linear;
 
               .header {
+                     border-color: color-mix(in oklab, var(--color-base-content) 10%, transparent);
+                     border-bottom-style: solid;
+                     border-bottom-width: 1px;
+                     height: calc(var(--spacing) * 16);
+                     @media (width >=40rem) {
+                            column-gap: calc(var(--spacing) * 6);
+                     }
+
+                     @media (width >=64rem) {
+                            padding-inline: calc(var(--spacing) * 8);
+                     }
                      .bar {
                             padding: calc(var(--spacing) * 2.5);
                             background-color: transparent;
