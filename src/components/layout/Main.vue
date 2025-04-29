@@ -44,15 +44,15 @@ const breadcrumbs = computed((): RouteRecordRaw => {
                             <div aria-hidden="true" class="w-px h-6 lg:hidden"></div>
                             <div class="flex self-stretch flex-1 gap-x-4 lg:gap-x-6">
                                    <div class="grid flex-1 grid-cols-1">
-                                          <div class="breadcrumbs flex items-center space-x-2 text-sm text-base-content/70">
-                                                 <div :key="breadcrumbs.path" className="flex items-center text-base-content">
+                                          <div class="breadcrumbs flex items-center space-x-2 text-sm text-base-content">
+                                                 <div :key="breadcrumbs.path" className="flex items-center ">
                                                         <component :is="`${breadcrumbs.meta!.icon}Icon`" class="h-5 w-5 flex-shrink-0" />
                                                         <span className="ml-2 text-base">{{ breadcrumbs.meta!.name }}</span>
                                                  </div>
                                           </div>
                                    </div>
                                    <div className="flex items-center gap-x-4 lg:gap-x-6">
-                                          <div aria-hidden="true" className="hidden lg:block lg:h-6 lg:w-px lg:bg-base-content/30"></div>
+                                          <div aria-hidden="true" className="hidden lg:block lg:h-6 lg:w-px bg-base-content"></div>
                                           <div className="flex items-center gap-2">
                                                  <ThemeButton></ThemeButton>
                                           </div>
