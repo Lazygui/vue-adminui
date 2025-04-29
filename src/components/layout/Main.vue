@@ -168,7 +168,7 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
        ul > li {
               list-style-type: none;
        }
-
+       // 网页端左侧栏抽屉动画
        @media (width >=64rem) {
               .pl-72 {
                      padding-left: calc(var(--spacing) * 72);
