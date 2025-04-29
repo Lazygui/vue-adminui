@@ -45,7 +45,7 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
               </div>
               <!-- 移动端侧边栏 - 在小屏幕设备上显示为可滑出的对话框 -->
               <div class="sm:hidden">h5</div>
-              <div class="container flex" :class="`${isShowSidebar ? 'pl-72' : 'pl-0'}`">
+              <div class="container" :class="`${isShowSidebar ? 'pl-72' : 'pl-0'}`">
                      <div class="header sticky w-full flex items-center">
                             <!-- 菜单栏收缩  -->
                             <button type="button" class="bar lg:block text-base-content" @click="isShowSidebar = !isShowSidebar">
@@ -66,8 +66,10 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
                                           ></path>
                                    </svg>
                             </button>
-                            <div aria-hidden="true" class="w-px h-6 bg-gray-900/10 lg:hidden"></div>
+                            <div aria-hidden="true" class="aria lg:hidden"></div>
+                            <div></div>
                      </div>
+                     <div class="container-router"></div>
                      <!-- <router-view></router-view> -->
               </div>
        </div>
@@ -181,14 +183,18 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
               flex-grow: 1;
               background-color: var(--color-base-100);
               transition: padding 0.3s linear;
-
+              $head: calc(var(--spacing) * 16);
               .header {
                      border-color: color-mix(in oklab, var(--color-base-content) 10%, transparent);
                      border-bottom-style: solid;
                      border-bottom-width: 1px;
-                     height: calc(var(--spacing) * 16);
+                     height: $head;
                      @media (width >=40rem) {
                             column-gap: calc(var(--spacing) * 6);
+
+                            .bar {
+                                   //  color: oklch(0.373 0.034 259.733);
+                            }
                      }
 
                      @media (width >=64rem) {
@@ -199,6 +205,14 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
                             background-color: transparent;
                             border-radius: 0;
                      }
+                     .aria {
+                            width: 1px;
+                            height: calc(var(--spacing) * 6);
+                            background-color: color-mix(in oklab, var(--color-gray-900) 10%, transparent);
+                     }
+              }
+              .container-router {
+                     height: calc(100vh - $head);
               }
        }
 }
