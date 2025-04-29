@@ -12,7 +12,7 @@ import { isExpire } from "@/hooks/useUtils";
 export const routes: RouteRecordRaw[] = [
        {
               path: "/",
-              redirect: "/login",
+              redirect: "/login"
        },
        {
               path: "/login",
@@ -32,14 +32,15 @@ export const routes: RouteRecordRaw[] = [
                             meta: {
                                    name: "仪表盘",
                                    icon: "Home"
-                            },
-                     }, {
+                            }
+                     },
+                     {
                             path: "table",
                             component: () => import("@/pages/Dashboard.vue"),
                             meta: {
                                    name: "表格页",
                                    icon: "Table"
-                            },
+                            }
                      },
                      {
                             path: "show",
@@ -47,30 +48,30 @@ export const routes: RouteRecordRaw[] = [
                             meta: {
                                    name: "组件展示",
                                    icon: "Cube"
-                            },
+                            }
                      }
               ]
        },
        {
               path: "/user",
-              component: () => import("@/pages/Login.vue"),
+              component: () => import("@/pages/Login.vue")
        }
 ];
 
-
 export const router = createRouter({
        history: createWebHashHistory(import.meta.env.BASE_URL),
-       routes,
+       routes
 });
 router.beforeEach(async (to, from, next) => {
-       storage.setItem(StorageKeys.LAST_PATH, from.fullPath)
+       storage.setItem(StorageKeys.LAST_PATH, from.fullPath);
        //路由跳转之前清除上个页面的所有网络请求
        Fequest.abortAll();
+       //凭证失效
        if (isExpire()) {
-              if (to.path === '/login') {
+              if (to.path === "/login" || from.path === "/login") {
                      return next();
               }
-              return next('/login');
+              return next("/login");
        }
        next();
 });
