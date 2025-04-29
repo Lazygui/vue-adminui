@@ -59,7 +59,7 @@ const breadcrumbs = computed((): RouteRecordRaw => {
                                    </div>
                             </div>
                      </div>
-                     <div class="router-page w-full py-8 bg-base-100">
+                     <div class="router-page transition-all duration-300 ease-in-out w-full py-8 bg-base-100">
                             <div className="px-4 sm:px-6 lg:px-8 w-full h-full">
                                    <router-view></router-view>
                             </div>
