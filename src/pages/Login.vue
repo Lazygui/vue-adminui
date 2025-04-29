@@ -52,18 +52,18 @@ onMounted(async () => {
 </script>
 
 <template>
-       <div class="login flex items-center justify-center to-indigo-900 from-blue-900\/70" v-if="loading">
-              <z-card class="login-card">
-                     <div class="card-body">
+       <div class="login flex relative w-full h-full items-center justify-center to-indigo-900 from-blue-900\/70" v-if="loading">
+              <z-card class="login-card w-96">
+                     <div class="w-full">
                             <div class="text-center">
-                                   <h2 class="h2 text-base-content">用户登录</h2>
-                                   <p class="tips text-base-content">请输入您的账号和密码</p>
+                                   <h2 class="text-3xl font-extrabold text-base-content tracking-tight mb-1">用户登录</h2>
+                                   <p class="text-sm text-base-content">请输入您的账号和密码</p>
                             </div>
-                            <div class="form">
+                            <div class="form w-full box-border mt-8">
                                    <form @submit.prevent="submit">
                                           <z-input
                                                  required
-                                                 class="form-input"
+                                                 class="w-full"
                                                  label="账号"
                                                  :icon="UserIcon"
                                                  v-model="form.username"
@@ -71,13 +71,14 @@ onMounted(async () => {
                                           ></z-input>
                                           <z-input
                                                  required
+                                                 class="w-full"
                                                  label="密码"
                                                  :icon="LockIcon"
                                                  type="password"
                                                  v-model="form.password"
                                                  placeholder="请输入密码"
                                           ></z-input>
-                                          <div class="form-config flex justify-between items-center">
+                                          <div class="flex justify-between items-center mb-6">
                                                  <div class="flex items-center">
                                                         <z-checkbox label="记住密码" type="checkbox" v-model="remember"></z-checkbox>
                                                  </div>
@@ -97,111 +98,8 @@ onMounted(async () => {
 
 <style scoped lang="scss">
 .login {
-       position: relative;
-       width: 100%;
-       height: 100%;
-       display: flex;
        background-image: linear-gradient(to right, rgba(28, 57, 142, 0.7), transparent), url("/background.png");
        background-size: cover;
        background-repeat: no-repeat;
-       inset: 0;
-       // background-image: linear-gradient(to right in oklab);
-
-       .login-card {
-              width: 24rem;
-
-              .card-body {
-                     width: 100%;
-
-                     .form {
-                            width: 100%;
-                            margin-top: 2rem;
-                            box-sizing: border-box;
-
-                            .form-input {
-                                   width: 100%;
-                            }
-
-                            .form-config {
-                                   margin-block-start: 0;
-                                   margin-block-end: 1.5rem;
-                            }
-                     }
-
-                     .h2 {
-                            margin-top: 0;
-                            font-size: 1.875rem;
-                            line-height: calc(2.25 / 1.875);
-                            letter-spacing: -0.025rem;
-                            font-weight: 800;
-                            margin-bottom: 0.25rem;
-                     }
-
-                     .tips {
-                            font-size: 0.875rem;
-                     }
-              }
-       }
-}
-
-.to-indigo-900\/50 {
-       --tw-gradient-to: color-mix(in oklab, var(--color-indigo-900) /* oklch(0.359 0.144 278.697) = #312c85 */ 50%, transparent);
-       --tw-gradient-stops: var(
-              --tw-gradient-via-stops,
-              var(--tw-gradient-position),
-              var(--tw-gradient-from) var(--tw-gradient-from-position),
-              var(--tw-gradient-to) var(--tw-gradient-to-position)
-       );
-}
-
-@property --tw-gradient-position {
-       syntax: "*";
-       inherits: false;
-}
-
-@property --tw-gradient-from {
-       syntax: "<color>";
-       inherits: false;
-       initial-value: #0000;
-}
-
-@property --tw-gradient-via {
-       syntax: "<color>";
-       inherits: false;
-       initial-value: #0000;
-}
-
-@property --tw-gradient-to {
-       syntax: "<color>";
-       inherits: false;
-       initial-value: #0000;
-}
-
-@property --tw-gradient-stops {
-       syntax: "*";
-       inherits: false;
-}
-
-@property --tw-gradient-via-stops {
-       syntax: "*";
-       inherits: false;
-}
-
-@property --tw-gradient-from-position {
-       syntax: "<length-percentage>";
-       inherits: false;
-       initial-value: 0%;
-}
-
-@property --tw-gradient-via-position {
-       syntax: "<length-percentage>";
-       inherits: false;
-       initial-value: 50%;
-}
-
-@property --tw-gradient-to-position {
-       syntax: "<length-percentage>";
-       inherits: false;
-       initial-value: 100%;
 }
 </style>

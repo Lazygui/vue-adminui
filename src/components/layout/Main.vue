@@ -17,23 +17,21 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
        }
        return [];
 });
-// const dark = window.matchMedia('(prefers-color-scheme: dark)')
 </script>
 
 <template>
        <div class="main-layout w-full h-full flex">
-              <!-- 桌面端侧边栏 - 在大屏幕设备上固定显示 -->
               <div
-                     class="lg-sidebar lg:fixed hidden sm:flex sm:flex-col flex items-center"
+                     class="lg-sidebar gap-y-2 overflow-y-auto px-6 pt-4 border-r border-solid lg:w-72 lg:inset-y-0 lg:fixed hidden sm:flex sm:flex-col lg:flex items-center transition-transform duration-300 ease-in-out"
                      :class="`${isShowSidebar ? 'translate-x-0' : '-translate-x-full'}`"
               >
-                     <div class="title w-full text-base-content">高效后台管理</div>
-                     <nav class="nav w-full flex flex-col">
-                            <ul role="list" class="ui_list">
+                     <div class="shrink-0 text-xl font-bold items-center flex py-4 w-full text-base-content">高效后台管理</div>
+                     <nav class="w-full flex flex-col flex-1 mt-1">
+                            <ul role="list" class="box-border gap-y-7 space-y-1">
                                    <li v-for="item in currentNavigation">
                                           <RouterLink
                                                  :to="`/admin/${item.path}`"
-                                                 class="ui_item flex text-base-content"
+                                                 class="ui_item group rounded-lg flex gap-x-3 p-2 text-sm/6 font-semibold text-base-content"
                                                  :class="{ 'bg-click': item.meta!.current }"
                                           >
                                                  <component :is="`${item.meta!.icon}Icon`" class="size-6" />
@@ -43,12 +41,13 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
                             </ul>
                      </nav>
               </div>
-              <!-- 移动端侧边栏 - 在小屏幕设备上显示为可滑出的对话框 -->
-              <div class="sm:hidden">h5</div>
-              <div class="container" :class="`${isShowSidebar ? 'pl-72' : 'pl-0'}`">
-                     <div class="header sticky w-full flex items-center">
+              <div
+                     class="router-container w-full bg-base grow transition-all duration-300 ease-in-out"
+                     :class="`${isShowSidebar ? 'lg:pl-72' : 'lg:pl-0'}`"
+              >
+                     <div class="header sticky w-full flex items-center h-16 shrink-0 gap-x-4 sm:gap-x-6 sm:px-6 lg:px-8 border">
                             <!-- 菜单栏收缩  -->
-                            <button type="button" class="bar lg:block text-base-content" @click="isShowSidebar = !isShowSidebar">
+                            <button type="button" class="bar p-2.5 lg:block text-base-content" @click="isShowSidebar = !isShowSidebar">
                                    <svg
                                           xmlns="http://www.w3.org/2000/svg"
                                           fill="none"
@@ -66,11 +65,10 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
                                           ></path>
                                    </svg>
                             </button>
-                            <div aria-hidden="true" class="aria lg:hidden"></div>
+                            <div aria-hidden="true" class="w-px h-6 lg:hidden"></div>
                             <div></div>
                      </div>
-                     <div class="container-router"></div>
-                     <!-- <router-view></router-view> -->
+                     <div class="router-page"></div>
               </div>
        </div>
 </template>
@@ -78,141 +76,36 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
 <style scoped lang="scss">
 .main-layout {
        position: relative;
-       background-color: var(--color-base-100);
-
-       .size-6 {
-              width: calc(var(--spacing) * 6);
-              height: calc(var(--spacing) * 6);
-       }
-       .-translate-x-full {
-              transform: translateX(-100%);
-       }
-       .translate-x-0 {
-              transform: translateX(0);
-       }
        .lg-sidebar {
-              border-right-style: solid;
-              border-right-width: 1px;
               border-color: color-mix(in oklab, var(--color-base-content) 10%, transparent);
               height: inherit;
-              padding-top: calc(var(--spacing) * 4);
-              padding-inline: calc(var(--spacing) * 6);
-              box-sizing: border-box;
-              overflow-y: auto;
-              row-gap: calc(var(--spacing) * 2);
               background-color: var(--color-base-200);
-              transition: transform 0.3s linear;
 
-              @media (width >=64rem) {
-                     width: calc(var(--spacing) * 72);
-              }
-              @media (width >= 64rem) {
-                     flex-direction: column;
-              }
-              @media (width >= 64rem) {
-                     display: flex;
-              }
-              .title {
-                     padding-block-start: 1rem;
-                     padding-block-end: 1rem;
-                     box-sizing: border-box;
-                     display: flex;
-                     align-items: center;
-                     flex-shrink: 1;
-                     font-weight: 700;
-                     font-size: calc(var(--spacing) * 5);
-              }
-
-              .nav {
-                     margin-top: calc(var(--spacing) * 1);
-                     box-sizing: border-box;
-                     flex: 1;
-
-                     .ui_list {
-                            row-gap: calc(var(--spacing) * 7);
-                            box-sizing: border-box;
-
-                            :where(& > :not(:last-child)) {
-                                   margin-block-start: calc(var(--spacing) * 1);
-                                   margin-block-end: calc(var(--spacing) * 1);
-                            }
-
-                            .ui_item {
-                                   column-gap: calc(var(--spacing) * 3);
-                                   border-radius: var(--radius-field);
-                                   padding: calc(var(--spacing) * 2);
-                                   box-sizing: border-box;
-                                   font-size: 0.875rem;
-                                   line-height: calc(var(--spacing) * 6);
-                                   font-weight: 600;
-
-                                   &:hover {
-                                          @media (hover: hover) {
-                                                 color: var(--color-primary-content);
-                                                 background-color: var(--color-primary);
-                                          }
-                                   }
-                            }
-
-                            .bg-click {
-                                   background-color: var(--color-primary);
+              .ui_item {
+                     &:hover {
+                            @media (hover: hover) {
                                    color: var(--color-primary-content);
+                                   background-color: var(--color-primary);
                             }
                      }
+              }
 
-                     & > ul {
-                            padding: 0;
-                            margin: 0;
-                     }
+              .bg-click {
+                     background-color: var(--color-primary);
+                     color: var(--color-primary-content);
               }
        }
-
-       ul > li {
-              list-style-type: none;
-       }
-       // 网页端左侧栏抽屉动画
-       @media (width >=64rem) {
-              .pl-72 {
-                     padding-left: calc(var(--spacing) * 72);
-              }
-              .pl-0 {
-                     padding-left: 0;
-              }
-       }
-       .container {
-              flex-grow: 1;
-              background-color: var(--color-base-100);
-              transition: padding 0.3s linear;
+       .router-container {
               $head: calc(var(--spacing) * 16);
               .header {
                      border-color: color-mix(in oklab, var(--color-base-content) 10%, transparent);
-                     border-bottom-style: solid;
-                     border-bottom-width: 1px;
-                     height: $head;
-                     @media (width >=40rem) {
-                            column-gap: calc(var(--spacing) * 6);
-
-                            .bar {
-                                   //  color: oklch(0.373 0.034 259.733);
-                            }
-                     }
-
-                     @media (width >=64rem) {
-                            padding-inline: calc(var(--spacing) * 8);
-                     }
                      .bar {
-                            padding: calc(var(--spacing) * 2.5);
                             background-color: transparent;
                             border-radius: 0;
                      }
-                     .aria {
-                            width: 1px;
-                            height: calc(var(--spacing) * 6);
-                            background-color: color-mix(in oklab, var(--color-gray-900) 10%, transparent);
-                     }
               }
-              .container-router {
-                     height: calc(100vh - $head);
+              .router-page {
+                     height: calc(100% - $head);
               }
        }
 }
