@@ -66,7 +66,11 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
                                    </svg>
                             </button>
                             <div aria-hidden="true" class="w-px h-6 lg:hidden"></div>
-                            <div></div>
+                            <div class="flex self-stretch flex-1 gap-x-4 lg:gap-x-6">
+                                   <div class="grid flex-1 grid-cols-1">
+                                          <!-- <RouterLink></RouterLink> -->
+                                   </div>
+                            </div>
                      </div>
                      <div class="router-page"></div>
               </div>
