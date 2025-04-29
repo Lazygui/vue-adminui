@@ -3,6 +3,13 @@ import type { RouteRecordRaw } from "vue-router";
 import { routes } from "@/router";
 const route = useRoute();
 const isShowSidebar = ref<boolean>(true);
+
+const breadcrumbs = computed((): RouteRecordRaw => {
+       const routeObj = routes.find((item: any) => item.path === "/admin");
+       const path = route.path.replace("/admin/", "");
+       return routeObj!.children!.find((item: RouteRecordRaw) => item.path === path)!;
+});
+
 const currentNavigation = computed((): RouteRecordRaw[] => {
        const routeObj = routes.find((item: any) => item.path === "/admin");
        if (routeObj && routeObj.children && routeObj.children.length > 0) {
@@ -45,7 +52,7 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
                      class="router-container w-full bg-base grow transition-all duration-300 ease-in-out"
                      :class="`${isShowSidebar ? 'lg:pl-72' : 'lg:pl-0'}`"
               >
-                     <div class="header sticky w-full flex items-center h-16 shrink-0 gap-x-4 sm:gap-x-6 sm:px-6 lg:px-8 border">
+                     <div class="header sticky w-full flex items-center h-16 shrink-0 gap-x-4 sm:gap-x-6 sm:px-6 lg:px-8 border-b-1">
                             <!-- 菜单栏收缩  -->
                             <button type="button" class="bar p-2.5 lg:block text-base-content" @click="isShowSidebar = !isShowSidebar">
                                    <svg
@@ -68,7 +75,12 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
                             <div aria-hidden="true" class="w-px h-6 lg:hidden"></div>
                             <div class="flex self-stretch flex-1 gap-x-4 lg:gap-x-6">
                                    <div class="grid flex-1 grid-cols-1">
-                                          <!-- <RouterLink></RouterLink> -->
+                                          <div class="breadcrumbs flex items-center space-x-2 text-sm text-base-content/70">
+                                                 <div :key="breadcrumbs.path" className="flex items-center">
+                                                        <component :is="`${breadcrumbs.meta!.icon}Icon`" class="h-5 w-5 flex-shrink-0" />
+                                                        <span className="ml-2 text-base">{{ breadcrumbs.meta!.name }}</span>
+                                                 </div>
+                                          </div>
                                    </div>
                             </div>
                      </div>
