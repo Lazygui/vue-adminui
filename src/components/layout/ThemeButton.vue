@@ -1,7 +1,7 @@
 <template>
        <div class="theme-button flex items-center">
               <label class="toggle text-base-content">
-                     <input type="checkbox" value="dark" @change="handleThemeChange" :checked="theme === 'dark'" />
+                     <input type="checkbox" class="theme-controller" value="dark" @change="handleThemeChange" :checked="theme === 'dark'" />
                      <SunIcon aria-label="sun"></SunIcon>
                      <MoonIcon aria-label="moon"></MoonIcon>
               </label>
@@ -9,27 +9,27 @@
 </template>
 
 <script setup lang="ts">
-type ITheme = 'dark' | 'light'
+type ITheme = "dark" | "light";
 const emit = defineEmits<{
-       (e: 'update:modelValue', el: ITheme): void,
-}>()
-const theme = ref<ITheme>('light')
+       (e: "update:modelValue", el: ITheme): void;
+}>();
+const theme = ref<ITheme>("light");
 const handleThemeChange = (e: Event) => {
-       const target = e.target as HTMLInputElement
-       const theme = target.checked ? 'dark' : 'light'
-       document.documentElement.setAttribute('data-theme', theme)
-       storage.setItem(StorageKeys.THEME, theme)
-       emit('update:modelValue', theme)
-}
+       const target = e.target as HTMLInputElement;
+       const theme = target.checked ? "dark" : "light";
+       document.documentElement.setAttribute("data-theme", theme);
+       storage.setItem(StorageKeys.THEME, theme);
+       emit("update:modelValue", theme);
+};
 onMounted(() => {
-       const themeloacl = storage.getItem(StorageKeys.THEME) as ITheme
+       const themeloacl = storage.getItem(StorageKeys.THEME) as ITheme;
        if (themeloacl) {
-              theme.value = themeloacl
-              return
+              theme.value = themeloacl;
+              return;
        }
-       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-       theme.value = prefersDark ? 'dark' : 'light'
-})
+       const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+       theme.value = prefersDark ? "dark" : "light";
+});
 </script>
 
 <style scoped lang="scss">
@@ -48,7 +48,9 @@ onMounted(() => {
               user-select: none;
               grid-template-columns: 0fr 1fr 1fr;
               --radius-selector-max: calc(var(--radius-selector) + var(--radius-selector) + var(--radius-selector));
-              border-radius: calc(var(--radius-selector) + min(var(--toggle-p), var(--radius-selector-max)) + min(var(--border), var(--radius-selector-max)));
+              border-radius: calc(
+                     var(--radius-selector) + min(var(--toggle-p), var(--radius-selector-max)) + min(var(--border), var(--radius-selector-max))
+              );
               padding: var(--toggle-p);
               box-shadow: 0 1px color-mix(in oklab, currentColor calc(var(--depth) * 10%), #0000) inset;
               transition: color 0.3s, grid-template-columns 0.2s;
@@ -58,7 +60,7 @@ onMounted(() => {
               width: calc((var(--size) * 2) - (var(--border) + var(--toggle-p)) * 2);
               height: fit-content;
 
-              >* {
+              > * {
                      z-index: 1;
                      grid-column: span 1 / span 1;
                      grid-column-start: 2;
@@ -83,16 +85,12 @@ onMounted(() => {
                      }
 
                      &:nth-child(2) {
-                            color: var(--color-base-100)
-                                   /* var(--color-base-100) */
-                            ;
+                            color: var(--color-base-100) /* var(--color-base-100) */;
                             rotate: 0deg;
                      }
 
                      &:nth-child(3) {
-                            color: var(--color-base-100)
-                                   /* var(--color-base-100) */
-                            ;
+                            color: var(--color-base-100) /* var(--color-base-100) */;
                             opacity: 0%;
                             rotate: -15deg;
                      }
@@ -112,26 +110,20 @@ onMounted(() => {
 
               &:before {
                      position: relative;
-                     inset-inline-start: calc(0.25rem
-                                   /* 4px */
-                                   * 0)
-                            /* 0rem = 0px */
-                     ;
+                     inset-inline-start: calc(0.25rem /* 4px */ * 0) /* 0rem = 0px */;
                      grid-column-start: 2;
                      grid-row-start: 1;
                      aspect-ratio: 1 / 1;
                      height: 100%;
-                     border-radius: var(--radius-selector)
-                            /* var(--radius-selector) */
-                     ;
+                     border-radius: var(--radius-selector) /* var(--radius-selector) */;
                      background-color: currentColor;
                      translate: 0;
                      --tw-content: "";
                      content: var(--tw-content);
                      transition: background-color 0.1s, translate 0.2s, inset-inline-start 0.2s;
-                     box-shadow: 0 -1px oklch(0% 0 0 / calc(var(--depth) * 0.1))
-                            /* #000000 */
-                            inset, 0 8px 0 -4px oklch(100% 0 0 / calc(var(--depth) * 0.1)) inset, 0 1px color-mix(in oklab, currentColor calc(var(--depth) * 10%), #0000);
+                     box-shadow: 0 -1px oklch(0% 0 0 / calc(var(--depth) * 0.1)) /* #000000 */ inset,
+                            0 8px 0 -4px oklch(100% 0 0 / calc(var(--depth) * 0.1)) inset,
+                            0 1px color-mix(in oklab, currentColor calc(var(--depth) * 10%), #0000);
                      background-size: auto, calc(var(--noise) * 100%);
                      background-image: none, var(--fx-noise);
               }
@@ -140,20 +132,14 @@ onMounted(() => {
                      &:before {
                             outline-style: var(--tw-outline-style);
                             outline-width: 1px;
-                            outline-offset: calc(1px * -1)
-                                   /* -1px */
-                            ;
+                            outline-offset: calc(1px * -1) /* -1px */;
                      }
               }
 
               @media print {
                      &:before {
-                            outline: 0.25rem
-                                   /* 4px */
-                                   solid;
-                            outline-offset: -1rem
-                                   /* -16px */
-                            ;
+                            outline: 0.25rem /* 4px */ solid;
+                            outline-offset: -1rem /* -16px */;
                      }
               }
 
@@ -167,21 +153,11 @@ onMounted(() => {
               &[aria-checked="true"],
               &:has(> input:checked) {
                      grid-template-columns: 1fr 1fr 0fr;
-                     background-color: var(--color-base-100)
-                            /* var(--color-base-100) */
-                     ;
-                     --input-color: var(--color-base-content)
-                            /* var(--color-base-content) */
-                     ;
+                     background-color: var(--color-base-100) /* var(--color-base-100) */;
+                     --input-color: var(--color-base-content) /* var(--color-base-content) */;
 
                      &:before {
                             background-color: currentColor;
-                     }
-
-                     @starting-style {
-                            &:before {
-                                   opacity: 0;
-                            }
                      }
               }
 

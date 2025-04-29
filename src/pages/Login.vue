@@ -4,7 +4,7 @@ import ZInput from "@/components/library/ZInput.vue";
 import ZCheckbox from "@/components/library/ZCheckbox.vue";
 import ZButton from "@/components/library/ZButton.vue";
 import { UserIcon, LockIcon } from "@/components/svg";
-import ThemeButton from "@admin/login/ThemeButton.vue";
+import ThemeButton from "@/components/layout/ThemeButton.vue";
 import { useLoading } from "@/hooks/private/usePlugin";
 import { isExpire, diffSystem } from "@/hooks/useUtils";
 useLoading.show();
