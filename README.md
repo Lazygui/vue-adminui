@@ -6,6 +6,7 @@
 
 ## 技术栈
 
+- Node.js 20.13.1
 - Vue 3 (Composition API)
 - TypeScript
 - Vite
