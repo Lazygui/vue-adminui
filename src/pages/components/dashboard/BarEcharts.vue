@@ -1,5 +1,5 @@
 <template>
-       <z-card>
+       <z-card shadow="hover">
               <div ref="barEcharts" class="w-full h-full"></div>
        </z-card>
 </template>
