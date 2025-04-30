@@ -13,7 +13,7 @@ import BarEcharts from "./components/dashboard/BarEcharts.vue";
 </script>
 <style scoped lang="scss">
 .Dashboard {
-       border: 1px solid red;
+       // border: 1px solid red;
        box-sizing: border-box;
        font-size: 20px;
        color: #333;

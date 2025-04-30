@@ -21,7 +21,7 @@ interface Props {
         * 卡片内边距
         * @default '2rem'
         */
-       padding?: string
+       padding?: string;
        /**
         * 阴影显示模式
         * - 'always': 始终显示
@@ -29,25 +29,19 @@ interface Props {
         * - 'hover': 悬停时显示
         * @default 'always'
         */
-       shadow?: 'always' | 'never' | 'hover'
-       /**
-        * 阴影颜色值，支持CSS box-shadow语法
-        * @default '0 1px 3px rgba(0, 0, 0, 0.1)'
-        */
-       shadowColor?: string
+       shadow?: "always" | "never" | "hover";
        /**
         * 自定义CSS类名，会应用到卡片根元素
         * @default ''
         */
-       bodyClass?: string
+       bodyClass?: string;
 }
 
 withDefaults(defineProps<Props>(), {
-       padding: '2rem',
-       shadow: 'always',
-       shadowColor: '0 1px 3px rgba(0, 0, 0, 0.1)',
-       bodyClass: '',
-})
+       padding: "2rem",
+       shadow: "always",
+       bodyClass: ""
+});
 </script>
 
 <template>
@@ -62,14 +56,14 @@ withDefaults(defineProps<Props>(), {
        display: flex;
        padding: v-bind(padding);
        background-color: color-mix(in oklab, var(--color-base-100) 95%, transparent);
-       border-color: color-mix(in oklab, var(--color-base-300) 50%, transparent);
+       border-color: color-mix(in oklab, var(--color-base-300) 100%, transparent);
        border-radius: 0.5rem;
        border-width: 1px;
        border-style: solid;
        transition: box-shadow 0.2s ease;
        max-width: 100%;
        max-height: 100%;
-       $shadow-color: v-bind(shadowColor);
+       $shadow-color: 0px 0px 12px color-mix(in oklab, var(--color-neutral) 10%, transparent);
 
        &.shadow-always {
               box-shadow: $shadow-color;
