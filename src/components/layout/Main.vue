@@ -19,7 +19,7 @@ const breadcrumbs = computed((): RouteRecordRaw => {
               <Sidebar :is-show-sidebar="isShowSidebar" />
               <div
                      class="router-container w-full bg-base grow transition-all duration-300 ease-in-out"
-                     :class="`${isShowSidebar ? 'lg:pl-72' : 'lg:pl-0'}`"
+                     :class="`${isShowSidebar ? 'lg:pl-72' : 'pl-0'}`"
               >
                      <div class="header sticky w-full flex items-center h-16 shrink-0 gap-x-4 sm:gap-x-6 sm:px-6 lg:px-8 border-b-1">
                             <!-- 菜单栏收缩  -->
