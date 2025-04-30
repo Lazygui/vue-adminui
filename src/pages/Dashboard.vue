@@ -1,5 +1,7 @@
 <template>
-       <div class="Dashboard w-full h-full">欢迎来到仪表盘页面！</div>
+       <div class="Dashboard w-full h-full">
+              <div>欢迎来到仪表盘页面！</div>
+       </div>
 </template>
 <script lang="ts" setup></script>
 <style scoped lang="scss">
