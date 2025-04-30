@@ -1,5 +1,9 @@
 {
-  "extends": "./tsconfig.json",
+  /*
+  报错找不到路径时，请先检查时候存在@vue/tsconfig
+  pnpm install @vue/tsconfig --save-dev
+  */
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     /* Linting */
