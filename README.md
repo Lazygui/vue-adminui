@@ -1,8 +1,11 @@
 # Vue 3 + TypeScript + Vite 后台管理系统
 
-这是一个基于Vue 3、TypeScript和Vite构建的后台管理系统模板，包含了常用的组件、路由、网络请求等基础功能。
+## 项目旨在提供一个基础的搭建框架，方便快速开发后台管理系统。
+
+这是一个基于 Vue 3、TypeScript 和 Vite 构建的响应式后台管理系统模板，包含了常用的组件、路由、网络请求等基础功能。
 
 ## 技术栈
+
 - Vue 3 (Composition API)
 - TypeScript
 - Vite
@@ -54,45 +57,57 @@ vue-adminui/
 ## 主要功能
 
 1. **组件系统**
-   - 通用组件：Loading加载状态
-   - UI组件库：卡片(ZCard)、输入框(ZInput)等
-   - SVG图标组件：用户(User)、锁(Lock)等图标
+
+      - 通用组件：Loading 加载状态
+      - UI 组件库：卡片(ZCard)、输入框(ZInput)等
+      - SVG 图标组件：用户(User)、锁(Lock)等图标
 
 2. **路由系统**
-   - 基于vue-router的路由配置
-   - 包含登录页和仪表盘页
+
+      - 基于 vue-router 的路由配置
+      - 包含登录页和仪表盘页
 
 3. **网络请求**
-   - 封装了Fequest请求类
-   - 提供了请求实例管理
+
+      - 封装了 Fequest 请求类
+      - 提供了请求实例管理
 
 4. **状态管理**
-   - 使用自定义Hook管理状态
-   - 提供本地存储Hook
+
+      - 使用自定义 Hook 管理状态
+      - 提供本地存储 Hook
 
 5. **样式系统**
-   - 使用SCSS预处理器
-   - 包含响应式断点定义
-   - 提供常用类名工具
+
+      - 使用 SCSS 预处理器/主题切换
+      - tailwindcss4
+      - 提供常用颜色类名(可自行添加)
+
+6. **Vite 插件**
+      - unplugin-auto-import/vite 自动导入
 
 ## 快速开始
 
 1. 安装依赖
+
 ```bash
 pnpm install
 ```
 
 2. 启动开发服务器
+
 ```bash
 pnpm run dev
 ```
 
 3. 构建生产版本
+
 ```bash
 pnpm run build
 ```
 
 ## 参考文档
+
 - [Vue 3 文档](https://vuejs.org/)
 - [Vite 文档](https://vitejs.dev/)
 - [TypeScript 文档](https://www.typescriptlang.org/)
