@@ -6,6 +6,7 @@
 // biome-ignore lint: disable
 export {}
 declare global {
+  const Echarts: typeof import('../../hooks/useEcharts')['Echarts']
   const Fequest: typeof import('../../hooks/useFech')['Fequest']
   const StorageKeys: typeof import('../../hooks/useLocalStore')['StorageKeys']
   const computed: typeof import('vue')['computed']
@@ -24,6 +25,9 @@ declare global {
 }
 // for type re-export
 declare global {
+  // @ts-ignore
+  export type { Echarts } from '../../hooks/useEcharts'
+  import('../../hooks/useEcharts')
   // @ts-ignore
   export type { CommonResult } from '../../hooks/useFech'
   import('../../hooks/useFech')
