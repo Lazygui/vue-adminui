@@ -6,31 +6,28 @@
 // biome-ignore lint: disable
 export {}
 declare global {
-  const Fequest: typeof import('../../hooks/useFech')['Fequest']
-  const StorageKeys: typeof import('../../hooks/useLocalStore')['StorageKeys']
-  const computed: typeof import('vue')['computed']
-  const defineComponent: typeof import('vue')['defineComponent']
-  const defineEmits: typeof import('vue')['defineEmits']
-  const defineProps: typeof import('vue')['defineProps']
-  const diffSystem: typeof import('../../hooks/useUtils')['diffSystem']
-  const isExpire: typeof import('../../hooks/useUtils')['isExpire']
-  const onMounted: typeof import('vue')['onMounted']
-  const onUnmounted: typeof import('vue')['onUnmounted']
-  const ref: typeof import('vue')['ref']
-  const storage: typeof import('../../hooks/useLocalStore')['storage']
-  const useFequest: typeof import('../../hooks/useFech')['useFequest']
-  const useRoute: typeof import('vue-router')['useRoute']
-  const useRouter: typeof import('vue-router')['useRouter']
-  const wait: typeof import('../../hooks/useUtils')['wait']
-  const watch: typeof import('vue')['watch']
-  const watchEffect: typeof import('vue')['watchEffect']
+       const Fequest: typeof import("../../hooks/useFech")["Fequest"];
+       const StorageKeys: typeof import("../../hooks/useLocalStore")["StorageKeys"];
+       const computed: typeof import("vue")["computed"];
+       const defineComponent: typeof import("vue")["defineComponent"];
+       const defineEmits: typeof import("vue")["defineEmits"];
+       const defineProps: typeof import("vue")["defineProps"];
+       const onMounted: typeof import("vue")["onMounted"];
+       const onUnmounted: typeof import("vue")["onUnmounted"];
+       const ref: typeof import("vue")["ref"];
+       const storage: typeof import("../../hooks/useLocalStore")["storage"];
+       const useFequest: typeof import("../../hooks/useFech")["useFequest"];
+       const useRoute: typeof import("vue-router")["useRoute"];
+       const useRouter: typeof import("vue-router")["useRouter"];
+       const watch: typeof import("vue")["watch"];
+       const watchEffect: typeof import("vue")["watchEffect"];
 }
 // for type re-export
 declare global {
-  // @ts-ignore
-  export type { CommonResult } from '../../hooks/useFech'
-  import('../../hooks/useFech')
-  // @ts-ignore
-  export type { StorageKeys } from '../../hooks/useLocalStore'
-  import('../../hooks/useLocalStore')
+       // @ts-ignore
+       export type { CommonResult } from "../../hooks/useFech";
+       import("../../hooks/useFech");
+       // @ts-ignore
+       export type { StorageKeys } from "../../hooks/useLocalStore";
+       import("../../hooks/useLocalStore");
 }
