@@ -48,7 +48,17 @@ export const routes: RouteRecordRaw[] = [
                             meta: {
                                    name: "组件展示",
                                    icon: "Cube"
-                            }
+                            },
+                            children: [
+                                   {
+                                          path: "show",
+                                          component: () => import("@/pages/Dashboard.vue"),
+                                          meta: {
+                                                 name: "组件展示",
+                                                 icon: "Cube"
+                                          }
+                                   }
+                            ]
                      }
               ]
        },
