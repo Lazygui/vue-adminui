@@ -1,7 +1,7 @@
 <template>
        <div class="Dashboard w-full h-full overflow-x-hidden overflow-y">
-              <div>欢迎来到仪表盘页面！</div>
-              <div class="w-full grid grid-cols-3 gap-4">
+              <h1 class="text-3xl mb-5">欢迎来到仪表盘页面！</h1>
+              <div class="w-full grid grid-cols-3 gap-4 overflow-x-hidden">
                      <BarEcharts class="h-92"></BarEcharts>
                      <BarEcharts class="h-92"></BarEcharts>
                      <BarEcharts class="h-92"></BarEcharts>
@@ -15,7 +15,6 @@ import BarEcharts from "./components/dashboard/BarEcharts.vue";
 .Dashboard {
        // border: 1px solid red;
        box-sizing: border-box;
-       font-size: 20px;
        color: #333;
        text-align: center;
        margin-top: 20px;
