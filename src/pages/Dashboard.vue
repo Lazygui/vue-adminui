@@ -1,15 +1,22 @@
 <template>
        <div class="Dashboard w-full h-full overflow-x-hidden overflow-y">
-              <h1 class="text-3xl mb-5">欢迎来到仪表盘页面！</h1>
-              <div class="w-full grid grid-cols-3 gap-4 overflow-x-hidden">
-                     <BarEcharts class="h-92"></BarEcharts>
-                     <BarEcharts class="h-92"></BarEcharts>
-                     <BarEcharts class="h-92"></BarEcharts>
+              <h1 class="text-3xl mb-5 text-base-content select-none">欢迎来到仪表盘页面！</h1>
+              <div class="w-full grid lg:grid-cols-3 sm:grid-cols-1 gap-4 overflow-x-hidden *:h-92">
+                     <BarEcharts></BarEcharts>
+                     <BarEcharts></BarEcharts>
+                     <LineEcharts></LineEcharts>
+                     <PieEcharts></PieEcharts>
+                     <CircularEcharts></CircularEcharts>
+                     <RoseEcharts></RoseEcharts>
               </div>
        </div>
 </template>
 <script lang="ts" setup>
 import BarEcharts from "./components/dashboard/BarEcharts.vue";
+import LineEcharts from "./components/dashboard/LineEcharts.vue";
+import PieEcharts from "./components/dashboard/PieEcharts.vue";
+import CircularEcharts from "./components/dashboard/CircularEcharts.vue";
+import RoseEcharts from "./components/dashboard/RoseEcharts.vue";
 </script>
 <style scoped lang="scss">
 .Dashboard {
