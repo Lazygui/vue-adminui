@@ -39,7 +39,7 @@ export const routes: RouteRecordRaw[] = [
                             component: () => import("@/pages/TableShow.vue"),
                             meta: {
                                    name: "表格页",
-                                   icon: "Table"
+                                   icon: "TableCells"
                             }
                      },
                      {

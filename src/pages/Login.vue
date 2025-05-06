@@ -3,7 +3,6 @@ import ZCard from "@/components/library/ZCard.vue";
 import ZInput from "@/components/library/ZInput.vue";
 import ZCheckbox from "@/components/library/ZCheckbox.vue";
 import ZButton from "@/components/library/ZButton.vue";
-import { UserIcon, LockIcon } from "@/components/svg";
 import ThemeButton from "@/components/layout/ThemeButton.vue";
 import { useLoading } from "@/hooks/private/usePlugin";
 import { isExpire, diffSystem } from "@/hooks/private/useUtils";
@@ -65,7 +64,7 @@ onMounted(async () => {
                                                  required
                                                  class="w-full"
                                                  label="账号"
-                                                 :icon="UserIcon"
+                                                 icon="User"
                                                  v-model="form.username"
                                                  placeholder="请输入账号"
                                           ></z-input>
@@ -73,7 +72,7 @@ onMounted(async () => {
                                                  required
                                                  class="w-full"
                                                  label="密码"
-                                                 :icon="LockIcon"
+                                                 icon="LockClosed"
                                                  type="password"
                                                  v-model="form.password"
                                                  placeholder="请输入密码"

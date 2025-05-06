@@ -19,6 +19,9 @@
       ],
       "@admin/*": [
         "src/pages/components/*"
+      ],
+      "@svg": [
+        "src/components/svg/index.vue"
       ]
     }
   },

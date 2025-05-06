@@ -2,13 +2,14 @@
        <div class="theme-button flex items-center">
               <label class="toggle text-base-content">
                      <input type="checkbox" class="theme-controller" value="dark" @change="handleThemeChange" :checked="theme === 'dark'" />
-                     <SunIcon aria-label="sun"></SunIcon>
-                     <MoonIcon aria-label="moon"></MoonIcon>
+                     <Icon name="Sun" :is-size="false"></Icon>
+                     <Icon name="Moon" :is-size="false"></Icon>
               </label>
        </div>
 </template>
 
 <script setup lang="ts">
+import Icon from "@svg";
 type ITheme = "dark" | "light";
 const emit = defineEmits<{
        (e: "update:modelValue", el: ITheme): void;

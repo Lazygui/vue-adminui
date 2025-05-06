@@ -1,38 +1,49 @@
 <script setup lang="ts">
-import type { Component } from 'vue'
-type InputType = 'text' | 'password' | 'radio'
-const props = withDefaults(defineProps<{
-       label: string
-       labelPost?: 'top' | 'left'
-       icon?: Component
-       type?: InputType
-       placeholder?: string
-       modelValue?: string
-       required?: boolean
-}>(), {
-       labelPost: 'top',
-       type: 'text',
-       modelValue: '',
-       required: false
-})
+import Icon from "@svg";
+type InputType = "text" | "password" | "radio";
+const props = withDefaults(
+       defineProps<{
+              label: string;
+              labelPost?: "top" | "left";
+              icon?: string;
+              type?: InputType;
+              placeholder?: string;
+              modelValue?: string;
+              required?: boolean;
+       }>(),
+       {
+              labelPost: "top",
+              type: "text",
+              modelValue: "",
+              required: false
+       }
+);
 const emit = defineEmits<{
-       (e: 'update:modelValue', el: string): void,
-}>()
+       (e: "update:modelValue", el: string): void;
+}>();
 </script>
 
 <template>
        <div class="z-input">
-              <label class="label" :class="{ 'label-top': labelPost === 'top', 'label-left': labelPost === 'left' }"
-                     v-if="props.type === 'text' || props.type === 'password'">
+              <label
+                     class="label"
+                     :class="{ 'label-top': labelPost === 'top', 'label-left': labelPost === 'left' }"
+                     v-if="props.type === 'text' || props.type === 'password'"
+              >
                      {{ props.label }}
-                     <div class="input-Iocn border block input">
-                            <div class="inputIcon" v-show="props.icon">
-                                   <component :is="props.icon" class="icon"></component>
+                     <div class="input-Icon border block input">
+                            <div class="inputIcon" v-if="props.icon">
+                                   <Icon :name="props.icon" class="icon" :is-show="false"></Icon>
                             </div>
-                            <input class="bg-transparent caret-color" :type="props.type" :required="props.required"
-                                   :placeholder="props.placeholder" :autocomplete="type === 'password' ? 'off' : 'on'"
+                            <input
+                                   class="bg-transparent caret-color"
+                                   :type="props.type"
+                                   :required="props.required"
+                                   :placeholder="props.placeholder"
+                                   :autocomplete="type === 'password' ? 'off' : 'on'"
                                    :value="props.modelValue"
-                                   @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)" />
+                                   @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)"
+                            />
                      </div>
               </label>
        </div>
@@ -72,8 +83,7 @@ const emit = defineEmits<{
                      }
               }
 
-              .input-Iocn {
-
+              .input-Icon {
                      .inputIcon {
                             pointer-events: none;
                             display: flex;
@@ -89,13 +99,7 @@ const emit = defineEmits<{
 
                      .caret-color {
                             color: color-mix(in oklab, var(--color-base-content) 90%, transparent);
-
-
-
-
                      }
-
-
               }
 
               .border {
@@ -129,18 +133,16 @@ const emit = defineEmits<{
                      border-start-end-radius: 0.5rem;
                      border-end-start-radius: 0.5rem;
                      border-end-end-radius: 0.5rem;
-                     box-shadow: 0 1px color-mix(in oklab, var(--color-primary) calc(0 * 10%), #0000) inset, 0 -1px oklch(100% 0 0 / calc(0 * 0.1)) inset;
+                     box-shadow: 0 1px color-mix(in oklab, var(--color-primary) calc(0 * 10%), #0000) inset,
+                            0 -1px oklch(100% 0 0 / calc(0 * 0.1)) inset;
                      --size: calc(var(--size-field, 0.25rem) * 10);
 
-
-
                      &:focus-within {
-                            box-shadow: 0 1px color-mix(in oklab, var(--color-primary) calc(0* 10%), #0000);
+                            box-shadow: 0 1px color-mix(in oklab, var(--color-primary) calc(0 * 10%), #0000);
                             outline: 2px solid var(--color-primary);
                             outline-offset: 2px;
                             isolation: isolate;
                      }
-
               }
 
               input {
@@ -151,7 +153,5 @@ const emit = defineEmits<{
                      }
               }
        }
-
-
 }
 </style>

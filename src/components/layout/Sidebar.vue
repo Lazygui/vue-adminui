@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Icon from "@svg";
 import type { RouteRecordRaw } from "vue-router";
 import { routes } from "@/router";
 const route = useRoute();
@@ -37,7 +38,7 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
                                           class="ui_item group rounded-lg flex gap-x-3 p-2 text-sm/6 font-semibold text-base-content"
                                           :class="{ 'bg-click': item.meta!.current }"
                                    >
-                                          <component :is="`${item.meta!.icon}Icon`" class="size-6" />
+                                          <Icon :name="item.meta!.icon as string" class="size-6"></Icon>
                                           {{ item.meta!.name }}
                                    </RouterLink>
                             </li>

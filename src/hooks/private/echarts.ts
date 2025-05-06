@@ -1,6 +1,7 @@
 import * as echarts from "echarts/core";
 import { BarChart, LineChart, PieChart, GaugeChart } from "echarts/charts";
 import {
+       ToolboxComponent,
        TitleComponent,
        DataZoomComponent,
        TooltipComponent,
@@ -47,6 +48,7 @@ export type ECOption = ComposeOption<
 
 // 注册必须的组件
 echarts.use([
+       ToolboxComponent,
        DataZoomComponent,
        TitleComponent,
        TooltipComponent,

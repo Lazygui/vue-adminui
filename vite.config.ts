@@ -12,7 +12,8 @@ export default defineConfig({
        resolve: {
               alias: {
                      "@": path.resolve(__dirname, "./src"),
-                     "@admin": path.resolve(__dirname, "./src/pages/components")
+                     "@admin": path.resolve(__dirname, "./src/pages/components"),
+                     "@svg": path.resolve(__dirname, "./src/components/svg/index.vue")
               }
        }
 });

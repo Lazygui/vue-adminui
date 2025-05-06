@@ -8,8 +8,8 @@ import "./scss/index.scss";
 import { IconPlugin } from "@/components/svg";
 
 const app = createApp(App);
-app.use(IconPlugin);
 app.use(router);
+app.use(IconPlugin);
 // app.component()
 // 自动注册所有自定义指令
 directives.forEach((directive) => {
