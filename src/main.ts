@@ -3,7 +3,7 @@ import "./style.css";
 import App from "./App.vue";
 import directives from "./components/general/index";
 import { router } from "@/router/index";
-import "./scss/index.scss";
+// import "./scss/index.scss";
 //全局svg注册
 import { IconPlugin } from "@/components/svg";
 

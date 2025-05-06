@@ -52,14 +52,14 @@ onMounted(async () => {
 
 <template>
        <div class="login flex relative w-full h-full items-center justify-center to-indigo-900 from-blue-900\/70" v-if="loading">
-              <z-card class="login-card w-96">
+              <z-card class="w-108">
                      <div class="w-full">
                             <div class="text-center">
                                    <h2 class="text-3xl font-extrabold text-base-content tracking-tight mb-1">用户登录</h2>
                                    <p class="text-sm text-base-content">请输入您的账号和密码</p>
                             </div>
                             <div class="form w-full box-border mt-8">
-                                   <form @submit.prevent="submit">
+                                   <form @submit.prevent="submit" class="w-full">
                                           <z-input
                                                  required
                                                  class="w-full"

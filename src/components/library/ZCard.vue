@@ -28,16 +28,18 @@ interface Props {
         * @default 'always'
         */
        shadow?: "always" | "never" | "hover";
+
+       class?: string;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
        padding: "2rem",
        shadow: "always"
 });
 </script>
 
 <template>
-       <div :class="['z-card', `shadow-${shadow}`]">
+       <div :class="[`${props.class || ''}`, 'z-card', `shadow-${props.shadow}`]">
               <slot></slot>
        </div>
 </template>
