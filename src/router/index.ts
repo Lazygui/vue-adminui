@@ -36,7 +36,7 @@ export const routes: RouteRecordRaw[] = [
                      },
                      {
                             path: "table",
-                            component: () => import("@/pages/Dashboard.vue"),
+                            component: () => import("@/pages/TableShow.vue"),
                             meta: {
                                    name: "表格页",
                                    icon: "Table"
