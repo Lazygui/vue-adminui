@@ -1,0 +1,124 @@
+{
+	"红边框": {
+		"scope": "css,scss",
+		"prefix": "border",
+		"body": [
+			"border: 1px solid red;",
+			"box-sizing: border-box;"
+		],
+		"description": "红边框"
+	},
+	"单监听": {
+		"prefix": "watch",
+		"body": [
+			"watch(() => $0, (newVal: any, oldVal: any) => {",
+			"console.log('🚀 ~ file: ~ watch ~ oldVal:', oldVal)",
+			"console.log('🚀 ~ file: ~ watch ~ newVal:', newVal)",
+			"",
+			"})"
+		],
+		"description": "单监听"
+	},
+	"多监听": {
+		"prefix": "watchEffect",
+		"body": [
+			"watchEffect(() => {",
+			"  $0",
+			"})"
+		],
+		"description": "多监听"
+	},
+	"设置背景图": {
+		"scope": "css,scss",
+		"prefix": "background",
+		"body": [
+			"background-image: url('$0');",
+			"background-repeat: no-repeat;",
+			"background-size: 100% 100%;"
+		],
+		"description": "设置背景图"
+	},
+	"计算属性": {
+		"scope": "typescript,javascript",
+		"prefix": "computed",
+		"body": [
+			"computed(() => {",
+			"       $0",
+			"})"
+		],
+		"description": "computed计算属性"
+	},
+	"接口类型定义": {
+		"scope": "vue,typescript,javascript",
+		"prefix": "interface",
+		"body": [
+			"interface IData {",
+			"$0",
+			"}"
+		],
+		"description": "interface接口"
+	},
+	"字传父方法": {
+		"scope": "typescript,javascript",
+		"prefix": "emit",
+		"body": [
+			"const emit = defineEmits<{",
+			"       (e: '$0', el: any): void,",
+			"}>()"
+		],
+		"description": "emit"
+	},
+	"函数注释": {
+		"prefix": "vue",
+		"body": [
+			"",
+			"/**",
+			" * $0",
+			" * @param  {*}",
+			" */"
+		],
+		"description": "函数注释"
+	},
+	"map循环": {
+		"scope": "typescript",
+		"prefix": ".map",
+		"body": [
+			".map((item:any,index:number) => {",
+			"$0",
+			"})"
+		],
+		"description": "map循环"
+	},
+	"filter过滤": {
+		"prefix": ".filter",
+		"body": [
+			".filter((item: any,index:number):boolean => $0)"
+		],
+		"description": "filter过滤"
+	},
+	"传值": {
+		"scope": "typescript,javascript",
+		"prefix": "props",
+		"body": [
+			"const props = withDefaults(defineProps<{",
+			"     $0",
+			"}>(), {",
+			"",
+			"})"
+		],
+		"description": "props父传子参数"
+	},
+	"文件头部注释": {
+		"prefix": "<!--",
+		"body": [
+			"<!--",
+			" * @FileDescription: 该文件的描述信息",
+			" * @Author: 作者信息",
+			" * @Date: 文件创建时间",
+			" * @LastEditors: 最后更新作者",
+			" * @LastEditTime: 最后更新时间",
+			" -->"
+		],
+		"description": "文件头部注释"
+	}
+}

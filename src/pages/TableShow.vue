@@ -50,6 +50,7 @@
 </template>
 <script lang="ts" setup>
 import { h } from "vue";
+import toast from "@/components/general/toast";
 import ZTable from "@/components/library/ZTable.vue";
 const tableData = ref([
        {
@@ -127,7 +128,7 @@ const actions: any[] = [
        }
 ];
 const copy = () => {
-       console.log("点击了");
+       toast.error("Successfully toasted!");
 };
 </script>
 <style scoped lang="scss">
