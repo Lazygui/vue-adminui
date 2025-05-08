@@ -2,54 +2,81 @@
  * @FileDescription: 消息通知
  * @Author: zhouzhijun
  * @Date: 2025-5-7
- * @Version: 1.0.0
+ * @Version: 1.0.1
  * 1.0.0 /:实现消息通知组件的基本样式，位置上中，类型错误，动画开始结束过渡。
+ * 1.0.1 /:通知窗口的位置增加 "top-left" | "top-center" | "top-right" 、支持使用Unicode图标。
  -->
 <template>
        <div
               class="toaster_row"
               :id="`toaster_${props.id}`"
-              style="
-                     left: 16px;
-                     right: 16px;
-                     display: flex;
-                     position: absolute;
-                     transition: 230ms cubic-bezier(0.21, 1.02, 0.73, 1);
-                     top: 16px;
-                     justify-content: center;
-              "
-              :style="`transform: translateY(${props.offset}px);`"
+              :style="{
+                     transform: `translateY(${props.offset}px)`,
+                     justifyContent: justifyContent,
+                     top: topPosition ? '0px' : undefined,
+                     bottom: topPosition ? undefined : '0px'
+              }"
        >
-              <div class="toaster_card" :class="{ toaster_leave: !visible, toaster_enter: visible }">
-                     <div class="toaster_Icon">
+              <div :style="{ ...props.style }" class="toaster_card" :class="{ toaster_leave: !visible, toaster_enter: visible }">
+                     <div class="toaster_Icon" v-if="!props.Unicode">
                             <div class="toaster_loading"></div>
                             <div class="toaster_type">
-                                   <div class="toaster_error"></div>
+                                   <div class="toaster" :class="`${props.type}_Icon`"></div>
                             </div>
                      </div>
+                     <div class="toaster_unicode" v-else>{{ props.Unicode }}</div>
                      <div role="status" aria-live="polite" class="toaster_message">{{ props.message }}</div>
               </div>
        </div>
 </template>
 <script lang="ts" setup>
 import { onMounted } from "vue";
+type ToasterType = "error" | "success" | "Unicode";
+type ToasterPosition = "top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right";
 const props = withDefaults(
        defineProps<{
               id: string;
               offset: number;
               message: string;
+              type: ToasterType;
+              duration: number;
+              Unicode?: string;
+              style?: CSSStyleValue;
+              position: ToasterPosition;
        }>(),
-       {}
+       {
+              position: "top-center"
+       }
 );
 const visible = ref(true);
+const justifyContent = computed(() => {
+       if (props.position.includes("left")) {
+              return "flex-start";
+       } else if (props.position.includes("center")) {
+              return "center";
+       } else if (props.position.includes("right")) {
+              return "flex-end";
+       }
+       return "center";
+});
+const topPosition = computed((): boolean => {
+       return props.position.includes("top");
+});
 onMounted(async () => {
        setTimeout(() => {
               visible.value = false;
-       }, 3000);
+       }, props.duration);
 });
 </script>
 <style lang="scss" scoped>
+@use "./toastIcon.scss";
+@use "./animation.scss";
 .toaster_row {
+       left: 0px;
+       right: 0px;
+       display: flex;
+       position: absolute;
+       transition: 230ms cubic-bezier(0.21, 1.02, 0.73, 1);
        z-index: 9999;
        .toaster_card {
               display: flex;
@@ -79,87 +106,25 @@ onMounted(async () => {
                             border-color: #e0e0e0;
                             border-right-color: #616161;
                             animation: loading 1s linear infinite;
-                            @keyframes loading {
-                                   0% {
-                                          transform: rotate(0deg);
-                                   }
-                                   100% {
-                                          transform: rotate(360deg);
-                                   }
-                            }
                      }
                      .toaster_type {
                             position: absolute;
-
-                            .toaster_error {
+                            .toaster {
                                    width: 20px;
                                    opacity: 0;
                                    height: 20px;
                                    border-radius: 10px;
-                                   background: #ff4b4b;
+                                   animation-delay: 100ms;
                                    position: relative;
                                    transform: rotate(45deg);
-                                   animation: error 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-                                   animation-delay: 100ms;
-
-                                   &::before {
-                                          animation: errorBefore 0.15s ease-out forwards;
-                                          animation-delay: 180ms;
-                                          content: "";
-                                          position: absolute;
-                                          border-radius: 3px;
-                                          background: #fff;
-                                          bottom: 9px;
-                                          left: 4px;
-                                          height: 2px;
-                                          width: 12px;
-                                   }
-                                   &::after {
-                                          content: "";
-                                          animation: errorAfter 0.15s ease-out forwards;
-                                          animation-delay: 150ms;
-                                          position: absolute;
-                                          border-radius: 3px;
-                                          opacity: 0;
-                                          background: #fff;
-                                          bottom: 9px;
-                                          left: 4px;
-                                          height: 2px;
-                                          width: 12px;
-                                   }
-
-                                   @keyframes error {
-                                          0% {
-                                                 transform: scale(0) rotate(45deg);
-                                                 opacity: 0;
-                                          }
-                                          100% {
-                                                 transform: scale(1) rotate(45deg);
-                                                 opacity: 1;
-                                          }
-                                   }
-
-                                   @keyframes errorBefore {
-                                          0% {
-                                                 transform: scale(0) rotate(90deg);
-                                                 opacity: 0;
-                                          }
-                                          100% {
-                                                 transform: scale(1) rotate(90deg);
-                                                 opacity: 1;
-                                          }
-                                   }
-                                   @keyframes errorAfter {
-                                          0% {
-                                                 transform: scale(0);
-                                                 opacity: 0;
-                                          }
-                                          100% {
-                                                 transform: scale(1);
-                                                 opacity: 1;
-                                          }
-                                   }
                             }
+                     }
+                     .toaster_unicode {
+                            position: relative;
+                            transform: scale(0.6);
+                            opacity: 0.4;
+                            min-width: 20px;
+                            animation: unicode 0.3s 0.12s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
                      }
               }
               .toaster_message {
@@ -174,30 +139,9 @@ onMounted(async () => {
 }
 .toaster_leave {
        animation: 0.35s cubic-bezier(0.21, 1.02, 0.73, 1) 0s 1 normal forwards running exitAnimation;
-       @keyframes exitAnimation {
-              0% {
-                     transform: translate3d(0, 0, -1px) scale(1);
-                     opacity: 1;
-              }
-              100% {
-                     transform: translate3d(0, -150%, -1px) scale(0.6);
-                     opacity: 0;
-              }
-       }
 }
 
 .toaster_enter {
        animation: 0.35s cubic-bezier(0.21, 1.02, 0.73, 1) 0s 1 normal forwards running enterAnimation;
-
-       @keyframes enterAnimation {
-              0% {
-                     transform: translate3d(0, -200%, 0) scale(0.6);
-                     opacity: 0.5;
-              }
-              100% {
-                     transform: translate3d(0, 0, 0) scale(1);
-                     opacity: 1;
-              }
-       }
 }
 </style>

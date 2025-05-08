@@ -1,6 +1,17 @@
 import { ref, render, createVNode } from "vue";
 import ZToast from "./ZToast.vue";
-
+// 类型工具：过滤掉必选属性，只保留可选属性
+type OptionalProperties<T> = {
+       [K in keyof T as T[K] extends Required<T>[K] ? never : K]: T[K];
+};
+type ToasterPosition = "top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right";
+interface ToasterOption {
+       type: "error" | "success" | "Unicode";
+       duration: number;
+       style?: Record<string, string>;
+       Unicode?: string;
+       position?: ToasterPosition;
+}
 /**
  * 唯一全局容器
  */
@@ -21,7 +32,7 @@ const createToaster = () => {
 
 createToaster();
 
-const showToast = async (message: string) => {
+const showToast = async (message: string, options: ToasterOption) => {
        // 为弹窗分配一个唯一的 ID
        const id = Date.now().toString();
 
@@ -29,7 +40,8 @@ const showToast = async (message: string) => {
               id,
               message,
               offset: 0,
-              leaveOffset: 0
+              leaveOffset: 0,
+              ...options
        });
        // 创建一个容器来挂载虚拟节点
        const container = document.createElement("div");
@@ -41,32 +53,34 @@ const showToast = async (message: string) => {
        if (toasts.value.length > 0) {
               updateOffsets();
        }
+
        toastContainer!.appendChild(container);
-       toasts.value.unshift({ id, container });
+       toasts.value.unshift({ id, container, options });
        setTimeout(() => {
               // 从列表中移除当前弹窗
               toasts.value = toasts.value.filter((toast) => toast.id !== id);
               // 销毁组件并移除 DOM 节点
               render(null, container);
               container.remove();
-       }, 3500);
+       }, options.duration + 100);
 };
 const updateOffsets = () => {
-       let totalOffset = 0; // 初始偏移量，根据需要调整
+       let totalOffset = 0;
        toasts.value.forEach((toast) => {
               const height = toast.container.firstElementChild.clientHeight;
-
               const vnode = createVNode(ZToast, {
                      message: toast.container.innerText || "",
                      id: toast.container.id,
-                     offset: totalOffset + height + BASE_OFFEST
+                     offset: totalOffset + height + BASE_OFFEST,
+                     ...toast.options
               });
               render(vnode, toast.container);
               totalOffset += height + BASE_OFFEST;
        });
 };
-const error = (message: string) => {
-       showToast(message);
-};
+type ExposeFunction = OptionalProperties<ToasterOption>;
 
-export default { error };
+const error = (message: string, options?: ExposeFunction) => showToast(message, { type: "error", duration: 3000, ...options });
+const success = (message: string, options?: ExposeFunction) => showToast(message, { type: "success", duration: 3000, ...options });
+
+export default { error, success };

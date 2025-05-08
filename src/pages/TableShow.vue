@@ -128,7 +128,7 @@ const actions: any[] = [
        }
 ];
 const copy = () => {
-       toast.error("Successfully toasted!");
+       toast.success("Successfully toasted!");
 };
 </script>
 <style scoped lang="scss">
