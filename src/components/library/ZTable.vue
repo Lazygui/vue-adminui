@@ -45,7 +45,7 @@ const defaultContent = (row: RowData, column: Column) => {
                             <table class="table table-zebra w-full">
                                    <thead>
                                           <tr>
-                                                 <th v-for="column in props.columns" :key="column.key" :class="column.className || ''">
+                                                 <th v-for="column in props.columns" :key="column.key" >
                                                         {{ column.title }}
                                                  </th>
                                                  <th v-if="props.actions && props.actions.length > 0"></th>
