@@ -5,9 +5,10 @@
 </template>
 <script lang="ts" setup>
 import ZCard from "@/components/library/ZCard.vue";
-import type { ECOption } from "@/hooks/private/echarts";
+import type { ECOption, EChartsType } from "@/hooks/private/echarts";
 const echart = new Echarts();
 const lineEcharts = ref<HTMLElement>();
+const echartInstance = ref<EChartsType | null>(null);
 const option = computed((): ECOption => {
        return {
               tooltip: {
@@ -53,10 +54,18 @@ const option = computed((): ECOption => {
               ]
        };
 });
+const resize = () => {
+       if (echartInstance.value) {
+              echartInstance.value.resize();
+       }
+}
 onMounted(() => {
        if (lineEcharts.value) {
-              echart.init(lineEcharts.value);
-              echart.render(option.value);
+              echartInstance.value = echart.init(lineEcharts.value);
+              if (echartInstance.value) {
+                     echartInstance.value.setOption(option.value);
+                     useEventListener("resize", useDebounce(resize, 500))
+              }
        }
 });
 onUnmounted(() => {

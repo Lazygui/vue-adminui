@@ -1,16 +1,17 @@
 import echarts from "./private/echarts";
-import type { ECOption } from "./private/echarts";
+import type { ECOption,EChartsType } from "./private/echarts";
 export class Echarts {
-       private echartInstance: echarts.ECharts | null = null;
+       private echartInstance: EChartsType | null = null;
        constructor() {}
-       public init = (html: HTMLElement | undefined | null): void => {
+       public init = (html: HTMLElement | undefined | null): EChartsType |null=> {
               if (!html) {
                      console.error("HTML element is null or undefined");
-                     return;
+                     return this.echartInstance;
               }
               if (this.echartInstance === null) {
                      this.echartInstance = echarts.init(html);
               }
+              return this.echartInstance
        };
        public render = (option: ECOption): void => {
               if (!option) {

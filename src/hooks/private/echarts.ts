@@ -1,4 +1,5 @@
 import * as echarts from "echarts/core";
+export type EChartsType = echarts.ECharts;
 import { BarChart, LineChart, PieChart, GaugeChart } from "echarts/charts";
 import {
        ToolboxComponent,

@@ -16,6 +16,7 @@ export default {
                             'defineComponent',
                             'defineProps',
                             'defineEmits',
+                            "markRaw"
                      ],
                      'vue-router': [
                             'useRouter',

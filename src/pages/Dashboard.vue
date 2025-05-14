@@ -1,7 +1,7 @@
 <template>
-       <div class="Dashboard w-full h-full overflow-x-hidden overflow-y">
+       <div class="Dashboard w-full h-full ">
               <h1 class="text-3xl mb-5 text-base-content select-none">欢迎来到仪表盘页面！</h1>
-              <div class="w-full grid lg:grid-cols-3 sm:grid-cols-1 gap-4 overflow-x-hidden *:h-92">
+              <div class="w-full grid lg:grid-cols-3 sm:grid-cols-1 gap-4  *:h-92 ">
                      <BarEcharts></BarEcharts>
                      <LineEcharts></LineEcharts>
                      <BarEcharts></BarEcharts>
