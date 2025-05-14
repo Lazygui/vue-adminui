@@ -39,7 +39,7 @@ const props = withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-       <div :class="[`${props.class || ''}`, 'z-card', `shadow-${props.shadow}`]">
+       <div class="z-card card border-1" :class="[`${props.class || ''}`,  `shadow-${props.shadow}`]">
               <slot></slot>
        </div>
 </template>
@@ -49,12 +49,7 @@ const props = withDefaults(defineProps<Props>(), {
        position: relative;
        display: flex;
        padding: v-bind(padding);
-       background-color: color-mix(in oklab, var(--color-base-100) 95%, transparent);
        border-color: color-mix(in oklab, var(--color-border-base) 10%, transparent);
-       border-radius: 0.5rem;
-       border-width: 1px;
-       border-style: solid;
-       transition: box-shadow 0.2s ease;
        max-width: 100%;
        max-height: 100%;
        $shadow-color: 0px 0px 12px color-mix(in oklab, var(--color-border-base) 10%, transparent);
