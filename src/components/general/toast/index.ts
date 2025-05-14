@@ -18,7 +18,7 @@ interface ToasterOption {
 let toastContainer: HTMLElement | null = null;
 const BASE_OFFEST = 5;
 const toasts = ref<any[]>([]);
-const createToaster = () => {
+(() => {
        if (!toastContainer) {
               toastContainer = document.createElement("div");
               toastContainer.id = "_rht_toaster";
@@ -28,9 +28,7 @@ const createToaster = () => {
               toastContainer.style.pointerEvents = "none";
               document.body.appendChild(toastContainer);
        }
-};
-
-createToaster();
+})()
 
 const showToast = async (message: string, options: ToasterOption) => {
        // 为弹窗分配一个唯一的 ID
