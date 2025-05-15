@@ -8,20 +8,20 @@ import { onUnmounted,  watch, type Ref } from 'vue';
  * @param options - 事件监听器选项（可选）
  * @returns 一个手动卸载的函数
  */
-export function useEventListener(
+export function useEventListener<T extends Event>(
   target: Ref<EventTarget | null | undefined> | EventTarget,
   event: string,
-  listener: EventListenerOrEventListenerObject,
+  listener: (event: T) => void,
   options?: boolean | AddEventListenerOptions
 ): () => void;
 
-export function useEventListener(
+export function useEventListener<T extends Event>(
   event: string,
-  listener: EventListenerOrEventListenerObject,
+  listener: (event: T) => void,
   options?: boolean | AddEventListenerOptions
 ): () => void;
 
-export  function useEventListener(
+export  function useEventListener<T extends Event>(
   ...args:
     | [Ref<EventTarget | null | undefined> | EventTarget, string, EventListenerOrEventListenerObject, (boolean | AddEventListenerOptions)?]
     | [string, EventListenerOrEventListenerObject, (boolean | AddEventListenerOptions)?]
@@ -29,7 +29,7 @@ export  function useEventListener(
   // 解析参数
   let target: Ref<EventTarget | null | undefined> | EventTarget;
   let event: string;
-  let listener: EventListenerOrEventListenerObject;
+  let listener: (event: T) => void;
   let options: boolean | AddEventListenerOptions | undefined;
 
   if (args.length >= 3) {
@@ -58,8 +58,8 @@ export  function useEventListener(
     }
 
     if (el) {
-      el.addEventListener(event, listener, options);
-      cleanup = () => el!.removeEventListener(event, listener, options);
+      el.addEventListener(event, listener as EventListener, options);
+      cleanup = () => el!.removeEventListener(event, listener as EventListener, options);
     }
   };
 
