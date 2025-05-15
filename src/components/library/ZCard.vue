@@ -33,13 +33,13 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-       padding: "2rem",
        shadow: "always"
 });
 </script>
 
 <template>
-       <div class="z-card card border-1" :class="[`${props.class || ''}`,  `shadow-${props.shadow}`]">
+       <div class="z-card card border-1 p-8"
+              :class="[`${props.class || ''}`, `shadow-${props.shadow}`, `${props.padding || ''}`]">
               <slot></slot>
        </div>
 </template>
@@ -48,10 +48,10 @@ const props = withDefaults(defineProps<Props>(), {
 .z-card {
        position: relative;
        display: flex;
-       padding: v-bind(padding);
-       border-color: color-mix(in oklab, var(--color-border-base) 10%, transparent);
        max-width: 100%;
        max-height: 100%;
+       border-color: color-mix(in oklab, var(--color-border-base) 10%, transparent);
+       background-color: color-mix(in oklab, var(--color-base-100) 95%, transparent);
        $shadow-color: 0px 0px 12px color-mix(in oklab, var(--color-border-base) 10%, transparent);
 
        &.shadow-always {
