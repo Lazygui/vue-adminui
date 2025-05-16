@@ -25,19 +25,15 @@ const currentNavigation = computed((): RouteRecordRaw[] => {
 </script>
 
 <template>
-       <div
-              class="lg-sidebar hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col gap-y-2 overflow-y-auto px-6 pt-4 border-r border-solid transition-transform duration-300 ease-in-out"
-              :class="`${props.isShowSidebar ? 'translate-x-0' : '-translate-x-full'}`"
-       >
+       <div class="lg-sidebar hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col gap-y-2 overflow-y-auto px-6 pt-4 border-r border-solid transition-transform duration-5000 ease-in-out"
+              :class="`${props.isShowSidebar ? 'translate-x-0' : '-translate-x-full'}`">
               <div class="shrink-0 text-xl font-bold items-center flex py-4 w-full text-base-content">高效后台管理</div>
               <nav class="w-full flex flex-col flex-1 mt-1">
                      <ul role="list" class="box-border gap-y-7 space-y-1">
                             <li v-for="item in currentNavigation">
-                                   <RouterLink
-                                          :to="`/admin/${item.path}`"
+                                   <RouterLink :to="`/admin/${item.path}`"
                                           class="ui_item group rounded-lg flex gap-x-3 p-2 text-sm/6 font-semibold text-base-content"
-                                          :class="{ 'bg-click': item.meta!.current }"
-                                   >
+                                          :class="{ 'bg-click': item.meta!.current }">
                                           <Icon :name="item.meta!.icon as string" class="size-6"></Icon>
                                           {{ item.meta!.name }}
                                    </RouterLink>

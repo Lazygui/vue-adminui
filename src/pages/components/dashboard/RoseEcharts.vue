@@ -1,13 +1,13 @@
 <template>
        <z-card shadow="hover">
-              <div ref="lineEcharts" class="w-full h-full"></div>
+              <div ref="roseEcharts" class="w-full h-full"></div>
        </z-card>
 </template>
 <script lang="ts" setup>
 import ZCard from "@/components/library/ZCard.vue";
 import type { ECOption, EChartsType } from "@/hooks/private/echarts";
 const echart = new Echarts();
-const lineEcharts = ref<HTMLElement>();
+const roseEcharts = ref<HTMLElement>();
 const echartInstance = ref<EChartsType | null>(null);
 const option = computed((): ECOption => {
        return {
@@ -44,11 +44,11 @@ const resize = () => {
        }
 }
 onMounted(() => {
-       if (lineEcharts.value) {
-              echartInstance.value = echart.init(lineEcharts.value);
+       if (roseEcharts.value) {
+              echartInstance.value = echart.init(roseEcharts.value);
               if (echartInstance.value) {
                      echartInstance.value.setOption(option.value);
-                     useEventListener("resize", useDebounce(resize, 500))
+                     useResize(roseEcharts.value, useDebounce(resize, 500))
               }
        }
 });

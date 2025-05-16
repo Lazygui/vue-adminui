@@ -44,7 +44,7 @@ onMounted(() => {
               echartInstance.value = markRaw(echart.init(lineEcharts.value) as EChartsType);
               if (echartInstance.value) {
                      echartInstance.value.setOption(option.value);
-                     useEventListener("resize", useDebounce(resize, 500))
+                     useResize(lineEcharts.value, useDebounce(resize, 500))
               }
        }
 });

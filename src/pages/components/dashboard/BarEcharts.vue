@@ -178,6 +178,7 @@ const option = computed((): ECOption => {
        };
 });
 const resize = () => {
+
        if (echartInstance.value) {
               echartInstance.value.resize();
        }
@@ -187,7 +188,7 @@ onMounted(() => {
               echartInstance.value = markRaw(echart.init(barEcharts.value) as EChartsType);
               if (echartInstance.value) {
                      echartInstance.value.setOption(option.value);
-                     // useEventListener("resize", useDebounce(resize, 500))
+                     useResize(barEcharts.value, useDebounce(resize, 500))
               }
 
        }
