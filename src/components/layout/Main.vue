@@ -29,7 +29,7 @@ const breadcrumbs = computed((): RouteRecordRaw => {
 
 <template>
        <div class="main-layout w-full h-full flex">
-              <div class="lg-sidebar hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col gap-y-2 overflow-y-auto px-6 pt-4 border-r border-solid transition-transform duration-300 ease-in-out"
+              <div class="lg-sidebar hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col gap-y-2 overflow-y-auto px-6 pt-4 border-r border-solid transition-transform duration-200 ease-in-out"
                      :class="`${isShowSidebar ? 'translate-x-0' : '-translate-x-full'}`">
                      <div class="shrink-0 text-xl font-bold items-center flex py-4 w-full text-base-content">高效后台管理
                      </div>
@@ -46,7 +46,7 @@ const breadcrumbs = computed((): RouteRecordRaw => {
                             </ul>
                      </nav>
               </div>
-              <div class="router-container w-full bg-base grow transition-all duration-300 ease-in-out"
+              <div class="router-container w-full bg-base grow transition-all duration-200 ease-in-out"
                      :class="`${isShowSidebar ? 'lg:pl-72' : 'pl-0'}`">
                      <div
                             class="header sticky w-full flex items-center h-16 shrink-0 gap-x-4 sm:gap-x-6 sm:px-6 lg:px-8 border-b-1">
@@ -69,7 +69,7 @@ const breadcrumbs = computed((): RouteRecordRaw => {
                                                         <component :is="`${breadcrumbs.meta!.icon}Icon`"
                                                                class="h-5 w-5 flex-shrink-0 transition-none" />
                                                         <span className="ml-2 text-base">{{ breadcrumbs.meta!.name
-                                                        }}</span>
+                                                               }}</span>
                                                  </div>
                                           </div>
                                    </div>
