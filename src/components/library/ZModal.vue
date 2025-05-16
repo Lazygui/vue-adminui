@@ -8,7 +8,7 @@ const props = withDefaults(defineProps<{
      * @default true
      * @type  {boolean}
      */
-    esc?: boolean
+    escape?: boolean
 
     /**
      * 模态框的标题， 也可通过具名 slot 
@@ -28,7 +28,7 @@ const props = withDefaults(defineProps<{
     footerClass?: string
 }>(), {
     modelValue: false,
-    esc: true,
+    escape: true,
     title: '',
     headerClass: ''
 })
@@ -45,7 +45,7 @@ const confirm = () => {
     emit('confirm')
 }
 onMounted(() => {
-    if (props.esc) {
+    if (props.escape) {
         useEventListener('keydown', (e: KeyboardEvent) => {
             if (e.key === 'Escape' || e.keyCode === 27) {
                 emit('update:modelValue', false)
@@ -66,7 +66,7 @@ onMounted(() => {
                     <h3 class="font-bold text-lg" v-else>{{ props.title }}</h3>
                 </div>
                 <div class="py-4">
-                    <input type="text" label="用户名" placeholder="用户名" />
+                    <slot></slot>
                 </div>
                 <div class="modal-action box-border">
                     <div v-if="!!slot.footer" :class="props.footerClass">
