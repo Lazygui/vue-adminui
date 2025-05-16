@@ -23,7 +23,7 @@ const form = ref<IForm>({
 const config = ref<Config>({
        system: ""
 });
-const remember = ref<boolean>(false);
+const remember = ref<boolean>(true);
 const disabled = ref<boolean>(false);
 const submit = () => {
        disabled.value = true;
@@ -51,7 +51,8 @@ onMounted(async () => {
 </script>
 
 <template>
-       <div class="login flex relative w-full h-full items-center justify-center to-indigo-900 from-blue-900\/70" v-if="loading">
+       <div class="login flex relative w-full h-full items-center justify-center to-indigo-900 from-blue-900\/70"
+              v-if="loading">
               <z-card class="w-108">
                      <div class="w-full">
                             <div class="text-center">
@@ -60,33 +61,21 @@ onMounted(async () => {
                             </div>
                             <div class="form w-full box-border mt-8">
                                    <form @submit.prevent="submit" class="w-full">
-                                          <z-input
-                                                 required
-                                                 class="w-full"
-                                                 label="账号"
-                                                 icon="User"
-                                                 v-model="form.username"
-                                                 placeholder="请输入账号"
-                                          ></z-input>
-                                          <z-input
-                                                 required
-                                                 class="w-full"
-                                                 label="密码"
-                                                 icon="LockClosed"
-                                                 type="password"
-                                                 v-model="form.password"
-                                                 placeholder="请输入密码"
-                                          ></z-input>
+                                          <z-input required class="w-full" label="账号" icon="User"
+                                                 v-model="form.username" placeholder="请输入账号"></z-input>
+                                          <z-input required class="w-full" label="密码" icon="LockClosed" type="password"
+                                                 v-model="form.password" placeholder="请输入密码"></z-input>
                                           <div class="flex justify-between items-center mb-6">
                                                  <div class="flex items-center">
-                                                        <z-checkbox label="记住密码" type="checkbox" v-model="remember"></z-checkbox>
+                                                        <z-checkbox label="记住密码" type="checkbox"
+                                                               v-model="remember"></z-checkbox>
                                                  </div>
                                                  <ThemeButton></ThemeButton>
                                           </div>
                                           <div class="text-center">
                                                  <z-button :disabled="disabled" type="primary" btn-type="submit">{{
                                                         disabled ? "登录中..." : "登录"
-                                                 }}</z-button>
+                                                        }}</z-button>
                                           </div>
                                    </form>
                             </div>
