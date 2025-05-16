@@ -187,7 +187,7 @@ onMounted(() => {
               echartInstance.value = markRaw(echart.init(barEcharts.value) as EChartsType);
               if (echartInstance.value) {
                      echartInstance.value.setOption(option.value);
-                     useEventListener("resize", useDebounce(resize, 500))
+                     // useEventListener("resize", useDebounce(resize, 500))
               }
 
        }

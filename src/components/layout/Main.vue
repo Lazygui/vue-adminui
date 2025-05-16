@@ -40,7 +40,7 @@ const breadcrumbs = computed((): RouteRecordRaw => {
                                                         <component :is="`${breadcrumbs.meta!.icon}Icon`"
                                                                class="h-5 w-5 flex-shrink-0" />
                                                         <span className="ml-2 text-base">{{ breadcrumbs.meta!.name
-                                                        }}</span>
+                                                               }}</span>
                                                  </div>
                                           </div>
                                    </div>

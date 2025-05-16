@@ -21,6 +21,7 @@ declare global {
   const useDebounce: typeof import('../../hooks/useVue')['useDebounce']
   const useEventListener: typeof import('../../hooks/useVue')['useEventListener']
   const useFequest: typeof import('../../hooks/useFech')['useFequest']
+  const useResize: typeof import('../../hooks/useVue')['useResize']
   const useRoute: typeof import('vue-router')['useRoute']
   const useRouter: typeof import('vue-router')['useRouter']
   const watch: typeof import('vue')['watch']
