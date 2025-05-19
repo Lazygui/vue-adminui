@@ -76,7 +76,7 @@ const defaultContent = (row: RowData, column: Column) => {
                                                         </td>
                                                         <td v-if="!!slot.active" class="align-middle">
                                                                <div class="flex justify-end items-center gap-2">
-                                                                      <slot name="active" :row="row"></slot>
+                                                                      <slot name="active" :row="{ ...row }"></slot>
                                                                </div>
                                                         </td>
                                                  </tr>
