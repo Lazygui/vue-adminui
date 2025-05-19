@@ -81,7 +81,7 @@ const tableData = ref([
        {
               tableId: 4,
               no: 1,
-              name: "张三sadsadsadsadsad张三sadsadsadsadsadsadsadsadsadsadsadsadadadsadsadsadsadsadsadsadasdsadsadsadfsdhfgsdkjghsdlghdflhglsdkhfglksdhjflksdlsadsadsadsadsadsadsadadadsadsadsadsadsadsadsadasdsadsadsadfsdhfgsdkjghsdlghdflhglsdkhfglksdhjflksdl"
+              name: "张三sadsadsadsadsad张三sdl"
        },
        {
               tableId: 5,
@@ -141,7 +141,7 @@ const confirm = () => {
        reset()
 }
 const copy = () => {
-       toast.success("Successfully toasted!");
+       toast.success("复制好了📋");
 };
 </script>
 <style scoped lang="scss"></style>
