@@ -4,6 +4,7 @@ const props = withDefaults(
               type?: "" | "primary" | "warning" | "error";
               btnType?: "submit" | "button" | "reset";
               disabled?: boolean;
+              class?: string;
        }>(),
        {
               type: "",
@@ -17,23 +18,11 @@ const emit = defineEmits<{
 
 <template>
        <div class="z-button">
-              <button
-                     :type="props.btnType"
-                     :class="['btn', props.type ? `btn-${props.type}` : '', 'w-full']"
-                     :disabled="props.disabled"
-                     @click="emit('click')"
-              >
+              <button :type="props.btnType" :class="['btn', props.type ? `btn-${props.type}` : '', props.class]"
+                     :disabled="props.disabled" @click="emit('click')">
                      <slot></slot>
               </button>
        </div>
 </template>
 
-<style scoped lang="scss">
-.z-button {
-       width: 100%;
-
-       .w-full {
-              width: 100%;
-       }
-}
-</style>
+<style scoped lang="scss"></style>

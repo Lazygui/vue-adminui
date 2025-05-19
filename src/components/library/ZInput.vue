@@ -25,24 +25,19 @@ const emit = defineEmits<{
 
 <template>
        <div class="z-input">
-              <label
-                     class="block text-sm font-medium text-base-content/90 w-full"
+              <label class="block text-sm font-medium text-base-content/90 w-full"
                      :class="{ 'label-top': labelPost === 'top', 'label-left': labelPost === 'left' }"
-                     v-if="props.type === 'text' || props.type === 'password'"
-              >
+                     v-if="props.type === 'text' || props.type === 'password'">
                      {{ props.label }}
-                     <div className="mt-2 input input-primary block w-full pl-10 border border-base-content/20">
-                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none" v-if="props.icon">
+                     <div class="mt-2 input input-primary block w-full  border border-base-content/20"
+                            :class="`${props.icon ? 'pl-10' : ''}`">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                                   v-if="props.icon">
                                    <Icon :name="props.icon" class="icon" :is-show="false"></Icon>
                             </div>
-                            <input
-                                   :type="props.type"
-                                   :required="props.required"
-                                   :placeholder="props.placeholder"
-                                   :autocomplete="type === 'password' ? 'off' : 'on'"
-                                   :value="props.modelValue"
-                                   @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)"
-                            />
+                            <input :type="props.type" :required="props.required" :placeholder="props.placeholder"
+                                   :autocomplete="type === 'password' ? 'off' : 'on'" :value="props.modelValue"
+                                   @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)" />
                      </div>
               </label>
        </div>
