@@ -33,7 +33,7 @@
                             <z-button class="btn-sm" type="primary" @click="editClick(scoped.row)">
                                    编辑
                             </z-button>
-                            <z-button class="btn-sm" type="error">
+                            <z-button class="btn-sm" type="error" @click="deleteClick(scoped.row)">
                                    删除
                             </z-button>
                      </template>
@@ -129,6 +129,11 @@ const editClick = (row: any) => {
        modal.value = true
        form.value = row
 }
+const deleteClick = (row: any) => {
+       modal.value = true
+       modalType.value = 3
+       form.value = row
+}
 const confirm = () => {
        modal.value = false
        if (modalType.value === 1) {
@@ -137,6 +142,8 @@ const confirm = () => {
               toast.success("修改成功!");
               const index = tableData.value.findIndex((item: any) => item.tableId === form.value.tableId);
               tableData.value[index].name = form.value.name;
+       } else if (modalType.value === 3) {
+              toast.success("删除成功!");
        }
        reset()
 }

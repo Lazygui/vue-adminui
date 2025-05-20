@@ -3,6 +3,7 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import { storage, StorageKeys } from "@/hooks/useLocalStore";
 import { Fequest } from "@/hooks/useFech";
 import { isExpire } from "@/hooks/private/useUtils";
+import {admin} from "./admin"
 /**
  * 路由配置
  * meta
@@ -25,42 +26,7 @@ export const routes: RouteRecordRaw[] = [
               path: "/admin",
               component: () => import("@/components/layout/Main.vue"),
               redirect: "/admin/home",
-              children: [
-                     {
-                            path: "home",
-                            component: () => import("@/pages/Dashboard.vue"),
-                            meta: {
-                                   name: "仪表盘",
-                                   icon: "Home"
-                            }
-                     },
-                     {
-                            path: "table",
-                            component: () => import("@/pages/TableShow.vue"),
-                            meta: {
-                                   name: "表格页",
-                                   icon: "TableCells"
-                            }
-                     },
-                     {
-                            path: "show",
-                            component: () => import("@/pages/Dashboard.vue"),
-                            meta: {
-                                   name: "组件展示",
-                                   icon: "Cube"
-                            },
-                            children: [
-                                   {
-                                          path: "show",
-                                          component: () => import("@/pages/Dashboard.vue"),
-                                          meta: {
-                                                 name: "组件展示",
-                                                 icon: "Cube"
-                                          }
-                                   }
-                            ]
-                     }
-              ]
+              children: admin
        },
        {
               path: "/user",

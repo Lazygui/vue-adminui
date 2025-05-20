@@ -27,6 +27,7 @@ declare module 'vue' {
 export const IconPlugin = {
        install(app: App) {
               Object.entries(InternalIcons).forEach(([name, component]) => {
+                     //@ts-ignore
                      app.component(name, component)
               })
        }

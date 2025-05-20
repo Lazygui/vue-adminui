@@ -1,13 +1,12 @@
 <script setup lang="ts">
 const props = withDefaults(
        defineProps<{
-              type?: "" | "primary" | "warning" | "error";
+              type?: "" | "primary" | "warning" | "error" | "success";
               btnType?: "submit" | "button" | "reset";
               disabled?: boolean;
               class?: string;
        }>(),
        {
-              type: "",
               btnType: "button"
        }
 );
@@ -18,7 +17,7 @@ const emit = defineEmits<{
 
 <template>
        <div class="z-button">
-              <button :type="props.btnType" :class="['btn', props.type ? `btn-${props.type}` : '', props.class]"
+              <button :type="props.btnType" class="btn" :class="[props.type ? `btn-${props.type}` : '', props.class]"
                      :disabled="props.disabled" @click="emit('click')">
                      <slot></slot>
               </button>
