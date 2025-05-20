@@ -1,53 +1,44 @@
 <template>
     <div class="ButtonShow w-full h-full grid lg:grid-cols-2 sm:grid-cols-1 gap-4">
-        <z-preview id="1" title="按钮颜色" :code="colorList">
-            <z-button>Default</z-button>
-            <z-button type="primary">Primary</z-button>
-            <z-button type="error">Error</z-button>
-            <z-button type="warning">Warning</z-button>
+        <z-preview id="1" title="带有关闭按钮的模态窗" :code="closeList">
+            <z-button @click="openModal(1)">打开模态窗</z-button>
         </z-preview>
-        <z-preview id="2" title="朴素按钮" :code="plainList">
-            <z-button type="primary" plain>Primary</z-button>
-            <z-button type="error" plain>Error</z-button>
-            <z-button type="warning" plain>Warning</z-button>
+        <z-preview id="2" title="使用ESC按键关闭的模态窗" :code="EscList">
+            <z-button @click="openModal(2)">打开模态窗</z-button>
         </z-preview>
-        <z-preview id="3" title="虚线按钮" :code="dashList">
-            <z-button dash>Default</z-button>
-            <z-button type="primary" dash>Primary</z-button>
-            <z-button type="error" dash>Error</z-button>
-            <z-button type="warning" dash>Warning</z-button>
-        </z-preview>
-        <z-preview id="4" title="文字按钮" :code="linkList">
-            <z-button type="primary" link>Primary</z-button>
-            <z-button type="error" link>Error</z-button>
-            <z-button type="warning" link>Warning</z-button>
-        </z-preview>
+        <z-modal v-model="modal1" title="Hello!" :escape="false">
+            <span>请点击右上角 ✕ 按钮关闭模态窗</span>
+            <template #footer></template>
+        </z-modal>
+        <z-modal v-model="modal2" title="Hello!" :show-close="false">
+            <span>请按下键盘左上角ESC按键关闭模态窗</span>
+            <template #footer></template>
+        </z-modal>
     </div>
 </template>
 <script lang="ts" setup>
+import ZModal from "@/components/library/ZModal.vue"
 import ZPreview from "@/components/library/ZPreview.vue"
 import ZButton from "@/components/library/ZButton.vue"
-const plainList = [
-    '<z-button type="primary" plain>Primary</z-button>',
-    '<z-button type="error" plain>Error</z-button>',
-    '<z-button type="warning" plain>Warning</z-button>'
+const modal1 = ref(false)
+const modal2 = ref(false)
+const openModal = (num: number) => {
+    switch (num) {
+        case 1:
+            modal1.value = true
+            break;
+        case 2:
+            modal2.value = true
+            break;
+    }
+}
+const closeList = [
+    '<z-button @click="modal=true">打开模态窗</z-button>',
+    '<z-modal v-model="modal" title="Hello!" :escape="false"><span>请点击右上角 ✕ 按钮关闭模态窗</span></z-modal>',
 ]
-const colorList = [
-    '<z-button>Default</z-button>',
-    '<z-button type="primary">Primary</z-button>',
-    '<z-button type="error">Error</z-button>',
-    '<z-button type="warning">Warning</z-button>'
-]
-const dashList = [
-    '<z-button dash>Default</z-button>',
-    '<z-button type="primary" dash>Primary</z-button>',
-    '<z-button type="error" dash>Error</z-button>',
-    '<z-button type="warning" dash>Warning</z-button>'
-]
-const linkList = [
-    '<z-button type="primary" link>Primary</z-button>',
-    '<z-button type="error" link>Error</z-button>',
-    '<z-button type="warning" link>Warning</z-button>'
+const EscList = [
+    '<z-button @click="modal=true">打开模态窗</z-button>',
+    '<z-modal v-model="modal" title="Hello!" :show-close="false">请按下键盘左上角ESC按键关闭模态窗</z-modal>',
 ]
 </script>
 <style scoped lang="scss"></style>
