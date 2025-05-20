@@ -7,69 +7,72 @@
 const props = defineProps<{
     code: string
 }>()
+const BASE_COLOR = "oklch(92% .004 286.32)";
+
+const getMixedColor = (hue: number) =>
+    `color-mix(in oklab, 
+    color-mix(in oklab, white 40%, ${BASE_COLOR}) 20%,
+    oklch(75% .3 ${hue})
+  )`;
+
 const COLOR_MAP = {
-    tagName: 'white',
-    attrName: 'color-mix(in oklab,color-mix(in oklab,white 40%, oklch(92% .004 286.32))20%,oklch(75% .3 337.94))',
-    attrValue: 'color-mix(in oklab,color-mix(in oklab,white 40%, oklch(92% .004 286.32))20%,oklch(75% .3 173.24))',
-    text: 'color-mix(in oklab,color-mix(in oklab,white 40%, oklch(92% .004 286.32))20%,oklch(75% .3 242.69))'
+    tagName: "white",
+    attrName: getMixedColor(337.94),
+    attrValue: getMixedColor(173.24),
+    text: getMixedColor(242.69)
+};
+// 匹配开始标签（含属性部分）
+const startTagRegex = /^<([^\s>]+)(.*?)>/
+// 匹配结束标签
+const endTagRegex = /<\/([^\s>]+)>$/
+// 匹配标签属性（支持带引号和不带引号）
+const attrRegex = /([^\s=]+)(?:=(["'])(.*?)\2)?/g
+const parseStartTag = (tagStr: string) => {
+    const segments = [];
+    const [_, tagName, attrs] = tagStr.match(startTagRegex) || [];
+    segments.push({
+        text: `<${tagName}`,
+        style: `color: ${COLOR_MAP.tagName}`
+    });
+    let attrMatch;
+    while ((attrMatch = attrRegex.exec(attrs)) !== null) {
+        const [_, name, quote, value] = attrMatch;
+        segments.push({
+            text: ` ${name}`,
+            style: `color: ${COLOR_MAP.attrName}`
+        });
+        if (value) {
+            segments.push(
+                { text: "=", style: `color: ${COLOR_MAP.tagName}` },
+                { text: `${quote}${value}${quote}`, style: `color: ${COLOR_MAP.attrValue}` }
+            );
+        }
+    }
+
+    segments.push({ text: ">", style: `color: ${COLOR_MAP.tagName}` });
+    return segments;
 };
 
 const parsedSegments = computed(() => {
-    const segments: Array<{ text: string; style: string }> = [];
-    const startTagMatch = props.code.match(/^<[^>]+>/);
-    const endTagMatch = props.code.match(/<\/[^>]+>$/);
-    if (!startTagMatch || !endTagMatch) {
-        throw new Error("Invalid template string");
+    try {
+        const startMatch = props.code.match(startTagRegex);
+        const endMatch = props.code.match(endTagRegex);
+        if (!startMatch || !endMatch) throw new Error();
+
+        const [startFull, tagName, attrs] = startMatch;
+        const content = props.code
+            .slice(startFull.length, -endMatch[0].length);
+
+        return [
+            ...parseStartTag(`<${tagName}${attrs}>`),
+            { text: content, style: `color: ${COLOR_MAP.text}` },
+            { text: endMatch[0], style: `color: ${COLOR_MAP.tagName}` }
+        ];
+    } catch {
+        return [{
+            text: props.code,
+            style: `color: ${COLOR_MAP.text}; opacity: 0.6`
+        }];
     }
-    const startTags = startTagMatch[0];
-    const endTag = endTagMatch[0];
-    const content = props.code.slice(startTags.length, -endTag.length);
-    if (startTags && startTags.length > 0) {
-        const startTag = startTags.replace(/^<|>$/g, '').split(' ')
-        segments.push({
-            text: `<${startTag[0]}`,
-            style: `color: ${COLOR_MAP.tagName}`
-        })
-        for (let i = 1; i < startTag.length; i++) {
-            const attr = startTag[i]
-            if (attr.includes("=")) {
-                const [attrName, attrValue] = attr.split("=")
-                segments.push({
-                    text: ` ${attrName}"`,
-                    style: `color: ${COLOR_MAP.attrName}`
-                })
-                segments.push({
-                    text: `=`,
-                    style: `color: ${COLOR_MAP.tagName}`
-                })
-                segments.push({
-                    text: `${attrValue}`,
-                    style: `color: ${COLOR_MAP.attrValue}`
-                })
-            } else {
-                segments.push({
-                    text: ` ${attr}`,
-                    style: `color: ${COLOR_MAP.attrName}`
-                })
-            }
-        }
-        segments.push({
-            text: `>`,
-            style: `color: ${COLOR_MAP.tagName}`
-        })
-    }
-    if (content && content.length > 0) {
-        segments.push({
-            text: `${content}`,
-            style: `color: ${COLOR_MAP.text}`
-        })
-    }
-    if (endTag && endTag.length > 0) {
-        segments.push({
-            text: `${endTag}`,
-            style: `color: ${COLOR_MAP.tagName}`
-        })
-    }
-    return segments;
 });
 </script>
