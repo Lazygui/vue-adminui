@@ -3,20 +3,36 @@
         <div class="flex items-center gap-2 pb-3 text-sm font-bold">
             <h4 class="component-preview-title mt-2 mb-1 text-lg font-semibold">{{ props.title }}</h4>
         </div>
-        <div class="tabs tabs-lift">
-            <input type="radio" class="tab [--tab-p:.75rem]" aria-label="预览" checked />
+        <div class="tabs tabs-lift ">
+            <input type="radio" class="tab [--tab-p:.75rem]" aria-label="预览" checked
+                :name="`preview_tab_${props.id}`" />
             <div class="tab-content border-base-300 overflow-x-auto">
                 <div
-                    class="preview bg-base-100 relative flex min-h-[6rem] max-w-4xl min-w-[18rem] flex-wrap items-center justify-center gap-2 overflow-x-hidden bg-cover bg-top p-4 xl:py-10">
+                    class="preview min-h-[6rem] bg-base-100 relative flex flex-wrap items-center justify-center gap-2 overflow-x-hidden bg-cover bg-top p-4 xl:py-10">
                     <slot></slot>
                 </div>
             </div>
+            <template v-if="props.code">
+                <input type="radio" :name="`preview_tab_${props.id}`"
+                    class="tab checked:text-neutral-content border-b-transparent! checked:[--tab-bg:var(--color-neutral)] checked:[--tab-border-color:var(--color-base-100)]"
+                    aria-label="HTML">
+                <div class="tab-content">
+                    <div class="code-wrapper">
+                        <div v-for="(item) in props.code">
+                            <PreviewCode :code="item"></PreviewCode>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
         </div>
     </div>
 </template>
 <script lang="ts" setup>
+import PreviewCode from "./children/PreviewCode.vue"
 const props = withDefaults(defineProps<{
-    code: string
+    id: string
+    code?: string[]
     title: string
     class?: string
 }>(), {
@@ -37,29 +53,13 @@ const props = withDefaults(defineProps<{
     }
 
     .code-wrapper {
+        background-color: var(--color-neutral);
         border-radius: var(--radius-box);
-
-        :deep() {
-            .tag {
-                color: white !important;
-            }
-
-            .name {
-                color: #79b8ff !important;
-            }
-
-            .attr-value {
-                color: #9ccc65 !important;
-            }
-
-            .class-value {
-                color: #b392f0 !important;
-            }
-        }
+        direction: ltr;
+        min-height: 7.5rem;
+        max-height: 24rem;
+        padding: .75rem 1rem;
+        font-size: .8125rem;
     }
-
-
-
-    /* class值（紫色） */
 }
 </style>
