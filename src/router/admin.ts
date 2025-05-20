@@ -33,7 +33,7 @@ export const admin:RouteRecordRaw[] = [
                             },    
                      },
                      {
-                            path: "button",
+                            path: "modal",
                             component: () => import("@/pages/components/component/ModalShow.vue"),
                             meta: {
                                    name: "Modal 模态窗",
