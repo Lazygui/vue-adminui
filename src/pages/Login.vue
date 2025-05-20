@@ -73,8 +73,9 @@ onMounted(async () => {
                                                  <ThemeButton></ThemeButton>
                                           </div>
                                           <div class="text-center">
-                                                 <z-button :disabled="disabled" type="primary" btn-type="submit">{{
-                                                        disabled ? "登录中..." : "登录"
+                                                 <z-button class="w-full" :disabled="disabled" type="primary"
+                                                        btn-type="submit">{{
+                                                               disabled ? "登录中..." : "登录"
                                                         }}</z-button>
                                           </div>
                                    </form>

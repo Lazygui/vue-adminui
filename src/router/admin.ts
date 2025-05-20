@@ -19,9 +19,20 @@ export const admin:RouteRecordRaw[] = [
        {
               path: "show",
               component: () => import("@/pages/ComponentDisplay.vue"),
+              redirect: "/admin/show/button",
               meta: {
                      name: "组件展示",
                      icon: "Cube"
-              }
+              },
+              children:[
+                     {
+                            path: "button",
+                            component: () => import("@/pages/components/component/ButtonShow.vue"),
+                            meta: {
+                                   name: "按钮",
+                                   icon: "Cube"
+                            },    
+                     }
+              ]
        }
 ]
