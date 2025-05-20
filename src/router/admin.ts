@@ -29,8 +29,14 @@ export const admin:RouteRecordRaw[] = [
                             path: "button",
                             component: () => import("@/pages/components/component/ButtonShow.vue"),
                             meta: {
-                                   name: "按钮",
-                                   icon: "Cube"
+                                   name: "Button 按钮",
+                            },    
+                     },
+                     {
+                            path: "button",
+                            component: () => import("@/pages/components/component/ModalShow.vue"),
+                            meta: {
+                                   name: "Modal 模态窗",
                             },    
                      }
               ]
