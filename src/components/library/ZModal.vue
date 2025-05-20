@@ -26,11 +26,18 @@ const props = withDefaults(defineProps<{
      * @type {string}
      */
     footerClass?: string
+    /**
+     * 是否显示关闭按钮
+     * @default true
+     * @type  {boolean}
+     */
+    showClose?: boolean
 }>(), {
     modelValue: false,
     escape: true,
     title: '',
-    headerClass: ''
+    headerClass: '',
+    showClose: true
 })
 const emit = defineEmits<{
     (e: "update:modelValue", value: boolean): void;
@@ -59,11 +66,13 @@ onMounted(() => {
     <transition name="zmodal">
         <div class="z-modal" v-show="modelValue">
             <div class="modal-body">
-                <div class="w-full" :class="props.headerClass">
+                <div class="w-full flex justify-between items-center" :class="props.headerClass">
                     <div v-if="!!slot.header">
                         <slot name="header"></slot>
                     </div>
                     <h3 class="font-bold text-lg" v-else>{{ props.title }}</h3>
+                    <button v-show="props.showClose" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                        @click="close">✕</button>
                 </div>
                 <div class="py-4">
                     <slot></slot>

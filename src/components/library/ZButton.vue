@@ -28,7 +28,7 @@ const emit = defineEmits<{
               <button :type="props.btnType" class="btn"
                      :class="[props.type ? `btn-${props.type}` : '', props.class, props.plain ? 'btn-soft' : '', props.dash ? 'btn-dash' : '', props.link ? 'btn-link' : '']"
                      :disabled="props.disabled" @click="emit('click')">
-                     <span :class="{ 'loading loading-spinner': props.loading }"></span>
+                     <span v-show="props.loading" :class="{ 'loading loading-spinner': props.loading }"></span>
                      <slot></slot>
               </button>
        </div>
