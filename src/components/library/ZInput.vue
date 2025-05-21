@@ -10,12 +10,17 @@ const props = withDefaults(
               placeholder?: string;
               modelValue?: string;
               required?: boolean;
+              disabled?: boolean;
+              activeColor?: "primary" | "error" | "success" | "warning";
+              inputClass?: string
        }>(),
        {
               labelPost: "top",
               type: "text",
               modelValue: "",
-              required: false
+              required: false,
+              disabled: false,
+              inputClass: ''
        }
 );
 const emit = defineEmits<{
@@ -30,14 +35,15 @@ const emit = defineEmits<{
                      v-if="props.type === 'text' || props.type === 'password'">
                      {{ props.label }}
                      <div class="mt-2 input input-primary block w-full  border border-base-content/20"
-                            :class="`${props.icon ? 'pl-10' : ''}`">
+                            :class="`${props.icon ? 'pl-10' : ''} ${props.inputClass}`">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
                                    v-if="props.icon">
                                    <Icon :name="props.icon" class="icon" :is-show="false"></Icon>
                             </div>
                             <input :type="props.type" :required="props.required" :placeholder="props.placeholder"
                                    :autocomplete="type === 'password' ? 'off' : 'on'" :value="props.modelValue"
-                                   @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)" />
+                                   @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)"
+                                   :disabled="props.disabled" />
                      </div>
               </label>
        </div>
