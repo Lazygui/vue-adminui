@@ -33,12 +33,43 @@ const openModal = (num: number) => {
     }
 }
 const closeList = [
-    '<z-button @click="modal=true">打开模态窗</z-button>',
-    '<z-modal v-model="modal" title="Hello!" :escape="false"><span>请点击右上角 ✕ 按钮关闭模态窗</span></z-modal>',
+    {
+        row: '<z-button @click="modal=true">打开模态窗</z-button>',
+        rowStyle: {
+            white: ['<z-button', '</z-button>'],
+            text: ['打开模态窗'],
+            propertyNmae: ['@click'],
+            propertyValue: ['modal=true']
+        }
+    },
+    {
+        row: '<z-modal v-model="modal" title="Hello!" :escape="false">\n    <span>请点击右上角 ✕ 按钮关闭模态窗</span>\n    <template #footer></template>\n</z-modal>',
+        rowStyle: {
+            white: ['<z-modal', '>', '<span>', '</span>', '<template', '</template>', '</z-modal>'],
+            text: ['请请点击右上角 ✕ 按钮关闭模态窗'],
+            propertyNmae: ['v-model', 'title', ':escape', '#footer'],
+            propertyValue: ['modal', 'Hello!', 'false']
+        }
+    }
 ]
 const EscList = [
-    '<z-button @click="modal=true">打开模态窗</z-button>',
-    '<z-modal v-model="modal" title="Hello!" :show-close="false">请按下键盘左上角ESC按键关闭模态窗</z-modal>',
+    {
+        row: '<z-button @click="modal=true">打开模态窗</z-button>',
+        rowStyle: {
+            white: ['<z-button', '</z-button>'],
+            text: ['打开模态窗'],
+            propertyNmae: ['@click'],
+            propertyValue: ['modal=true']
+        }
+    }, {
+        row: '<z-modal v-model="modal" title="Hello!" :show-close="false">\n    <span>请按下键盘左上角ESC按键关闭模态窗</span>\n    <template #footer></template>\n</z-modal>',
+        rowStyle: {
+            white: ['<z-modal', '>', '<span>', '</span>', '<template', '</template>', '</z-modal>'],
+            text: ['请请点击右上角 ✕ 按钮关闭模态窗'],
+            propertyNmae: ['v-model', 'title', '#footer', ':show-close'],
+            propertyValue: ['modal', 'Hello!', 'false']
+        }
+    }
 ]
 </script>
 <style scoped lang="scss"></style>

@@ -27,27 +27,132 @@
 <script lang="ts" setup>
 import ZPreview from "@/components/library/ZPreview.vue"
 import ZButton from "@/components/library/ZButton.vue"
-const plainList = [
-    '<z-button type="primary" plain>Primary</z-button>',
-    '<z-button type="error" plain>Error</z-button>',
-    '<z-button type="warning" plain>Warning</z-button>'
-]
 const colorList = [
-    '<z-button>Default</z-button>',
-    '<z-button type="primary">Primary</z-button>',
-    '<z-button type="error">Error</z-button>',
-    '<z-button type="warning">Warning</z-button>'
+    {
+        row: '<z-button>Default</z-button>',
+        rowStyle: {
+            white: ['<z-button>', '</z-button>'],
+            text: ['Default'],
+            propertyNmae: [],
+            propertyValue: []
+        }
+    }, {
+        row: '<z-button type="primary">Primary</z-button>',
+        rowStyle: {
+            white: ['<z-button', '>', '</z-button>'],
+            text: ['Primary'],
+            propertyNmae: ['type'],
+            propertyValue: ['primary']
+        }
+    }, {
+        row: '<z-button type="error">Error</z-button>',
+        rowStyle: {
+            white: ['<z-button', '>', '</z-button>'],
+            text: ['Error'],
+            propertyNmae: ['type'],
+            propertyValue: ['error']
+        }
+    }, {
+        row: '<z-button type="warning">Warning</z-button>',
+        rowStyle: {
+            white: ['<z-button', '>', '</z-button>'],
+            text: ['Warning'],
+            propertyNmae: ['type'],
+            propertyValue: ['warning']
+        }
+    }
 ]
+const plainList = [
+    {
+        row: '<z-button type="primary" plain>Primary</z-button>',
+        rowStyle: {
+            white: ['<z-button', '>', '</z-button>'],
+            text: ['Primary'],
+            propertyNmae: ['type', 'plain'],
+            propertyValue: ['primary']
+        }
+    },
+    {
+        row: '<z-button type="error" plain>Error</z-button>',
+        rowStyle: {
+            white: ['<z-button', '>', '</z-button>'],
+            text: ['Error'],
+            propertyNmae: ['type', 'plain'],
+            propertyValue: ['error']
+        }
+    },
+    {
+        row: '<z-button type="warning" plain>Warning</z-button>',
+        rowStyle: {
+            white: ['<z-button', '>', '</z-button>'],
+            text: ['Warning'],
+            propertyNmae: ['type', 'plain'],
+            propertyValue: ['warning']
+        }
+    }
+]
+
 const dashList = [
-    '<z-button dash>Default</z-button>',
-    '<z-button type="primary" dash>Primary</z-button>',
-    '<z-button type="error" dash>Error</z-button>',
-    '<z-button type="warning" dash>Warning</z-button>'
+    {
+        row: '<z-button dash>Default</z-button>',
+        rowStyle: {
+            white: ['<z-button', '>', '</z-button>'],
+            text: ['Default'],
+            propertyNmae: ['dash'],
+            propertyValue: []
+        }
+    }, {
+        row: '<z-button type="primary" dash>Primary</z-button>',
+        rowStyle: {
+            white: ['<z-button', '>', '</z-button>'],
+            text: ['Primary'],
+            propertyNmae: ['type', 'dash'],
+            propertyValue: ['primary']
+        }
+    }, {
+        row: '<z-button type="error" dash>Error</z-button>',
+        rowStyle: {
+            white: ['<z-button', '>', '</z-button>'],
+            text: ['Error'],
+            propertyNmae: ['type', 'dash'],
+            propertyValue: ['error']
+        }
+    }, {
+        row: '<z-button type="warning" dash>Warning</z-button>',
+        rowStyle: {
+            white: ['<z-button', '>', '</z-button>'],
+            text: ['Warning'],
+            propertyNmae: ['type', 'dash'],
+            propertyValue: ['warning']
+        }
+    }
 ]
 const linkList = [
-    '<z-button type="primary" link>Primary</z-button>',
-    '<z-button type="error" link>Error</z-button>',
-    '<z-button type="warning" link>Warning</z-button>'
+    {
+        row: '<z-button type="primary" link>Primary</z-button>',
+        rowStyle: {
+            white: ['<z-button', '>', '</z-button>'],
+            text: ['Primary'],
+            propertyNmae: ['type', 'link'],
+            propertyValue: ['primary']
+        }
+    }, {
+        row: '<z-button type="error" link>Error</z-button>',
+        rowStyle: {
+            white: ['<z-button', '>', '</z-button>'],
+            text: ['Error'],
+            propertyNmae: ['type', 'link'],
+            propertyValue: ['error']
+        }
+    }, {
+        row: '<z-button type="warning" link>Warning</z-button>',
+        rowStyle: {
+            white: ['<z-button', '>', '</z-button>'],
+            text: ['Warning'],
+            propertyNmae: ['type', 'link'],
+            propertyValue: ['warning']
+        }
+    }
 ]
 </script>
 <style scoped lang="scss"></style>

@@ -29,10 +29,10 @@
     </div>
 </template>
 <script lang="ts" setup>
-import PreviewCode from "./children/PreviewCode.vue"
+import PreviewCode, { type Segments } from "./children/PreviewCode.vue"
 const props = withDefaults(defineProps<{
     id: string
-    code?: string[]
+    code?: Segments[]
     title: string
     class?: string
 }>(), {
