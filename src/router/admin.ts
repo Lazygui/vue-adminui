@@ -1,5 +1,5 @@
 import type { RouteRecordRaw } from "vue-router";
-export const admin:RouteRecordRaw[] = [
+export const admin: RouteRecordRaw[] = [
        {
               path: "home",
               component: () => import("@/pages/Dashboard.vue"),
@@ -24,21 +24,28 @@ export const admin:RouteRecordRaw[] = [
                      name: "组件展示",
                      icon: "Cube"
               },
-              children:[
+              children: [
                      {
                             path: "button",
                             component: () => import("@/pages/components/component/ButtonShow.vue"),
                             meta: {
                                    name: "Button 按钮",
-                            },    
+                            },
                      },
                      {
                             path: "modal",
                             component: () => import("@/pages/components/component/ModalShow.vue"),
                             meta: {
                                    name: "Modal 模态窗",
-                            },    
-                     }
+                            },
+                     },
+                     // {
+                     //        path: "upload",
+                     //        component: () => import("@/pages/components/component/UploadShow.vue"),
+                     //        meta: {
+                     //               name: "Upload 上传",
+                     //        },
+                     // }
               ]
        }
 ]
