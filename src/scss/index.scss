@@ -22,6 +22,7 @@
        --color-error: oklch(71% 0.194 13.428);
        --color-error-content: oklch(27% 0.105 12.094);
        --color-border-base: oklch(20% 0 0);
+       --color-border-secondary:oklch(88% 0.02 260);
        --radius-selector: 0.5rem;
        --radius-field: 0.5rem;
        --radius-box: 0.5rem;
@@ -31,6 +32,7 @@
        --depth: 0;
        --noise: 0;
        --spacing: 0.25rem;
+       --color-text-regular: #606266;
 }
 
 [data-theme="dark"] {
@@ -56,6 +58,7 @@
        --color-error: oklch(71% 0.194 13.428);
        --color-error-content: oklch(27% 0.105 12.094);
        --color-border-base: oklch(100% 0.03 257);
+       --color-border-secondary:oklch(30% 0.02 260);
        --radius-selector: 0.5rem;
        --radius-field: 0.5rem;
        --radius-box: 0.5rem;
@@ -64,5 +67,5 @@
        --border: 1px;
        --depth: 0;
        --noise: 0;
-       --spacing: 0.25rem;
+       --spacing: 0.25rem;--color-text-regular: #CFD3DC;
 }

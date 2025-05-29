@@ -1,206 +1,216 @@
 <template>
-       <div class="file-upload">
-              <!-- 上传区域 -->
-              <div class="upload-area" @dragover.prevent="onDragOver" @dragleave="onDragLeave" @drop.prevent="onDrop"
-                     :class="{ 'drag-over': isDragOver }">
-                     <p>将文件拖拽到此处或</p>
-                     <button class="btn btn-primary" @click="triggerFileInput">点击上传</button>
-              </div>
-              <input type="file" ref="fileInput" @change="onFileChange" style="display: none" />
-
-              <!-- 错误提示 -->
-              <div v-if="errorMessage" class="text-error">{{ errorMessage }}</div>
-
-              <!-- 文件列表 -->
-              <div v-if="fileList.length > 0" class="file-list">
-                     <div v-for="(file, index) in fileList" :key="index" class="file-item">
-                            <!-- 图片模式 -->
-                            <div v-if="listType === 'picture' && isImage(file)">
-                                   <img :src="getImagePreview(file)" alt="Preview" class="file-preview" />
-                                   <div class="file-info">
-                                          <p>{{ file.name }}</p>
-                                          <p>{{ formatFileSize(file.size) }}</p>
+       <div class="z-upload" :class="{ 'is-drag': props.drag }" @click="handleClick">
+              <template v-if="props.drag">
+                     <div class="upload_dragger py-10 px-2.5" :class="{ 'is-dragger': dragover }" @drop.prevent="onDrop"
+                            @dragover.prevent="onDragover" @dragleave.prevent="dragover = false">
+                            <div v-if="!slots.default">
+                                   <i class="upload-icon">
+                                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+                                                 <path fill="currentColor"
+                                                        d="M544 864V672h128L512 480 352 672h128v192H320v-1.6c-5.376.32-10.496 1.6-16 1.6A240 240 0 0 1 64 624c0-123.136 93.12-223.488 212.608-237.248A239.808 239.808 0 0 1 512 192a239.872 239.872 0 0 1 235.456 194.752c119.488 13.76 212.48 114.112 212.48 237.248a240 240 0 0 1-240 240c-5.376 0-10.56-1.28-16-1.6v1.6z">
+                                                 </path>
+                                          </svg>
+                                   </i>
+                                   <div class="upload-text">
+                                          拖拽文件到这里 或 <em>点击上传</em>
                                    </div>
                             </div>
-                            <!-- 文字模式 -->
-                            <div v-else>
-                                   <p>{{ file.name }}</p>
-                                   <p>{{ formatFileSize(file.size) }}</p>
-                                   <p>{{ file.type }}</p>
-                            </div>
-                            <button class="btn btn-error btn-sm" @click="removeFile(index)">删除</button>
+                            <slot v-else></slot>
                      </div>
+              </template>
+              <template v-else>
+                     <slot></slot>
+              </template>
+              <input ref="inputRef" class="upload_input" name="file" :disabled="props.disabled" :multiple="multiple"
+                     :accept="accept" type="file" @change="handleChange" @click.stop />
+              <div class="upload_tip">
+                     <slot name="tip"></slot>
               </div>
        </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { useSlots } from 'vue';
+/**
+ * shallowRef ：想象你有一个文件夹，文件夹里有很多文件。shallowRef只会关注你是否更换了整个文件夹，而不会关心文件夹内部的文件是否被修改。
+ */
+import { shallowRef } from 'vue';
+interface UploadRawFile extends File {
+       uid: number
+       isDirectory?: boolean
+}
+const slots = useSlots()
+const props = withDefaults(
+       defineProps<{
+              modelValue: File[]
 
-// Props
-const props = defineProps({
-       maxSize: {
-              type: Number,
-              default: null, // 默认不限制文件大小
-       },
-       allowedTypes: {
-              type: Array as () => string[],
-              default: () => [], // 默认不限制文件类型
-       },
-       listType: {
-              type: String as () => 'text' | 'picture',
-              default: 'text',
-       },
-});
+              /**
+               * 上传数量限制
+               * @type  {number}
+               */
+              limit?: number
 
-// Emits
-const emit = defineEmits(['upload-success']);
+              /**
+               * 是否支持拖拽上传
+               * @type  {boolean}
+               */
+              drag?: boolean
+              /**
+               * 禁用上传
+               * @type  {boolean}
+               */
+              disabled?: boolean
 
-// Refs
-const fileInput = ref<HTMLInputElement | null>(null);
-const isDragOver = ref(false);
-const errorMessage = ref('');
-const fileList = ref<File[]>([]);
-
-// 将简化的文件类型转换为 MIME 类型
-const mimeTypes = computed(() => {
-       const typeMap: Record<string, string[]> = {
-              jpg: ['image/jpeg'],
-              png: ['image/png'],
-              svg: ['image/svg+xml'],
-              mp4: ['video/mp4'],
-              pdf: ['application/pdf'],
-              // 可以根据需要扩展更多类型
-       };
-
-       return props.allowedTypes.reduce((acc, type) => {
-              const mime = typeMap[type.toLowerCase()];
-              if (mime) {
-                     acc.push(...mime);
-              }
-              return acc;
-       }, [] as string[]);
-});
-
-// Methods
-const triggerFileInput = () => {
-       fileInput.value?.click();
-};
-
-const onDragOver = () => {
-       isDragOver.value = true;
-};
-
-const onDragLeave = () => {
-       isDragOver.value = false;
-};
-
-const onDrop = (event: DragEvent) => {
-       isDragOver.value = false;
-       const files = event.dataTransfer?.files;
-       if (files && files.length > 0) {
-              handleFile(files[0]);
+              /**
+               * 文件多选
+               * @type  {boolean}
+               */
+              multiple?: boolean
+              accept?: string
+              /**
+               * 超出上传数量时的钩子
+               * @param rawFile File[]
+               */
+              onExceed?: (rawFile: File[]) => void
+              /**
+               * 文件展示列表类型
+               * @type {'text' | 'picture'}
+               * @default 'text'
+               */
+              listType?: 'text' | 'picture'
+       }>(),
+       {
+              drag: false,
+              disabled: false,
+              multiple: false,
+              accept: '',
+              onExceed: () => { },
+              listType: 'text'
        }
-};
-
-const onFileChange = (event: Event) => {
-       const input = event.target as HTMLInputElement;
-       if (input.files && input.files.length > 0) {
-              handleFile(input.files[0]);
+);
+const emit = defineEmits<{
+       (e: "update:modelValue", el: File[]): void;
+}>();
+const dragover = ref(false)
+let fileList: File[] = []
+const inputRef = shallowRef<HTMLInputElement>()
+const handleClick = () => {
+       if (!props.disabled) {
+              inputRef.value!.value = ''
+              inputRef.value!.click()
        }
-};
+}
+const handleChange = (e: Event) => {
+       const files = (e.target as HTMLInputElement).files
+       if (!files) return
+       uploadFiles(Array.from(files))
+}
 
-const handleFile = (file: File) => {
-       // 校验文件类型
-       if (mimeTypes.value.length > 0 && !mimeTypes.value.includes(file.type)) {
-              errorMessage.value = `文件类型不支持，仅支持以下类型：${props.allowedTypes.join(', ')}`;
-              return;
-       }
+const uploadFiles = (files: File[]) => {
+       if (files.length === 0) return
 
-       // 校验文件大小
-       if (props.maxSize !== null && file.size > props.maxSize) {
-              errorMessage.value = `文件大小超过限制，最大允许 ${formatFileSize(props.maxSize)}`;
-              return;
+       const { limit, multiple, onExceed } = props
+
+       if (limit && props.modelValue.length + files.length > limit) {
+              onExceed(files)
+              return
        }
 
-       errorMessage.value = '';
-
-       if (props.listType) {
-              // 列表模式：追加文件
-              fileList.value.push(file);
-       } else {
-              // 单文件模式：覆盖文件
-              fileList.value = [file];
+       if (!multiple) {
+              files = files.slice(0, 1)
        }
 
-       emit('upload-success', file);
-};
+       fileList.push(...files)
+       emit('update:modelValue', fileList)
+}
 
-const removeFile = (index: number) => {
-       fileList.value.splice(index, 1);
-};
+const onDrop = (e: DragEvent) => {
+       if (props.disabled) return
+       dragover.value = false
+       e.stopPropagation()
+       const files = Array.from(e.dataTransfer!.files) as UploadRawFile[]
+       if (files.length === 0 && !files) return
+       uploadFiles(files)
 
-const isImage = (file: File) => {
-       return file.type.startsWith('image/');
-};
-
-const getImagePreview = (file: File) => {
-       return URL.createObjectURL(file);
-};
-
-const formatFileSize = (size: number) => {
-       if (size < 1024) return `${size} B`;
-       if (size < 1024 * 1024) return `${(size / 1024).toFixed(2)} KB`;
-       return `${(size / (1024 * 1024)).toFixed(2)} MB`;
-};
+}
+const onDragover = () => {
+       if (!props.disabled) dragover.value = true
+}
+onMounted(() => {
+       fileList = []
+})
+onUnmounted(() => {
+       fileList = []
+})
 </script>
 
 <style scoped lang="scss">
-.file-upload {
+.z-upload {
+       display: inline-flex;
+       justify-content: center;
+       align-items: center;
+       cursor: pointer;
+       outline: none;
+
+       .upload_input {
+              display: none;
+       }
+
+       .upload_tip {
+              font-size: 12px;
+              color: var(--color-text-regular);
+              margin-top: 7px;
+       }
+}
+
+.upload_dragger {
+       background-color: var(--color-base-100);
+       border: 1px dashed var(--color-border-secondary);
+       border-radius: 6px;
+       box-sizing: border-box;
        text-align: center;
+       cursor: pointer;
+       position: relative;
+       overflow: hidden;
 
-       .upload-area {
-              border: 2px dashed #ccc;
-              padding: 20px;
-              border-radius: 8px;
-              cursor: pointer;
+       &:hover {
+              border-color: var(--color-primary);
+       }
 
-              &.drag-over {
-                     border-color: #4caf50;
+       .upload-icon {
+              height: 1em;
+              width: 1em;
+              display: inline-flex;
+              justify-content: center;
+              align-items: center;
+              position: relative;
+              fill: currentColor;
+              font-size: 67px;
+              color: #a8abb2;
+              margin-bottom: 16px;
+              line-height: 50px;
+       }
+
+       .upload-text {
+              color: var(--color-text-regular);
+              font-size: 14px;
+              text-align: center;
+
+              &>em {
+                     color: #409eff;
+                     font-style: normal;
               }
+
        }
+}
 
-       .btn {
-              margin-top: 10px;
-       }
+.is-dragger {
+       background-color: rgb(235.9, 245.3, 255);
+       border: 2px dashed var(--color-primary);
+}
 
-       .text-error {
-              color: #ff0000;
-              margin-top: 10px;
-       }
 
-       .file-list {
-              margin-top: 20px;
-
-              .file-item {
-                     display: flex;
-                     align-items: center;
-                     justify-content: space-between;
-                     padding: 10px;
-                     border: 1px solid #ccc;
-                     border-radius: 8px;
-                     margin-bottom: 10px;
-
-                     .file-preview {
-                            max-width: 100px;
-                            max-height: 100px;
-                            border-radius: 8px;
-                     }
-
-                     .file-info {
-                            margin-left: 10px;
-                     }
-              }
-       }
+.is-drag {
+       display: block;
 }
 </style>

@@ -39,13 +39,13 @@ export const admin: RouteRecordRaw[] = [
                                    name: "Modal 模态窗",
                             },
                      },
-                     // {
-                     //        path: "upload",
-                     //        component: () => import("@/pages/components/component/UploadShow.vue"),
-                     //        meta: {
-                     //               name: "Upload 上传",
-                     //        },
-                     // }
+                     {
+                            path: "upload",
+                            component: () => import("@/pages/components/component/UploadShow.vue"),
+                            meta: {
+                                   name: "Upload 上传",
+                            },
+                     }
               ]
        }
 ]

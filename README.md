@@ -1,6 +1,6 @@
 # Vue 3 + TypeScript + Vite 后台管理系统
 
-## 项目旨在提供一个基础的搭建框架，方便快速开发后台管理系统。
+## 项目旨在提供一个基础的搭建模板，方便快速开发后台管理系统。
 
 这是一个基于 Vue 3、TypeScript 和 Vite 构建的响应式后台管理系统模板，包含了常用的组件、路由、网络请求等基础功能。
 
@@ -59,33 +59,29 @@ vue-adminui/
 
 1. **组件系统**
 
-      - 通用组件：Loading 加载状态
-      - UI 组件库：卡片(ZCard)、输入框(ZInput)等
-      - SVG 图标组件：用户(User)、锁(Lock)等图标
-
+   - 通用组件：Loading 加载状态
+   - UI 组件库：卡片(ZCard)、输入框(ZInput)等
+   - SVG 图标组件：用户(User)、锁(Lock)等图标
 2. **路由系统**
 
-      - 基于 vue-router 的路由配置
-      - 包含登录页和仪表盘页
-
+   - 基于 vue-router 的路由配置
+   - 包含登录页和仪表盘页
 3. **网络请求**
 
-      - 封装了 Fequest 请求类
-      - 提供了请求实例管理
-
+   - 封装了 Fequest 请求类
+   - 提供了请求实例管理
 4. **状态管理**
 
-      - 使用自定义 Hook 管理状态
-      - 提供本地存储 Hook
-
+   - 使用自定义 Hook 管理状态
+   - 提供本地存储 Hook
 5. **样式系统**
 
-      - 使用 SCSS 预处理器/主题切换
-      - tailwindcss4
-      - 提供常用颜色类名(可自行添加)
-
+   - 使用 SCSS 预处理器/主题切换
+   - tailwindcss4
+   - 提供常用颜色类名(可自行添加)
 6. **Vite 插件**
-      - unplugin-auto-import/vite 自动导入
+
+   - unplugin-auto-import/vite 自动导入
 
 ## 快速开始
 
