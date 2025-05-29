@@ -38,7 +38,7 @@
                             </z-button>
                      </template>
               </z-table>
-              <z-page v-model="page" :total-items="150"></z-page>
+              <z-page v-model="page" :total="150"></z-page>
               <z-modal v-model="modal" title="病例配置" @confirm="confirm">
                      <div class="w-full h-full" v-show="modalType === 2">
                             <z-input label="名称：" v-model="form.name" label-post="left"></z-input>

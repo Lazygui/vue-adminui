@@ -1,24 +1,26 @@
 <template>
     <div class="flex items-center space-x-2 mt-4 justify-end">
         <!-- 上一页按钮 -->
-        <button class="join-item btn btn-square" :disabled="currentPage === 1" @click="goToPreviousPage">
+        <button :class="['join-item btn btn-square', sizeClass]" :disabled="currentPage === 1"
+            @click="goToPreviousPage">
             &lt;
         </button>
 
         <!-- 页码按钮 -->
         <template v-for="page in visiblePages" :key="page">
-            <button v-if="page === '...'" class="join-item btn btn-square" disabled>
+            <button v-if="page === '...'" :class="['join-item btn btn-square', sizeClass]" disabled>
                 {{ page }}
             </button>
-            <button v-else class="join-item btn btn-square"
-                :class="{ 'btn-active': page === currentPage, 'btn-primary': page === currentPage, }"
+            <button v-else
+                :class="['join-item btn btn-square', sizeClass, { 'btn-active': page === currentPage, 'btn-primary': page === currentPage }]"
                 @click="goToPage(page)">
                 {{ page }}
             </button>
         </template>
 
         <!-- 下一页按钮 -->
-        <button class="join-item btn btn-square" :disabled="currentPage === totalPages" @click="goToNextPage">
+        <button :class="['join-item btn btn-square', sizeClass]" :disabled="currentPage === totalPages"
+            @click="goToNextPage">
             &gt;
         </button>
     </div>
@@ -26,31 +28,36 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-
-const props = defineProps({
-    modelValue: {
-        type: Number,
-        required: true,
-    },
-    totalItems: {
-        type: Number,
-        required: true,
-    },
-    itemsPerPage: {
-        type: Number,
-        default: 10,
-    },
-});
+const props = withDefaults(defineProps<{
+    modelValue: number
+    total: number
+    pageSize?: number
+    size?: 'sm' | 'md' | 'lg'
+}>(), {
+    size: 'sm',
+    pageSize: 10
+})
 
 const emit = defineEmits(['update:modelValue']);
-
+const sizeClass = computed(() => {
+    switch (props.size) {
+        case 'sm':
+            return 'btn-sm';
+        case 'md':
+            return 'btn-md';
+        case 'lg':
+            return 'btn-lg';
+        default:
+            return 'btn-sm';
+    }
+});
 const currentPage = computed({
     get: () => props.modelValue,
     set: (value) => emit('update:modelValue', value),
 });
 
 const totalPages = computed(() =>
-    Math.ceil(props.totalItems / props.itemsPerPage)
+    Math.ceil(props.total / props.pageSize)
 );
 
 const visiblePages = computed(() => {
