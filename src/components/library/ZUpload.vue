@@ -69,11 +69,13 @@ interface UploadFile {
 
 interface UploadUserFile extends UploadFile {
        name: string
+       type: string
+       size: number
 }
 const slots = useSlots()
 const props = withDefaults(
        defineProps<{
-              modelValue: File[]
+              modelValue: UploadUserFile[]
               class?: string
               /**
                * 上传数量限制
@@ -110,6 +112,11 @@ const props = withDefaults(
                */
               onPreview?: (rawFile: UploadUserFile) => void
               /**
+               * 文件选中保存浏览器之前
+               * @param rawFile File[]
+               */
+              onBeforeUpload?: (rawFile: UploadUserFile[]) => boolean
+              /**
                * 文件展示列表类型
                * @type {'text' | 'picture'}
                * @default 'text'
@@ -124,7 +131,7 @@ const props = withDefaults(
               onExceed: () => { },
               listType: 'text',
               class: '',
-              onPreview: () => { },
+              onPreview: () => { }
        }
 );
 const emit = defineEmits<{
@@ -157,13 +164,23 @@ const uploadFiles = (files: UploadFile[]) => {
        const { limit, multiple, onExceed } = props
 
        if (limit && props.modelValue.length + files.length > limit) {
-              onExceed(files)
+              onExceed(files.map((item: UploadFile) => {
+                     return toUploadUserFile(item)
+              }))
               return
        }
 
        if (!multiple) {
               files = files.slice(0, 1)
        }
+       if (props.onBeforeUpload) {
+              const isSave = props.onBeforeUpload(files.map((item: UploadFile) => {
+                     return toUploadUserFile(item)
+              }))
+              if (!isSave) return
+
+       }
+
        fileList.value.push(...files)
        emit('update:modelValue', fileList.value)
 }
@@ -189,6 +206,8 @@ const onDragover = () => {
 const toUploadUserFile = (file: UploadFile): UploadUserFile => {
        const itemFile: UploadUserFile = {
               name: file.file.name,
+              type: file.file.type,
+              size: file.file.size,
               ...file
        }
        return itemFile
@@ -221,11 +240,15 @@ const handleDelete = (event: MouseEvent) => {
               }
        }
 };
+const vmWatch = watch(() => props.modelValue, (newValue) => {
+       fileList.value = newValue as UploadUserFile[]
+})
 onMounted(() => {
        fileList.value = []
 })
 onUnmounted(() => {
        fileList.value = []
+       vmWatch()
 })
 </script>
 
