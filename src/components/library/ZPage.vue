@@ -1,33 +1,56 @@
 <template>
     <div class="flex items-center space-x-2 mt-4 justify-end">
-        <!-- 上一页按钮 -->
-        <button :class="['join-item btn btn-square', sizeClass]" :disabled="currentPage === 1"
-            @click="goToPreviousPage">
-            &lt;
-        </button>
-
-        <!-- 页码按钮 -->
-        <template v-for="page in visiblePages" :key="page">
-            <button v-if="page === '...'" :class="['join-item btn btn-square', sizeClass]" disabled>
-                {{ page }}
+        <!-- 移动屏幕尺寸下显示的按钮 -->
+        <div class="lg:hidden flex items-center space-x-2">
+            <!-- 上一页按钮 -->
+            <button :class="['join-item btn btn-square', sizeClass, 'disabled:bg-gray-200 disabled:text-current']"
+                :disabled="currentPage === 1" @click="goToPreviousPage">
+                &lt;
             </button>
-            <button v-else
-                :class="['join-item btn btn-square', sizeClass, { 'btn-active': page === currentPage, 'btn-primary': page === currentPage }]"
-                @click="goToPage(page)">
-                {{ page }}
+            <!-- 当前页按钮 -->
+            <button :class="['join-item btn btn-square', sizeClass, 'disabled:bg-gray-200 disabled:text-current']"
+                disabled>
+                {{ currentPage }}
             </button>
-        </template>
+            <!-- 下一页按钮 -->
+            <button :class="['join-item btn btn-square', sizeClass, 'disabled:bg-gray-200 disabled:text-current']"
+                :disabled="currentPage === totalPages" @click="goToNextPage">
+                &gt;
+            </button>
+        </div>
 
-        <!-- 下一页按钮 -->
-        <button :class="['join-item btn btn-square', sizeClass]" :disabled="currentPage === totalPages"
-            @click="goToNextPage">
-            &gt;
-        </button>
+        <!-- 大屏幕尺寸下显示的按钮 -->
+        <div class="hidden lg:flex items-center space-x-2">
+            <!-- 上一页按钮 -->
+            <button :class="['join-item btn btn-square', sizeClass, 'disabled:bg-gray-200 disabled:text-current']"
+                :disabled="currentPage === 1" @click="goToPreviousPage">
+                &lt;
+            </button>
+            <!-- 页码按钮 -->
+            <template v-for="page in visiblePages" :key="page">
+                <button v-if="page === '...'"
+                    :class="['join-item btn btn-square', sizeClass, 'disabled:bg-gray-200 disabled:text-current']"
+                    disabled>
+                    {{ page }}
+                </button>
+                <button v-else
+                    :class="['join-item btn btn-square', sizeClass, { 'btn-active': page === currentPage, 'btn-primary': page === currentPage }, 'disabled:bg-gray-200 disabled:text-current']"
+                    @click="goToPage(page)">
+                    {{ page }}
+                </button>
+            </template>
+            <!-- 下一页按钮 -->
+            <button :class="['join-item btn btn-square', sizeClass, 'disabled:bg-gray-200 disabled:text-current']"
+                :disabled="currentPage === totalPages" @click="goToNextPage">
+                &gt;
+            </button>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
+
 const props = withDefaults(defineProps<{
     modelValue: number
     total: number
@@ -36,9 +59,10 @@ const props = withDefaults(defineProps<{
 }>(), {
     size: 'sm',
     pageSize: 10
-})
+});
 
 const emit = defineEmits(['update:modelValue']);
+
 const sizeClass = computed(() => {
     switch (props.size) {
         case 'sm':
@@ -51,6 +75,7 @@ const sizeClass = computed(() => {
             return 'btn-sm';
     }
 });
+
 const currentPage = computed({
     get: () => props.modelValue,
     set: (value) => emit('update:modelValue', value),
@@ -63,7 +88,6 @@ const totalPages = computed(() =>
 const visiblePages = computed(() => {
     const pages: (number | string)[] = [];
     const total = totalPages.value;
-
     if (total <= 10) {
         // 如果总页数小于等于 10，展示所有页码
         for (let i = 1; i <= total; i++) {
@@ -96,7 +120,6 @@ const visiblePages = computed(() => {
             pages.push(total);
         }
     }
-
     return pages;
 });
 
