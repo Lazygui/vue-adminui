@@ -1,13 +1,11 @@
 <template>
     <div class="ButtonShow w-full h-full grid lg:grid-cols-2 sm:grid-cols-1 gap-4">
         <z-preview id="1" title="拖拽文件上传">
-            <div class="w-full h-full">
-                <z-upload v-model="filesList" drag multiple>
-                    <template #tip>
-                        11111
-                    </template>
-                </z-upload>
-            </div>
+            <z-upload v-model="filesList" drag multiple class="w-full h-full" @preview="preview">
+                <template #tip>
+                    11111
+                </template>
+            </z-upload>
         </z-preview>
     </div>
 </template>
@@ -15,11 +13,6 @@
 import ZPreview from "@/components/library/ZPreview.vue"
 import ZUpload from "@/components/library/ZUpload.vue"
 const filesList = ref([])
-const exceed = (a: File[]) => {
-    console.log("🚀 ~ exceed ~ a:", a, filesList.value)
-
-
-}
 // const closeList = [
 //     {
 //         row: '<z-button @click="modal=true">打开模态窗</z-button>',
@@ -40,6 +33,10 @@ const exceed = (a: File[]) => {
 //         }
 //     }
 // ]
+const preview = (file: any) => {
+    console.log("🚀 ~ preview ~ file:", file)
+
+}
 </script>
 <style scoped lang="scss">
 .upload-icon {

@@ -33,6 +33,8 @@
        --noise: 0;
        --spacing: 0.25rem;
        --color-text-regular: #606266;
+       --color-icon-secondary:#909399;
+       --color-text-900:rgb(245,247,250,0.8);
 }
 
 [data-theme="dark"] {
@@ -67,5 +69,8 @@
        --border: 1px;
        --depth: 0;
        --noise: 0;
-       --spacing: 0.25rem;--color-text-regular: #CFD3DC;
+       --spacing: 0.25rem;
+       --color-text-regular: #CFD3DC;
+       --color-icon-secondary:#A3A6AD;
+       --color-text-900:rgb(255, 255, 255, 0.1);
 }
