@@ -3,8 +3,7 @@
               <div class="z-upload-content" :class="{ 'is-drag': props.drag }" @click="handleClick">
                      <template v-if="props.drag">
                             <div class="upload_dragger py-10 px-2.5" :class="{ 'is-dragger': dragover }"
-                                   @drop.prevent="onDrop" @dragover.prevent="onDragover"
-                                   @dragleave.prevent="dragover = false">
+                                   @drop.prevent="onDrop" @dragstart="onDragover" @dragleave.prevent="dragover = false">
                                    <div v-if="!slots.default">
                                           <i class="upload-icon">
                                                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
@@ -104,7 +103,7 @@ const props = withDefaults(
                * 超出上传数量时的钩子
                * @param rawFile File[]
                */
-              onExceed?: (rawFile: UploadFile[]) => void
+              onExceed?: (rawFile: UploadFile[]) => boolean
 
               /**
                * 点击文件列表时的钩子
@@ -128,7 +127,7 @@ const props = withDefaults(
               disabled: false,
               multiple: false,
               accept: '',
-              onExceed: () => { },
+              onExceed: () => true,
               listType: 'text',
               class: '',
               onPreview: () => { }
@@ -138,7 +137,10 @@ const emit = defineEmits<{
        (e: "update:modelValue", el: UploadFile[]): void;
 }>();
 const dragover = ref(false)
-const fileList = ref<UploadFile[]>([])
+const fileList = computed<UploadFile[]>({
+       get: () => props.modelValue,
+       set: (value) => emit('update:modelValue', value),
+});
 const inputRef = shallowRef<HTMLInputElement>()
 const handleClick = () => {
        if (!props.disabled) {
@@ -158,33 +160,26 @@ const handleChange = (e: Event) => {
        }))
 }
 
-const uploadFiles = (files: UploadFile[]) => {
-       if (files.length === 0) return
-
-       const { limit, multiple, onExceed } = props
+const uploadFiles = async (files: UploadFile[]) => {
+       if (files.length === 0) return;
+       const { limit, multiple, onExceed, onBeforeUpload } = props;
 
        if (limit && props.modelValue.length + files.length > limit) {
-              onExceed(files.map((item: UploadFile) => {
-                     return toUploadUserFile(item)
-              }))
-              return
+              const shouldContinue = onExceed(files.map(toUploadUserFile));
+              if (!shouldContinue) return;
        }
 
        if (!multiple) {
-              files = files.slice(0, 1)
-       }
-       if (props.onBeforeUpload) {
-              const isSave = props.onBeforeUpload(files.map((item: UploadFile) => {
-                     return toUploadUserFile(item)
-              }))
-              if (!isSave) return
-
+              files = files.slice(0, 1);
        }
 
-       fileList.value.push(...files)
-       emit('update:modelValue', fileList.value)
-}
+       if (onBeforeUpload) {
+              const isSave = await onBeforeUpload(files.map(toUploadUserFile));
+              if (!isSave) return;
+       }
 
+       fileList.value.push(...files);
+};
 const onDrop = (e: DragEvent) => {
        if (props.disabled) return
        dragover.value = false
@@ -214,41 +209,21 @@ const toUploadUserFile = (file: UploadFile): UploadUserFile => {
 }
 const handleDelete = (event: MouseEvent) => {
        const target = event.target as HTMLElement;
+       const item = target.closest('.upload-list__item') as HTMLElement | null;
+       if (!item) return;
 
-       // 提取获取元素和 ID 的逻辑
-       const getElementAndId = (selector: string) => {
-              const element = target.closest(selector) as HTMLElement | null;
-              if (!element) return null;
-              const id = Number(element.dataset.id);
-              return { element, id };
-       };
-
-       // 处理错误图标点击
-       const errorIconData = getElementAndId('.upload-list__item-icon-error');
-       if (errorIconData) {
-              fileList.value = fileList.value.filter(item => item.uid !== errorIconData.id);
-              return; // 提前返回，避免嵌套
-       }
-
-       // 处理文件项点击
-       const fileItemData = getElementAndId('.upload-list__item');
-       if (fileItemData) {
-              const file = fileList.value.find(item => item.uid === fileItemData.id);
+       const id = Number(item.dataset.id);
+       if (target.closest('.upload-list__item-icon-error')) {
+              fileList.value = fileList.value.filter(item => item.uid !== id);
+       } else {
+              const file = fileList.value.find(item => item.uid === id);
               if (file) {
-                     const uerFile: UploadUserFile = toUploadUserFile(file)
-                     props.onPreview(uerFile);
+                     props.onPreview(toUploadUserFile(file));
               }
        }
 };
-const vmWatch = watch(() => props.modelValue, (newValue) => {
-       fileList.value = newValue as UploadUserFile[]
-})
-onMounted(() => {
-       fileList.value = []
-})
 onUnmounted(() => {
        fileList.value = []
-       vmWatch()
 })
 </script>
 

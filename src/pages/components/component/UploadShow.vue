@@ -108,7 +108,7 @@ const pictureCode = [
 ]
 const exceed = (rawFile: any[]) => {
     coverList.value = rawFile
-
+    return true
 }
 </script>
 <style scoped lang="scss">
