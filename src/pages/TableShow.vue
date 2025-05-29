@@ -38,6 +38,7 @@
                             </z-button>
                      </template>
               </z-table>
+              <z-page v-model="page" :total-items="150"></z-page>
               <z-modal v-model="modal" title="病例配置" @confirm="confirm">
                      <div class="w-full h-full" v-show="modalType === 2">
                             <z-input label="名称：" v-model="form.name" label-post="left"></z-input>
@@ -53,6 +54,7 @@ import { h } from "vue";
 import Icon from "@svg";
 import toast from "@/components/general/toast";
 import ZTable from "@/components/library/ZTable.vue";
+import ZPage from "@/components/library/ZPage.vue"
 import ZModal from "@/components/library/ZModal.vue";
 import ZInput from "@/components/library/ZInput.vue";
 import ZButton from "@/components/library/ZButton.vue";
@@ -60,6 +62,7 @@ const form = ref({
        tableId: '',
        name: ''
 })
+const page = ref<number>(1)
 const modal = ref<boolean>(false)
 const modalType = ref<number>(0);
 const tableData = ref([
