@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Icon from "@svg";
-type InputType = "text" | "password" | "radio";
+type InputType = "text" | "password" | "textarea";
 const props = withDefaults(
        defineProps<{
               label: string;
@@ -31,8 +31,7 @@ const emit = defineEmits<{
 <template>
        <div class="z-input">
               <label class="block text-sm font-medium text-base-content/90 w-full"
-                     :class="{ 'label-top': labelPost === 'top', 'label-left': labelPost === 'left' }"
-                     v-if="props.type === 'text' || props.type === 'password'">
+                     :class="{ 'label-top': labelPost === 'top', 'label-left': labelPost === 'left' }">
                      {{ props.label }}
                      <div class="mt-2 input input-primary block w-full  border border-base-content/20"
                             :class="`${props.icon ? 'pl-10' : ''} ${props.inputClass}`">

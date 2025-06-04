@@ -45,6 +45,13 @@ export const admin: RouteRecordRaw[] = [
                             meta: {
                                    name: "Upload 上传",
                             },
+                     },
+                     {
+                            path: "select",
+                            component: () => import("@/pages/components/component/SelectShow.vue"),
+                            meta: {
+                                   name: "Select 选择器",
+                            },
                      }
               ]
        }
