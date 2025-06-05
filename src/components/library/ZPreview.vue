@@ -12,7 +12,7 @@
                     <slot></slot>
                 </div>
             </div>
-            <template v-if="props.code">
+            <template v-if="props.code" v-once>
                 <input type="radio" :name="`preview_tab_${props.id}`"
                     class="tab checked:text-neutral-content border-b-transparent! checked:[--tab-bg:var(--color-neutral)] checked:[--tab-border-color:var(--color-base-100)]"
                     aria-label="HTML">
@@ -24,7 +24,6 @@
                     </div>
                 </div>
             </template>
-
         </div>
     </div>
 </template>
