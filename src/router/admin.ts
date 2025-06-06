@@ -27,28 +27,35 @@ export const admin: RouteRecordRaw[] = [
               children: [
                      {
                             path: "button",
-                            component: () => import("@/pages/components/component/ButtonShow.vue"),
+                            component: () => import("@admin/component/ButtonShow.vue"),
                             meta: {
                                    name: "Button 按钮",
                             },
                      },
                      {
                             path: "modal",
-                            component: () => import("@/pages/components/component/ModalShow.vue"),
+                            component: () => import("@admin/component/ModalShow.vue"),
                             meta: {
                                    name: "Modal 模态窗",
                             },
                      },
                      {
                             path: "upload",
-                            component: () => import("@/pages/components/component/UploadShow.vue"),
+                            component: () => import("@admin/component/UploadShow.vue"),
                             meta: {
                                    name: "Upload 上传",
                             },
                      },
                      {
+                            path: "verify",
+                            component: () => import("@admin/component/VerifyShow.vue"),
+                            meta: {
+                                   name: "Verify 验证器",
+                            },
+                     },
+                     {
                             path: "select",
-                            component: () => import("@/pages/components/component/SelectShow.vue"),
+                            component: () => import("@admin/component/SelectShow.vue"),
                             meta: {
                                    name: "Select 选择器",
                             },

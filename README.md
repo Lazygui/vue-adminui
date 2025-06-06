@@ -1,12 +1,12 @@
 # Vue 3 + TypeScript + Vite 后台管理系统
 
-## 项目旨在提供一个基础的搭建模板，方便快速开发后台管理系统。
-
 这是一个基于 Vue 3、TypeScript 和 Vite 构建的响应式后台管理系统模板，包含了常用的组件、路由、网络请求等基础功能。
+项目初衷是提供一个简单易开发，易上手的后台管理系统，减少第三方库的依赖。
+部分组件参考第三方开源库，本地编写如：ELement、react-hot-toast
 
 ## 技术栈
 
-- Node.js 20.13.1
+- Node环境 20.13.1
 - Vue 3 (Composition API)
 - TypeScript
 - Vite
@@ -59,9 +59,20 @@ vue-adminui/
 
 1. **组件系统**
 
-   - 通用组件：Loading 加载状态
-   - UI 组件库：卡片(ZCard)、输入框(ZInput)等
-   - SVG 图标组件：用户(User)、锁(Lock)等图标
+   - 指令/函数组件：
+     - Loading 加载状态
+     - toast弹窗
+   - UI 组件库：
+     - 卡片(ZCard)
+     - 输入框(ZInput)
+     - 按钮(ZButton)
+     - 模态窗(ZModal)
+     - 分页(ZPage)
+     - 表格(ZTable)
+     - 上传(ZUpload)
+     - 文字提示(ZTooltip)
+     - 展示板(ZPreview)
+   - SVG 图标组件：index.vue 图标导入组件支持：[Heroicons](https://heroicons.com/)图标
 2. **路由系统**
 
    - 基于 vue-router 的路由配置
@@ -108,3 +119,6 @@ pnpm run build
 - [Vue 3 文档](https://vuejs.org/)
 - [Vite 文档](https://vitejs.dev/)
 - [TypeScript 文档](https://www.typescriptlang.org/)
+- [Heroicons](https://heroicons.com/)
+- [daisyUI — Tailwind CSS Components ( version 5 update is here )](https://daisyui.com/)
+- [Tailwind CSS 中文网](https://tailwind.nodejs.cn/)

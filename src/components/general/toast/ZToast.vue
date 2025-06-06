@@ -7,17 +7,14 @@
  * 1.0.1 /:通知窗口的位置增加 "top-left" | "top-center" | "top-right" 、支持使用Unicode图标。
  -->
 <template>
-       <div
-              class="toaster_row"
-              :id="`toaster_${props.id}`"
-              :style="{
-                     transform: `translateY(${props.offset}px)`,
-                     justifyContent: justifyContent,
-                     top: topPosition ? '0px' : undefined,
-                     bottom: topPosition ? undefined : '0px'
-              }"
-       >
-              <div :style="{ ...props.style }" class="toaster_card" :class="{ toaster_leave: !visible, toaster_enter: visible }">
+       <div class="toaster_row" :id="`toaster_${props.id}`" :style="{
+              transform: `translateY(${props.offset}px)`,
+              justifyContent: justifyContent,
+              top: topPosition ? '0px' : undefined,
+              bottom: topPosition ? undefined : '0px'
+       }">
+              <div :style="{ ...props.style }" class="toaster_card"
+                     :class="{ toaster_leave: !visible, toaster_enter: visible }">
                      <div class="toaster_Icon" v-if="!props.Unicode">
                             <div class="toaster_loading"></div>
                             <div class="toaster_type">
@@ -30,7 +27,6 @@
        </div>
 </template>
 <script lang="ts" setup>
-import { onMounted } from "vue";
 type ToasterType = "error" | "success" | "Unicode";
 type ToasterPosition = "top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right";
 const props = withDefaults(
@@ -71,6 +67,7 @@ onMounted(async () => {
 <style lang="scss" scoped>
 @use "./toastIcon.scss";
 @use "./animation.scss";
+
 .toaster_row {
        left: 0px;
        right: 0px;
@@ -78,6 +75,7 @@ onMounted(async () => {
        position: absolute;
        transition: 230ms cubic-bezier(0.21, 1.02, 0.73, 1);
        z-index: 9999;
+
        .toaster_card {
               display: flex;
               align-items: center;
@@ -90,6 +88,7 @@ onMounted(async () => {
               pointer-events: auto;
               padding: 8px 10px;
               border-radius: 8px;
+
               .toaster_Icon {
                      position: relative;
                      display: flex;
@@ -97,6 +96,7 @@ onMounted(async () => {
                      align-items: center;
                      min-width: 20px;
                      min-height: 20px;
+
                      .toaster_loading {
                             width: 12px;
                             height: 12px;
@@ -107,8 +107,10 @@ onMounted(async () => {
                             border-right-color: #616161;
                             animation: loading 1s linear infinite;
                      }
+
                      .toaster_type {
                             position: absolute;
+
                             .toaster {
                                    width: 20px;
                                    opacity: 0;
@@ -119,6 +121,7 @@ onMounted(async () => {
                                    transform: rotate(45deg);
                             }
                      }
+
                      .toaster_unicode {
                             position: relative;
                             transform: scale(0.6);
@@ -127,6 +130,7 @@ onMounted(async () => {
                             animation: unicode 0.3s 0.12s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
                      }
               }
+
               .toaster_message {
                      display: flex;
                      justify-content: center;
@@ -137,6 +141,7 @@ onMounted(async () => {
               }
        }
 }
+
 .toaster_leave {
        animation: 0.35s cubic-bezier(0.21, 1.02, 0.73, 1) 0s 1 normal forwards running exitAnimation;
 }
