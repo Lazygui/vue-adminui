@@ -7,7 +7,7 @@
                             添加病例
                      </z-button>
               </div>
-              <z-table :data="tableData" row-key="tableId" :pageSize="10" :columns="[
+              <z-table stripe :data="tableData" row-key="tableId" :pageSize="10" :columns="[
                      {
                             title: '序号',
                             key: 'no',

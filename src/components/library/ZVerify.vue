@@ -2,7 +2,8 @@
     <div>
         <ImageVerify v-if="props.type === 'graphic'" :style="{ width: `${width}px`, height: `${height}px` }"
             ref="imageVerifyRef" />
-        <SliderVerify v-else-if="props.type === 'slider'" @success="onSuccess" @failed="onFailed" />
+        <SliderVerify v-else-if="props.type === 'slider'" @success="onSuccess" @failed="onFailed"
+            :duration="props.duration" :height="props.height" />
     </div>
 </template>
 
@@ -16,11 +17,13 @@ const props = withDefaults(defineProps<{
     width?: number; // 图形验证器的宽度
     height?: number; // 图形验证器的高度
     modelValue: string | boolean; // v-model 绑定的值
+    duration?: number
 }>(), {
     type: 'graphic',
     width: 120,
     height: 40,
     modelValue: '',
+    duration: 800
 });
 
 // 定义 emits

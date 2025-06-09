@@ -1,6 +1,6 @@
 <template>
     <!-- 滑块轨道 -->
-    <div class="slider-track w-full h-10" ref="track">
+    <div class="slider-track w-full" ref="track" :style="sliderHeight">
         <!-- 背景层 -->
         <div class="slider-background" :style="backgroundStyle">
         </div>
@@ -20,10 +20,12 @@ import ZIcon from "@svg"
 import { ref, computed, withDefaults } from 'vue';
 const props = withDefaults(defineProps<{
     duration?: number
+    height?: number
 }>(), {
-    duration: 800
+    duration: 800,
+    height: 40
 })
-
+const sliderHeight = computed(() => `height:${props.height}px`)
 // 滑块状态
 type SliderState = 0 | 1 | 2 | 3;
 

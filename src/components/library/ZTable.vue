@@ -14,15 +14,17 @@ const props = withDefaults(
               rowKey: string;
               columns: Column[];
               data: RowData[];
-              pageSize: number;
+              pageSize?: number;
               loading?: boolean;
               loadingText?: string;
               emptyText?: string;
+              stripe?: boolean
        }>(),
        {
               loading: false,
               loadingText: "加载中...",
-              emptyText: "暂无数据"
+              emptyText: "暂无数据",
+              stripe: false
        }
 );
 const slot = useSlots()
@@ -33,20 +35,21 @@ const defaultContent = (row: RowData, column: Column) => {
 </script>
 
 <template>
-       <div class="ZTable mt-6 flow-root">
+       <div class="ZTable mt-6 flow-root box-border">
               <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8"
                      style="max-height: calc(100vh - 300px); overflow-y: auto">
                      <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                            <table class="table table-zebra w-full">
-                                   <thead>
+                            <table class="table w-full" :class="{ 'table-zebra': props.stripe }">
+                                   <thead class="w-full">
                                           <tr>
-                                                 <th v-for="column in props.columns" :key="column.key">
+                                                 <th v-for="column in props.columns" :key="column.key"
+                                                        :class="column.className">
                                                         {{ column.title }}
                                                  </th>
                                                  <th v-if="!!slot.active"></th>
                                           </tr>
                                    </thead>
-                                   <tbody>
+                                   <tbody class="w-full">
                                           <!-- loading -->
                                           <template v-if="loading">
                                                  <tr>
@@ -81,7 +84,7 @@ const defaultContent = (row: RowData, column: Column) => {
                                                         </td>
                                                  </tr>
                                                  <!-- 填充表格空行 -->
-                                                 <template v-if="props.data.length < props.pageSize">
+                                                 <template v-if="props.pageSize && props.data.length < props.pageSize">
                                                         <tr v-for="nullRow in props.pageSize - props.data.length"
                                                                :key="`null_${nullRow}`">
                                                                <td :colSpan="columns.length + (!!slot.active ? 1 : 0)"
