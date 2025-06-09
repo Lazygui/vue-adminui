@@ -12,11 +12,12 @@ import SliderVerify from './children/SliderVerify.vue';
 
 // 使用 TypeScript 定义 props
 const props = withDefaults(defineProps<{
-    type: 'graphic' | 'slider'; // 验证器类型
+    type?: 'graphic' | 'slider'; // 验证器类型
     width?: number; // 图形验证器的宽度
     height?: number; // 图形验证器的高度
     modelValue: string | boolean; // v-model 绑定的值
 }>(), {
+    type: 'graphic',
     width: 120,
     height: 40,
     modelValue: '',

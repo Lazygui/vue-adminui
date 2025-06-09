@@ -1,12 +1,13 @@
 <template>
     <div class="z-preview" :class="props.class">
         <div class="flex items-center gap-2 pb-3 text-sm font-bold">
-            <h4 class="component-preview-title mt-2 mb-1 text-lg font-semibold">{{ props.title }}</h4>
+            <h2 class="component-preview-title mt-2 mb-1 text-lg font-semibold">{{ props.title }}</h2>
         </div>
+        <slot name="illustrate"></slot>
         <div class="tabs tabs-lift ">
-            <input type="radio" class="tab [--tab-p:.75rem]" aria-label="预览" checked
+            <input type="radio" class="tab [--tab-p:.75rem] border-color" aria-label="预览" checked
                 :name="`preview_tab_${props.id}`" />
-            <div class="tab-content border-base-300 overflow-x-auto">
+            <div class="tab-content border-color tab-content-border overflow-x-auto">
                 <div
                     class="preview min-h-[6rem] bg-base-100 relative flex flex-wrap items-center justify-center gap-2 overflow-x-hidden bg-cover bg-top p-4 xl:py-10">
                     <slot></slot>
@@ -49,6 +50,11 @@ const props = withDefaults(defineProps<{
                 var(--color-base-200) 14px);
         background-size: 40px 40px;
         box-sizing: border-box;
+    }
+
+    .border-color {
+        border-color:
+            color-mix(in oklab, var(--color-base-content) 10%, transparent);
     }
 
     .code-wrapper {

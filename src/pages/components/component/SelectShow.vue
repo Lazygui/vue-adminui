@@ -5,19 +5,11 @@
                 <z-select v-model="baseSelect" :options="baseOptions" placeholder="请选择一个选项"></z-select>
             </div>
         </z-preview>
-        <z-preview id="1" title="基础用法" class="h-full">
-            <div class="w-full h-full">
-                <!-- <z-verify type="slider" v-model="verify"></z-verify> -->
-            </div>
-        </z-preview>
     </div>
 </template>
 <script lang="ts" setup>
 import ZPreview from "@/components/library/ZPreview.vue"
 import ZSelect from "@/components/library/ZSelect.vue"
-// import ZVerify from "@/components/library/ZVerify.vue"
-// import ZVerify from '@/components/library/children/SliderVerify2.vue';
-const verify = ref<boolean>(false)
 const baseOptions = [
     '1', '2', '3', '4'
 ]

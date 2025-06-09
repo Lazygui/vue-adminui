@@ -1,86 +1,204 @@
 <template>
-    <div ref="sliderContainer" @mousemove="onMouseMove" @mouseup="onMouseUp" @mouseleave="onMouseLeave"
-        class="relative w-full h-14 border-2 border-info text-info text-center leading-[56px] select-none overflow-hidden rounded-box">
-        <span class="z-10 relative">请按住滑块，拖动到最右边</span>
-        <div @mousedown="onMouseDown" :style="{ left: leftP }"
-            class="absolute w-14 h-full top-[-1px] bg-base-100 border-2 border-info cursor-grab bg-center bg-no-repeat bg-[length:50%]"
-            :class="{
-                'bg-[url(@/assets/images/login6/arrow.png)]': blockState !== 2,
-                '!cursor-auto': blockState === 2
-            }" />
-        <!-- 移除 transition 属性，背景色直接填充 -->
-        <div :style="{ width: leftP }" class="absolute h-full left-0 top-0 bg-info/30">
-            <span v-if="blockState === 2" class="text-info-content">验证成功</span>
+    <!-- 滑块轨道 -->
+    <div class="slider-track w-full h-10" ref="track">
+        <!-- 背景层 -->
+        <div class="slider-background" :style="backgroundStyle">
+        </div>
+        <div class="slider-tip" v-if="state === 0">
+            请按住滑块，拖动到最右边
+        </div>
+        <!-- 滑块 -->
+        <div class="slider-thumb w-10 h-full" :class="thumbClass" :style="thumbStyle" @mousedown="startDrag"
+            @mouseenter="isHover = true" @mouseleave="isHover = false" @transitionend="onTransitionEnd">
+            <z-icon :name="iconComponent" class="size-6"></z-icon>
         </div>
     </div>
 </template>
 
-<script setup>
-import { ref, defineEmits, onMounted } from "vue";
+<script setup lang="ts">
+import ZIcon from "@svg"
+import { ref, computed, withDefaults } from 'vue';
+const props = withDefaults(defineProps<{
+    duration?: number
+}>(), {
+    duration: 800
+})
 
-const emit = defineEmits(["success", "failed"]);
-const leftP = ref("0"); // 滑块和背景填充的宽度
-const blockState = ref(0); // 滑块状态：0-初始，1-拖动中，2-验证成功
-const startP = ref(undefined); // 鼠标按下的初始位置
-const sliderContainer = ref(null); // 滑块容器的 DOM 元素
-const containerWidth = ref(0); // 滑块容器的宽度
+// 滑块状态
+type SliderState = 0 | 1 | 2 | 3;
 
-// 获取滑块容器的宽度
-const updateContainerWidth = () => {
-    if (sliderContainer.value) {
-        containerWidth.value = sliderContainer.value.offsetWidth;
-    }
-};
+// 组件逻辑
+const track = ref<HTMLElement | null>(null); // 滑块轨道
+const thumbPosition = ref(0); // 滑块位置
+const isDragging = ref(false); // 是否正在拖动
+const isHover = ref(false); // 鼠标是否悬停在滑块上
+const state = ref<SliderState>(0); // 滑块状态
 
-// 组件挂载时更新容器宽度
-onMounted(() => {
-    updateContainerWidth();
-    window.addEventListener("resize", updateContainerWidth); // 监听窗口大小变化
+// 计算滑块的样式
+const thumbStyle = computed(() => ({
+    left: `${thumbPosition.value}px`,
+    // 失败状态保持当前位置时不应用过渡
+    transition: state.value === 3 && thumbPosition.value !== 0
+        ? "none"
+        : state.value === 1
+            ? "none"
+            : `left ${props.duration}ms linear 0.5s` // 使用传入的过渡时长
+}));
+const thumbClass = computed(() => ({
+    'slider-thumb-hover': isHover.value || isDragging.value,
+    'slider-thumb-success': state.value === 2,
+    'slider-thumb-fail': state.value === 3,
+}));
+
+const iconComponent = computed(() => {
+    const icons = {
+        0: 'ArrowRight',
+        1: 'ArrowRight',
+        2: 'Check',
+        3: 'XMark',
+    };
+    return icons[state.value] || 'ArrowRight';
 });
 
-// 鼠标按下事件
-const onMouseDown = (e) => {
-    if (blockState.value !== 2) {
-        leftP.value = "0";
-        blockState.value = 1;
-        startP.value = { clientX: e.clientX };
-    } else {
-        leftP.value = "0";
-        blockState.value = 0;
-    }
-};
-
-// 鼠标移动事件
-const onMouseMove = (e) => {
-    if (blockState.value === 1) {
-        const width = e.clientX - startP.value.clientX; // 计算滑块的偏移量
-        const maxWidth = containerWidth.value - 56; // 最大偏移量（容器宽度减去滑块宽度）
-
-        if (width >= maxWidth) {
-            leftP.value = `${maxWidth}px`; // 滑块移动到最右侧
-            blockState.value = 2;
-            emit("success"); // 触发成功事件
-        } else {
-            leftP.value = `${width}px`; // 更新滑块位置
+const backgroundStyle = computed(() => {
+    const colors = {
+        0: { bg: 'transparent', border: 'transparent' },
+        1: { bg: '#d1e9fe', border: '#1991fa' },
+        2: { bg: '#d2f4ef', border: '#52ccba' },
+        3: { bg: '#fce1e1', border: '#f57a7a' },
+    };
+    const { bg, border } = colors[state.value];
+    return {
+        width: `${thumbPosition.value + 20}px`,
+        backgroundColor: bg,
+        border: `1px solid ${border}`,
+        transition: (state.value === 3 && thumbPosition.value !== 0) || state.value === 1 ? 'none' : `width ${props.duration}ms linear 0.5s`,
+    };
+});
+// 开始拖动
+const startDrag = () => {
+    // 新增状态判断
+    if (state.value === 2 || state.value !== 0) return;
+    isDragging.value = true;
+    state.value = 1;
+    // 修改鼠标移动事件处理逻辑
+    const onMouseMove = (e: MouseEvent) => {
+        if (!isDragging.value || !track.value) return;
+        // 计算有效边界
+        const trackRect = track.value.getBoundingClientRect();
+        const maxPosition = track.value.clientWidth - 40;
+        // 获取新位置
+        const newPosition = e.clientX - trackRect.left;
+        const clampedPosition = Math.max(0, Math.min(newPosition, maxPosition));
+        // 实时检测是否到达终点
+        if (clampedPosition >= maxPosition) {
+            thumbPosition.value = maxPosition;
+            state.value = 2;  // 立即变为绿色
+            isDragging.value = false;  // 终止拖拽状态
+            // 清除事件监听
+            window.removeEventListener("mousemove", onMouseMove);
+            return;
         }
-    }
+        thumbPosition.value = clampedPosition;
+    };
+    // 修改mouseup事件处理逻辑
+    const onMouseUp = () => {
+        if (!isDragging.value) return;
+        isDragging.value = false;
+        if (!track.value) return;
+        // 计算有效验证位置
+        const validatePosition = track.value.clientWidth - 40;
+        // 使用>=避免计算误差
+        if (thumbPosition.value >= validatePosition) {
+            state.value = 2; // 验证成功
+        } else if (thumbPosition.value === 0) {
+            state.value = 0
+            return
+        } else {
+            state.value = 3; // 验证失败
+            thumbPosition.value = 0;
+        }
+        //移除事件监听器
+        window.removeEventListener('mousemove', onMouseMove);
+        window.removeEventListener('mouseup', onMouseUp);
+    };
+    // 添加事件监听器
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp, { once: true });
 };
 
-// 鼠标松开事件
-const onMouseUp = (e) => {
-    if (blockState.value !== 2) {
-        leftP.value = "0";
-        blockState.value = 0;
-        emit("failed"); // 触发失败事件
-    }
-};
-
-// 鼠标离开事件
-const onMouseLeave = (e) => {
-    if (blockState.value !== 2) {
-        leftP.value = "0";
-        blockState.value = 0;
-        emit("failed"); // 触发失败事件
-    }
+const onTransitionEnd = () => {
+    state.value = 0;
 };
 </script>
+
+<style scoped lang="scss">
+.slider-track {
+    position: relative;
+    border: 1px solid;
+    border-color:
+        color-mix(in oklab, var(--color-base-content) 10%, transparent);
+    background-color: var(--color-base-200);
+    border-radius: 2px;
+    overflow: hidden;
+
+
+
+    .slider-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        border-radius: 2px;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .slider-thumb-success {
+        transition: none !important;
+    }
+
+    .slider-thumb {
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-radius: 2px;
+        cursor: pointer;
+        box-shadow: 0 0 3px rgba(0, 0, 0, .3);
+        background-color: var(--color-base-100);
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .slider-thumb-hover {
+        background-color: #1991fa !important;
+        color: rgb(255, 255, 255);
+    }
+
+    .slider-thumb-success {
+        background-color: #52c41a !important;
+        color: rgb(255, 255, 255);
+    }
+
+    .slider-thumb-fail {
+        background-color: #f57a7a !important;
+        color: rgb(255, 255, 255);
+    }
+
+    .slider-tip {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 14px;
+        color: var(--color-text-regular);
+        user-select: none;
+        pointer-events: none;
+        z-index: 3;
+    }
+}
+</style>
