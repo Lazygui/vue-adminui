@@ -101,18 +101,18 @@ const props = withDefaults(
               accept?: string
               /**
                * 超出上传数量时的钩子
-               * @param rawFile File[]
+               * @param rawFile UploadFile[]
                */
               onExceed?: (rawFile: UploadFile[]) => boolean
 
               /**
                * 点击文件列表时的钩子
-               * @param rawFile File[]
+               * @param rawFile UploadUserFile[]
                */
               onPreview?: (rawFile: UploadUserFile) => void
               /**
                * 文件选中保存浏览器之前
-               * @param rawFile File[]
+               * @param rawFile UploadUserFile[]
                */
               onBeforeUpload?: (rawFile: UploadUserFile[]) => boolean
               /**
