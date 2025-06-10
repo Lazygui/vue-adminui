@@ -104,26 +104,28 @@ onMounted(() => {
     overflow: hidden;
     z-index: 999;
     transition: background-color 0.3s ease 0.1s; // 背景色动画，延迟 0.1s
+
+
+    .modal-body {
+        grid-column-start: 1;
+        grid-row-start: 1;
+        max-height: 100vh;
+        width: 100%;
+        max-width: 32rem;
+        background-color: var(--color-base-100);
+        padding: calc(0.25rem * 6);
+        border-top-left-radius: var(--radius-box);
+        border-top-right-radius: var(--radius-box);
+        border-bottom-left-radius: var(--radius-box);
+        border-bottom-right-radius: var(--radius-box);
+        box-shadow: oklch(0% 0 0 / 0.25) 0px 25px 50px -12px;
+        overflow: hidden;
+        transform: translateY(0); // 初始位置在顶部
+        opacity: 1; // 初始透明度为 0
+        transition: transform 0.3s ease, opacity 0.3s ease; // 位置和透明度动画
+    }
 }
 
-.modal-body {
-    grid-column-start: 1;
-    grid-row-start: 1;
-    max-height: 100vh;
-    width: 100%;
-    max-width: 32rem;
-    background-color: var(--color-base-100);
-    padding: calc(0.25rem * 6);
-    border-top-left-radius: var(--radius-box);
-    border-top-right-radius: var(--radius-box);
-    border-bottom-left-radius: var(--radius-box);
-    border-bottom-right-radius: var(--radius-box);
-    box-shadow: oklch(0% 0 0 / 0.25) 0px 25px 50px -12px;
-    overflow: hidden;
-    transform: translateY(0); // 初始位置在顶部
-    opacity: 1; // 初始透明度为 0
-    transition: transform 0.3s ease, opacity 0.3s ease; // 位置和透明度动画
-}
 
 .zmodal-enter-active .modal-body,
 .zmodal-leave-active .modal-body {
