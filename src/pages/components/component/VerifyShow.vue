@@ -18,8 +18,8 @@
         </z-preview>
         <div>
             <h4 id="verify-api" class="text-xl font-black mt-10" tabindex="-1">Verify 属性 <a
-                    class="header-anchor vp-link" href="#button-api"
-                    aria-label="Permalink to &quot;Button API&quot;">&ZeroWidthSpace;</a></h4>
+                    class="header-anchor vp-link" aria-label="Permalink to &quot;Verify API&quot;">&ZeroWidthSpace;</a>
+            </h4>
             <z-table :data="tableAPI" row-key="tableId" :columns="[
                 {
                     title: '属性名',
@@ -41,9 +41,9 @@
         </div>
         <div>
             <h4 id="verify-event" class="text-xl font-black mt-10" tabindex="-1">Verify 事件 <a
-                    class="header-anchor vp-link" href="#button-api"
-                    aria-label="Permalink to &quot;Button API&quot;">&ZeroWidthSpace;</a></h4>
-            <z-table class="pb-6" :data="tableEvent" row-key="tableId" :columns="[
+                    class="header-anchor vp-link" aria-label="Permalink to &quot;Verify API&quot;">&ZeroWidthSpace;</a>
+            </h4>
+            <z-table class="pb-6" :data="tableEvent" row-key="name" :columns="[
                 {
                     title: '事件名',
                     key: 'name',

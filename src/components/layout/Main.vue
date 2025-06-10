@@ -136,7 +136,7 @@ const expandChange = (path: string) => {
                                                         <component :is="`${breadcrumbs.meta!.icon}Icon`"
                                                                class="h-5 w-5 flex-shrink-0 transition-none" />
                                                         <span className="ml-2 text-base">{{ breadcrumbs.meta!.name
-                                                               }}</span>
+                                                        }}</span>
                                                  </div>
                                           </div>
                                    </div>
@@ -149,9 +149,9 @@ const expandChange = (path: string) => {
                                    </div>
                             </div>
                      </div>
-                     <main class="router-page w-full py-10 bg-base-100 box-border overflow-x-hidden overflow-y-auto">
+                     <main class="router-page w-full pt-10 bg-base-100 box-border overflow-x-hidden overflow-y-auto">
                             <div class="w-full h-full px-4 sm:px-6 lg:px-8">
-                                   <div class="p-6 w-full h-full">
+                                   <div class="px-6 pt-6 w-full h-full">
                                           <router-view></router-view>
                                    </div>
                             </div>

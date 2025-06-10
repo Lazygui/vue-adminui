@@ -12,8 +12,8 @@ export const admin: RouteRecordRaw[] = [
               path: "table",
               component: () => import("@/pages/TableShow.vue"),
               meta: {
-                     name: "表格页",
-                     icon: "TableCells"
+                     name: "基础页",
+                     icon: "CircleStack"
               }
        },
        {

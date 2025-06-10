@@ -1,10 +1,10 @@
 <template>
        <div class="TableShow w-full h-full">
               <div class="flex justify-between items-center mb-6">
-                     <h1 class="text-3xl font-bold">病人病例配置</h1>
+                     <h1 class="text-3xl font-bold">基础页</h1>
                      <z-button type="primary" @click="addClick">
                             <Icon name="Plus" class="size-6"></Icon>
-                            添加病例
+                            添加数据
                      </z-button>
               </div>
               <z-table stripe :data="tableData" row-key="tableId" :pageSize="10" :columns="[
@@ -39,7 +39,7 @@
                      </template>
               </z-table>
               <z-page v-model="page" :total="150"></z-page>
-              <z-modal v-model="modal" title="病例配置" @confirm="confirm">
+              <z-modal v-model="modal" title="数据配置" @confirm="confirm">
                      <div class="w-full h-full" v-show="modalType === 2">
                             <z-input label="名称：" v-model="form.name" label-post="left"></z-input>
                      </div>

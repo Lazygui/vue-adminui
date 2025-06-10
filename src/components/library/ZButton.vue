@@ -1,4 +1,22 @@
 <script setup lang="ts">
+/**
+* ZButton 组件
+*
+* 这是一个可自定义的按钮组件，支持多种类型、样式和状态。
+*
+* Props:
+* - type: 指定按钮的类型（如 primary、warning、error、success、info）。
+* - btnType: 指定 HTML 按钮的类型（如 submit、button、reset）。
+* - disabled: 如果为 true，则禁用按钮。
+* - class: 额外的 CSS 类名，应用于按钮。
+* - plain: 如果为 true，则应用朴素样式。
+* - dash: 如果为 true，则应用虚线边框样式。
+* - link: 如果为 true，则应用链接样式。
+* - loading: 如果为 true，则显示加载动画。
+*
+* Emits:
+* - click: 当按钮被点击时触发。
+*/
 const props = withDefaults(
        defineProps<{
               type?: "" | "primary" | "warning" | "error" | "success" | "info";
@@ -15,7 +33,8 @@ const props = withDefaults(
               plain: false,
               dash: false,
               link: false,
-              loading: false
+              loading: false,
+              disabled: false
        }
 );
 const emit = defineEmits<{
