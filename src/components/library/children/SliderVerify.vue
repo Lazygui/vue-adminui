@@ -17,7 +17,6 @@
 
 <script setup lang="ts">
 import ZIcon from "@svg"
-import { ref, computed, withDefaults } from 'vue';
 const props = withDefaults(defineProps<{
     duration?: number
     height?: number
