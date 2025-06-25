@@ -28,8 +28,13 @@ const diffSystem = async (): Promise<"admin" | "user"> => {
  * 暂用账号及密码的凭证过期判断，后续需要可修改为全局的凭证过期判断
  */
 const isExpire = () => {
-       const token = storage.getItem(StorageKeys.TOKEN)
+       const token: string = storage.getItem(StorageKeys.TOKEN)
        if (token) {
+              const payloadBase64 = token.split('.')[1];
+              const payload = JSON.parse(atob(payloadBase64));
+              if (Date.now() >= payload.exp * 1000) {
+                     return true
+              }
               return false
        }
        return true
