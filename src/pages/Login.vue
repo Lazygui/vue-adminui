@@ -14,6 +14,11 @@ interface IForm {
        username: string;
        password: string;
 }
+interface SignIn {
+       token: string
+       user_name: string
+       phone: string
+}
 const fequest = useFequest()
 const router = useRouter();
 const loading = ref<boolean>(false);
@@ -28,7 +33,7 @@ const remember = ref<boolean>(true);
 const disabled = ref<boolean>(false);
 const submit = async () => {
        disabled.value = true;
-       const res = await fequest<{ token: string }>('/api/auth/signIn-phone', {
+       const res = await fequest<SignIn>('/api/auth/signIn-phone', {
               method: "post",
               body: {
                      phone: form.value.username,
@@ -38,8 +43,9 @@ const submit = async () => {
        if (res && res.code === 200) {
               //本地保存密码
               if (remember.value) {
-                     storage.setItem(StorageKeys.USERNAME, form.value.username);
+                     storage.setItem(StorageKeys.USERNAME, res.data.user_name);
                      storage.setItem(StorageKeys.TOKEN, res.data.token);
+                     storage.setItem(StorageKeys.PHONE, res.data.phone);
               }
               router.push(`/${config.value.system}`);
        }

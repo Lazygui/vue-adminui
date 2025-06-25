@@ -62,6 +62,8 @@ const form = ref({
        tableId: '',
        name: ''
 })
+
+const fequest = useFequest()
 const page = ref<number>(1)
 const modal = ref<boolean>(false)
 const modalType = ref<number>(0);
@@ -153,5 +155,13 @@ const confirm = () => {
 const copy = () => {
        toast.success("复制好了📋");
 };
+onMounted(() => {
+       fequest('/api/auth/profile', {
+              method: 'get',
+              header: {
+                     Authorization: `Bearer ${storage.getItem(StorageKeys.TOKEN)}`
+              }
+       })
+})
 </script>
 <style scoped lang="scss"></style>
