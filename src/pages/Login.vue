@@ -14,6 +14,7 @@ interface IForm {
        username: string;
        password: string;
 }
+const fequest = useFequest()
 const router = useRouter();
 const loading = ref<boolean>(false);
 const form = ref<IForm>({
@@ -25,14 +26,23 @@ const config = ref<Config>({
 });
 const remember = ref<boolean>(true);
 const disabled = ref<boolean>(false);
-const submit = () => {
+const submit = async () => {
        disabled.value = true;
-       //本地保存密码
-       if (remember.value) {
-              storage.setItem(StorageKeys.USERNAME, form.value.username);
-              storage.setItem(StorageKeys.PASSWORD, form.value.password);
+       const res = await fequest<{ token: string }>('/api/auth/signIn-phone', {
+              method: "post",
+              body: {
+                     phone: form.value.username,
+                     password: form.value.password
+              }
+       })
+       if (res && res.code === 200) {
+              //本地保存密码
+              if (remember.value) {
+                     storage.setItem(StorageKeys.USERNAME, form.value.username);
+                     storage.setItem(StorageKeys.TOKEN, res.data.token);
+              }
+              router.push(`/${config.value.system}`);
        }
-       router.push(`/${config.value.system}`);
        disabled.value = false;
 };
 onMounted(async () => {
@@ -62,7 +72,7 @@ onMounted(async () => {
                             <div class="form w-full box-border mt-8">
                                    <form @submit.prevent="submit" class="w-full">
                                           <z-input required class="w-full" label="账号" icon="User"
-                                                 v-model="form.username" placeholder="请输入账号"></z-input>
+                                                 v-model="form.username" placeholder="请输入电话号码"></z-input>
                                           <z-input required class="w-full" label="密码" icon="LockClosed" type="password"
                                                  v-model="form.password" placeholder="请输入密码"></z-input>
                                           <div class="flex justify-between items-center mb-6">

@@ -7,7 +7,6 @@ export enum StorageKeys {
        REFRESH = "REFRESH",
        LAST_PATH = "LAST_PATH",
        THEME = 'THEME',
-       PASSWORD = 'PASSWORD',
        CONFIG = 'CONFIG'
 }
 interface IStorage {

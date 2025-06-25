@@ -1,5 +1,5 @@
 export interface CommonResult<T> {
-       code: "success" | "token_error" | "error";
+       code: number;
        message: string;
        data: T;
 }
